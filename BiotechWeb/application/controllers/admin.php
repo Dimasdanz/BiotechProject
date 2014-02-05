@@ -7,6 +7,9 @@ class admin extends CI_Controller{
 	}
 	
 	public function index(){
+		$this->load->view('template/header');
+		$this->load->view('template/topbar');
+		$this->load->view('template/sidebar');
 		$data['admin'] = $this->db_admin->get_all();
 		$this->load->view('admin', $data);
 	}
