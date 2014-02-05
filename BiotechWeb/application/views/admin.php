@@ -1,8 +1,3 @@
-<?php
-	$this->load->view('template/header');
-	$this->load->view('template/topbar');
-	$this->load->view('template/sidebar');
-?>
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-sm-12">
