@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2014 at 11:51 AM
+-- Generation Time: Feb 05, 2014 at 05:59 PM
 -- Server version: 5.6.11
 -- PHP Version: 5.5.3
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `db_biotech` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `db_biotech`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES
+(2, 'dimas', '$2a$08$mZd9.SCr5UBfswJCuTn55OXcjd7v3nEucSZ406TI0DT1ClioTwbVm');
 
 -- --------------------------------------------------------
 

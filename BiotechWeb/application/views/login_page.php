@@ -3,25 +3,30 @@
 		<div class="col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Please Sign In</h3>
+					<h3 class="panel-title">Please Log In</h3>
 				</div>
 				<div class="panel-body">
-					<form role="form">
+					<?php 
+						if($this->session->flashdata('error')){
+					?>
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<?=$this->session->flashdata('error')?>
+						</div>
+				    <?php 
+				    	}
+				    ?>
+					<?=form_open('/login/validate')?>
 						<fieldset>
 							<div class="form-group">
-								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+								<input class="form-control" placeholder="Username" name="username" type="text" autofocus>
 							</div>
 							<div class="form-group">
 								<input class="form-control" placeholder="Password" name="password" type="password" value="">
 							</div>
-							<div class="checkbox">
-								<label>
-									<input name="remember" type="checkbox" value="Remember Me">Remember Me
-								</label>
-							</div>
-							<a href="#" class="btn btn-lg btn-primary btn-block">Login</a>
+							<button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
 						</fieldset>
-					</form>
+					<?=form_close()?>
 				</div>
 			</div>
 		</div>
