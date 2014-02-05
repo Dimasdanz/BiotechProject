@@ -2,8 +2,10 @@
 class admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
+		if($this->session->userdata('logged_in') == NULL){
+			redirect('/login','refresh');
+		}
 		$this->load->model('db_admin');
-		
 	}
 	
 	public function index(){
