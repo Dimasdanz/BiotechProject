@@ -52,17 +52,29 @@
 			</treenode>
 			<treenode node="SYSDIR;PHP:PHP Word;C:\xampp\dimasdanz\BiotechWeb\index.php;f9;175;15;175;;G:\Documents\GitHub\BiotechProject\BiotechWeb\index.php;f9;175;15;175;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="admin;PHP:Class Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f0;1;1;19;;;;vpos;;vCI_Controller;;c;;r;;d33,1;;b0,0;;m">
-				<treenode node="__construct;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;2;2;6;;;;vpos;;v;;r;;d30,2;;b1,0;;m">
-					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f2;4;7;4;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="admin;PHP:Class Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f0;1;1;19;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f0;1;1;35;;;;vpos;;vCI_Controller;;c;;r;;d33,1;;b0,0;;m">
+				<treenode node="__construct;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;2;2;6;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f8;2;2;6;;;;vpos;;v;;r;;d30,2;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f2;4;7;4;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f2;4;7;4;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="index;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;8;2;14;;;;vpos;;v;;r;;d24,8;;b1,0;;m">
-					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f2;9;7;9;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="index;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;8;2;14;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f8;8;2;11;;;;vpos;;v;;r;;d24,8;;b1,0;;m">
+					<treenode node="data;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f2;9;7;9;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f2;9;7;9;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f19;9;24;9;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="insert;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;16;2;18;;;;vpos;;v;;r;;d25,16;;b1,0;;m">
+				<treenode node="insert;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f8;16;2;18;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f8;13;2;34;;;;vpos;;v;;r;;d25,13;;b1,0;;m">
 					<treenode node="_POST;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\Codelobster0.php;f10;17;16;17;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="data;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f3;27;8;27;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="msg;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f3;19;7;19;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="password;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f3;25;12;25;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f2;14;7;14;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="username;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php;f3;24;12;24;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
@@ -7022,11 +7034,17 @@
 					</treenode>
 				</treenode>
 			</treenode>
-			<treenode node="db_admin;PHP:Class Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f0;1;1;5;;;;vpos;;vCI_Model;;c;;r;;d31,1;;b0,0;;m">
-				<treenode node="insert;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f1;2;2;4;;;;vpos;;v;;r;;d23,2;;b0,0;;mdata;;p">
-					<treenode node="data;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f17;2;22;2;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="db_admin;PHP:Class Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f0;1;1;5;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f0;1;1;10;;;;vpos;;vCI_Model;;c;;r;;d31,1;;b0,0;;m">
+				<treenode node="get_all;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f1;2;2;5;;;;vpos;;v;;r;;d19,2;;b0,0;;m">
+					<treenode node="q;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f2;3;4;3;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f2;3;7;3;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f7;3;12;3;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="insert;PHP:Function Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f1;2;2;4;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f1;7;2;9;;;;vpos;;v;;r;;d23,7;;b0,0;;mdata;;p">
+					<treenode node="data;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f17;2;22;2;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f17;7;22;7;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\Codelobster0.php;f2;3;7;3;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php;f2;8;7;8;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
@@ -8178,6 +8196,8 @@
 			</treenode>
 			<treenode node="active_record;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\application\config\database.php;f0;48;14;48;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\database.php;f0;48;14;48;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
+			<treenode node="admin;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\admin.php;f11;25;17;25;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			</treenode>
 			<treenode node="application_folder;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\index.php;f1;74;20;74;;G:\Documents\GitHub\BiotechProject\BiotechWeb\index.php;f1;74;20;74;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="assign_to_config;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\system\core\CodeIgniter.php;f11;94;28;94;;G:\Documents\GitHub\BiotechProject\BiotechWeb\system\core\CodeIgniter.php;f11;94;28;94;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
@@ -8241,6 +8261,8 @@
 			<treenode node="smileys;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\application\config\smileys.php;f0;14;8;14;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\smileys.php;f0;14;8;14;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="system_path;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\index.php;f1;58;13;58;;G:\Documents\GitHub\BiotechProject\BiotechWeb\index.php;f1;58;13;58;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			</treenode>
+			<treenode node="this;PHP:Var Name;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\admin.php;f1;1;6;1;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="UNI;PHP:Var Name;C:\xampp\dimasdanz\BiotechWeb\system\core\CodeIgniter.php;f1;157;5;157;;G:\Documents\GitHub\BiotechProject\BiotechWeb\system\core\CodeIgniter.php;f1;157;5;157;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -37006,7 +37028,7 @@
 			</treenode>
 			<treenode node="docScroll;JS:JS Var Name;C:\xampp\dimasdanz\BiotechWeb\assets\js\bootstrap.js;f12;1185;21;1185;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\bootstrap.js;f12;1185;21;1185;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="document;JS:JS Var Name;C:\xampp\dimasdanz\BiotechWeb\user_guide\nav\prototype.lite.js;f13;40;21;40;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\morris\raphael-2.1.0.min.js;f9410;9;9418;9;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\metisMenu\jquery.metisMenu.js;f23;0;31;0;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f4;0;12;0;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\dataTables\jquery.dataTables.js;f41;26;49;26;;C:\xampp\dimasdanz\BiotechWeb\assets\js\demo\flot-demo.js;f2;1;10;1;;C:\xampp\dimasdanz\BiotechWeb\assets\js\bootstrap.min.js;f9704;5;9712;5;;C:\xampp\dimasdanz\BiotechWeb\assets\js\bootstrap.js;f4;142;12;142;;C:\xampp\dimasdanz\BiotechWeb\system\helpers\url_helper.php;f34;350;42;350;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\morris\raphael-2.1.0.min.js;f9410;9;9418;9;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\metisMenu\jquery.metisMenu.js;f23;0;31;0;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f4;0;12;0;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\dataTables\jquery.dataTables.js;f41;26;49;26;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\demo\flot-demo.js;f2;1;10;1;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\bootstrap.min.js;f9704;5;9712;5;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\bootstrap.js;f4;142;12;142;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\footer.php;f3;21;11;21;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="document;JS:JS Var Name;C:\xampp\dimasdanz\BiotechWeb\user_guide\nav\prototype.lite.js;f13;40;21;40;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\morris\raphael-2.1.0.min.js;f9410;9;9418;9;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\metisMenu\jquery.metisMenu.js;f23;0;31;0;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f4;0;12;0;;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\dataTables\jquery.dataTables.js;f41;26;49;26;;C:\xampp\dimasdanz\BiotechWeb\assets\js\demo\flot-demo.js;f2;1;10;1;;C:\xampp\dimasdanz\BiotechWeb\assets\js\bootstrap.min.js;f9704;5;9712;5;;C:\xampp\dimasdanz\BiotechWeb\assets\js\bootstrap.js;f4;142;12;142;;C:\xampp\dimasdanz\BiotechWeb\system\helpers\url_helper.php;f34;350;42;350;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\morris\raphael-2.1.0.min.js;f9410;9;9418;9;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\metisMenu\jquery.metisMenu.js;f23;0;31;0;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f4;0;12;0;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\dataTables\jquery.dataTables.js;f41;26;49;26;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\demo\flot-demo.js;f2;1;10;1;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\bootstrap.min.js;f9704;5;9712;5;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\bootstrap.js;f4;142;12;142;;G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\admin.php;f3;93;11;93;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="dodgerblue;JS:JS Var Name;C:\xampp\dimasdanz\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f3610;0;3620;0;;G:\Documents\GitHub\BiotechProject\BiotechWeb\assets\js\plugins\flot\excanvas.min.js;f3610;0;3620;0;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -38359,18 +38381,18 @@
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\topbar.php" crc="660856905"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\sidebar.php" crc="2020529900"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\header.php" crc="-1363091606"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\footer.php" crc="4660678"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\template\footer.php" crc="910959827"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\login_page.php" crc="-411754622"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\dashboard.php" crc="40148619"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\admin.php" crc="25165781"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php" crc="408646792"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\views\admin.php" crc="-1997490608"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\models\db_admin.php" crc="-276746895"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\errors\error_php.php" crc="1872552885"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\errors\error_general.php" crc="-408254174"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\errors\error_db.php" crc="-1726591355"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\errors\error_404.php" crc="1631448776"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\login.php" crc="199105706"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\dashboard.php" crc="-1073296372"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php" crc="1990061949"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\controllers\admin.php" crc="-412721677"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\user_agents.php" crc="-484381080"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\smileys.php" crc="-749249654"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\routes.php" crc="-37533632"/>
@@ -38380,10 +38402,10 @@
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\hooks.php" crc="-232972918"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\foreign_chars.php" crc="-1365329089"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\doctypes.php" crc="796808004"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\database.php" crc="2014814805"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\database.php" crc="-1029749098"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\constants.php" crc="1276116486"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\config.php" crc="-815656723"/>
-		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\autoload.php" crc="-1213669347"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\config.php" crc="1788209329"/>
+		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\config\autoload.php" crc="-1790797664"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\cache\.htaccess" crc="1792548129"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\application\.htaccess" crc="-643410220"/>
 		<file name="G:\Documents\GitHub\BiotechProject\BiotechWeb\index.php" crc="-550488241"/>
