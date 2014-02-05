@@ -15,8 +15,13 @@ class db_admin extends CI_Model{
 		$this->db->insert('admin', $data);
 	}
 	
-	function delete($data){
-		$this->db->where('username', $data);
+	function reset_password($username, $data){
+		$this->db->where('username', $username);
+		$this->db->update('admin', $data);
+	}
+	
+	function delete($username){
+		$this->db->where('username', $username);
 		$this->db->delete('admin');
 	}
 }

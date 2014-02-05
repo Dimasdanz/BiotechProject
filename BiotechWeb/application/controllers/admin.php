@@ -44,6 +44,10 @@ class admin extends CI_Controller{
 	
 	public function delete(){
 		$username = $this->input->post('username');
+		if($username == $this->session->userdata('logged_in')){
+			$this->session->set_flashdata('delete_error', 'Deleting logged in account is restricted');
+			redirect('/admin', 'refresh');
+		}
 		$this->db_admin->delete($username);
 		$this->session->set_flashdata('success', $username.' has been deleted');
 		redirect('/admin', 'refresh');
@@ -57,6 +61,16 @@ class admin extends CI_Controller{
 		}else{
 			return TRUE;
 		}
+	}
+	
+	public function reset_password(){
+		$this->load->library('PasswordHash');
+		$username = $this->input->post('username');
+		$password = $this->passwordhash->HashPassword('default');
+		$data = array('password'=>$password);
+		$this->db_admin->reset_password($username, $data);
+		$this->session->set_flashdata('success', $username.' password has been reset to default');
+		redirect('/admin', 'refresh');
 	}
 }
 ?>
