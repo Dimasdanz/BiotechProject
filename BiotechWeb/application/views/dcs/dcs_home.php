@@ -8,10 +8,10 @@
 				<div class="panel-heading">
 					<i class="fa fa-info-circle"></i> Door Control Status
 				</div>
-				<ul class="list-group">
-					<li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b>Armed</b></div></li>
-					<li class="list-group-item clearfix"><div class="pull-left">Password Attempts</div><div class="pull-right"><b>3</b></div></li>
-  					<li class="list-group-item clearfix"><div class="pull-left">Condition</div><div class="pull-right"><b>Unlocked</b></div></li>
+				<ul class="list-group dcs_status">
+					<li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b><?=$status?></b></div></li>
+					<li class="list-group-item clearfix"><div class="pull-left">Password Attempts</div><div class="pull-right"><b><?=$password_attempts?></b></div></li>
+  					<li class="list-group-item clearfix"><div class="pull-left">Condition</div><div class="pull-right"><b><?=$condition?></b></div></li>
   				</ul>
   				<div class="panel-footer clearfix">
 					<a href="#" class="btn btn-primary pull-right"><i class="fa fa-wrench"></i> Change Setting <i class="fa fa-chevron-right"></i></a>
@@ -68,3 +68,9 @@
 	$this->load->view('template/footer');
 	$this->load->view('dcs/dcs_footer');
 ?>
+<script>
+	function dcs_status(){
+		$('.dcs_status').load('/device_status/dcs');
+	}
+	setInterval('dcs_status()', 1000);
+</script>
