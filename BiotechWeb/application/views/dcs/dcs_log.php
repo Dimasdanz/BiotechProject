@@ -54,7 +54,6 @@
 		<?php 
 			if($dcs_log != NULL){
 		?>
-		
 			"fnDrawCallback": function ( oSettings ) {
 				if ( oSettings.bSorted || oSettings.bFiltered )
 				{

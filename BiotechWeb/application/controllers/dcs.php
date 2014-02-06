@@ -10,6 +10,9 @@ class dcs extends CI_Controller{
 	}
 	
 	public function index(){
+		$data['status'] = (read_file("assets/device/dcs/status.txt") == 1 ? "Armed" : "Disarmed");
+		$data['password_attempts'] = read_file("assets/device/dcs/password_attempts.txt");
+		$data['condition'] = (read_file("assets/device/dcs/condition.txt") == 1 ? "Locked" : "Unlocked");
 		$data['today_log'] = $this->db_dcs_log->get_today();
 		$this->load->view('dcs/dcs_home', $data);
 	}
@@ -26,7 +29,10 @@ class dcs extends CI_Controller{
 	}
 	
 	public function setting(){
-		$this->load->view('dcs/dcs_setting');
+		$data['status'] = read_file("assets/device/dcs/status.txt");
+		$data['password_attempts'] = read_file("assets/device/dcs/password_attempts.txt");
+		$data['condition'] = read_file("assets/device/dcs/condition.txt");
+		$this->load->view('dcs/dcs_setting',$data);
 	}
 	
 	public function test(){
@@ -90,5 +96,48 @@ class dcs extends CI_Controller{
 		$name = $this->input->post('name');
 		$data = array('name'=>$name);
 		$this->db_dcs_log->insert($data);
+	}
+	
+	public function change_attempt(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$this->session->set_flashdata('message', array('danger', 'Please unlock the device first'));
+			redirect('/dcs/setting', 'refresh');
+			return;
+		}
+		
+		$this->form_validation->set_rules('password_attempts', 'Password Attempts', 'trim|required|numeric|xss_clean');
+		$password_attempts = $this->input->post('password_attempts');
+		
+		if($this->form_validation->run() == FALSE){
+			$msg = array('danger', validation_errors());
+			$this->session->set_flashdata('message', $msg);
+			redirect('/dcs/setting', 'refresh');
+		}else{
+			write_file("assets/device/dcs/password_attempts.txt", $password_attempts);
+			$this->session->set_flashdata('message', array('success', 'Password Attempts has been changed'));
+			redirect('/dcs/setting', 'refresh');
+		}
+	}
+	
+	public function change_status(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$this->session->set_flashdata('message', array('danger', 'Please unlock the device first'));
+			redirect('/dcs/setting', 'refresh');
+			return;
+		}
+		if($this->input->post('status') == 'on'){
+			$status = 1;
+		}else{
+			$status = 0;
+		}
+		write_file("assets/device/dcs/status.txt", $status);
+		$this->session->set_flashdata('message', array('success', 'Device has been turned '.$this->input->post('status')));
+		redirect('/dcs/setting', 'refresh');
+	}
+	
+	public function unlock(){
+		write_file("assets/device/dcs/condition.txt", "0");
+		$this->session->set_flashdata('message', array('success', 'Device has been unlocked'));
+		redirect('/dcs/setting', 'refresh');
 	}
 }
