@@ -8,6 +8,7 @@
 	</div>
 
 	<ul class="nav navbar-top-links navbar-right">
+		<li><a href="/admin">Admin</a></li>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#"> 
 				<i class="fa fa-user fa-fw"></i> <?=$this->session->userdata('logged_in')?> <i class="fa fa-caret-down"></i>

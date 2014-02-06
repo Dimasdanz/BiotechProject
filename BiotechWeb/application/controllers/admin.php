@@ -6,14 +6,14 @@ class admin extends CI_Controller{
 			redirect('/login','refresh');
 		}
 		$this->load->model('db_admin');
-	}
-	
-	public function index(){
 		$this->load->view('template/header');
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');
+	}
+	
+	public function index(){
 		$data['admin'] = $this->db_admin->get_all();
-		$this->load->view('admin', $data);
+		$this->load->view('main/admin', $data);
 	}
 	
 	public function insert(){

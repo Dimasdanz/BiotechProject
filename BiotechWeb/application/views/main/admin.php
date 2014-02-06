@@ -175,7 +175,21 @@
 		<?php
 			}
 		?>
-		$('#dataTables-admin').dataTable();
+		$('#dataTables-admin').dataTable({
+			"fnDrawCallback": function ( oSettings ) {
+				if ( oSettings.bSorted || oSettings.bFiltered )
+				{
+					for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+					{
+						$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+					}
+				}
+			},
+			"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 0,2 ] }
+			],
+			"aaSorting": [[ 1, 'asc' ]]
+		});
 
 		$(".edit").click(function() {
 			var id = this.id;

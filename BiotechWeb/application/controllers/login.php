@@ -10,7 +10,7 @@ class login extends CI_Controller{
 			redirect(base_url());
 		}
 		$this->load->view('template/header');
-		$this->load->view('login_page');
+		$this->load->view('main/login_page');
 		$this->load->view('template/footer');
 	}
 	
