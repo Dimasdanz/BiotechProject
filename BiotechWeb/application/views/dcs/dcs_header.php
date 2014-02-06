@@ -26,8 +26,8 @@
 	</div>
 	<div class="device_status">
 		<ol class="breadcrumb">
-			<li>Condition: n/a</li>
-			<li>Password Attempts: n/a</li>
 			<li>Status: n/a</li>
+			<li>Password Attempts: n/a</li>
+			<li>Condition: n/a</li>
 		</ol>
 	</div>
