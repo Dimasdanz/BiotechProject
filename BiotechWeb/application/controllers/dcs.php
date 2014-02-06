@@ -6,10 +6,12 @@ class dcs extends CI_Controller{
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');
 		$this->load->model('db_dcs_users');
+		$this->load->model('db_dcs_log');
 	}
 	
 	public function index(){
-		$this->load->view('dcs/dcs_home');
+		$data['today_log'] = $this->db_dcs_log->get_today();
+		$this->load->view('dcs/dcs_home', $data);
 	}
 	
 	public function users(){
@@ -19,7 +21,8 @@ class dcs extends CI_Controller{
 	}
 	
 	public function log(){
-		$this->load->view('dcs/dcs_log');
+		$data['dcs_log'] = $this->db_dcs_log->get_all();
+		$this->load->view('dcs/dcs_log', $data);
 	}
 	
 	public function setting(){
@@ -81,5 +84,11 @@ class dcs extends CI_Controller{
 		$this->db_dcs_users->delete($this->input->post('user_id'));
 		$this->session->set_flashdata('success', 'User has been deleted');
 		redirect('/dcs/users', 'refresh');
+	}
+	
+	public function insert_log(){
+		$name = $this->input->post('name');
+		$data = array('name'=>$name);
+		$this->db_dcs_log->insert($data);
 	}
 }

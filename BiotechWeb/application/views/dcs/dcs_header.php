@@ -19,15 +19,9 @@
 	}
 ?>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<h3 class="page-header"><i class="fa fa-<?=$icon?> fa-fw"></i> <?=$header?></h3>
-		</div>
+<div class="row">
+	<div class="col-sm-12">
+		<h3 class="page-header"><i class="fa fa-<?=$icon?> fa-fw"></i> <?=$header?></h3>
 	</div>
-	<div class="device_status">
-		<ol class="breadcrumb">
-			<li>Status: n/a</li>
-			<li>Password Attempts: n/a</li>
-			<li>Condition: n/a</li>
-		</ol>
-	</div>
+</div>
+	
