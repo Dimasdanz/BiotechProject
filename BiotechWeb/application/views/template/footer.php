@@ -4,8 +4,7 @@
     <script src="<?=base_url()?>assets/js/jquery-1.10.2.js"></script>
     <script>
 		$(document).ready(function(){
-			$("#<?=$this->uri->segment(1, '')?>").addClass("active");
-			$("#<?=$this->uri->segment(1, '')?> #<?=$this->uri->segment(2, 'home')?>").addClass("active");
+			$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("active");
 		});
 	</script>
     <script src="<?=base_url()?>assets/js/bootstrap.min.js"></script>
