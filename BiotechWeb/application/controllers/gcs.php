@@ -6,6 +6,7 @@ class gcs extends CI_Controller{
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');
 		$this->load->model('db_gcs_plants');
+		$this->load->model('db_gcs_log');
 	}
 	
 	public function index(){
@@ -18,7 +19,8 @@ class gcs extends CI_Controller{
 	}
 	
 	public function log(){
-		$this->load->view('gcs/gcs_home');
+		$data['gcs_log'] = $this->db_gcs_log->get_all();
+		$this->load->view('gcs/gcs_log', $data);
 	}
 	
 	public function setting(){
