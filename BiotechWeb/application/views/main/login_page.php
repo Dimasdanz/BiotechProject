@@ -16,7 +16,7 @@
 				    <?php 
 				    	}
 				    ?>
-					<?=form_open('/login/validate')?>
+					<?=form_open(base_url().'login/validate')?>
 						<fieldset>
 							<div class="form-group">
 								<input class="form-control" placeholder="Username" name="username" type="text" autofocus>

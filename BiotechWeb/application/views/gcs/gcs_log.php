@@ -1,17 +1,18 @@
 <div id="page-wrapper">
 <?php
-	$this->load->view('dcs/dcs_header');
+	$this->load->view('gcs/gcs_header');
 ?>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="table-responsive">
-						<table class="table table-hover table-condensed" id="dataTables-dcs_log">
+						<table class="table table-hover table-condensed" id="dataTables-gcs_log">
 							<thead>
 								<tr>
 									<th width="5%">No.</th>
-									<th>Name</th>
+									<th>Temperature</th>
+									<th>Lux</th>
 									<th>Time</th>
 									<th>Date</th>
 								</tr>
@@ -19,12 +20,13 @@
 							<tbody>
 							<?php 
 								$no = 1;
-								if($dcs_log != NULL){
-									foreach ($dcs_log as $row){
+								if($gcs_log != NULL){
+									foreach ($gcs_log as $row){
 							?>
 								<tr>
 									<td><?=$no?></td>
-									<td><?=$row->name?></td>
+									<td><?=$row->temperature?></td>
+									<td><?=$row->lux?></td>
 									<td><?=date('h:i:s', strtotime($row->time))?></td>
 									<td><?=date('d F Y', strtotime($row->time))?></td>
 								</tr>
@@ -48,10 +50,10 @@
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
 	$(document).ready(function(){
-		$('#dataTables-dcs_log').dataTable({
+		$('#dataTables-gcs_log').dataTable({
 			"iDisplayLength": 50,
 		<?php 
-			if($dcs_log != NULL){
+			if($gcs_log != NULL){
 		?>
 			"fnDrawCallback": function ( oSettings ) {
 				if ( oSettings.bSorted || oSettings.bFiltered )

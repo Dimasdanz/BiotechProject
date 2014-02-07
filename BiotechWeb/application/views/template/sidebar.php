@@ -2,17 +2,17 @@
 	<div class="sidebar-collapse">
 		<ul class="nav" id="side-menu">
 			<li id="dashboard">
-				<a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+				<a href="<?=base_url()?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
 			<li id="dcs">
 				<a href="#">
 					<i class="fa fa-unlock-alt fa-fw"></i> Door Control System<span class="fa arrow"></span>
 				</a>
 				<ul class="nav nav-second-level">
-					<li id="home"><a href="/dcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
-					<li id="user"><a href="/dcs/users"><i class="fa fa-users fa-fw"></i> Users</a></li>
-					<li id="log"><a href="/dcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
-					<li id="setting"><a href="/dcs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
+					<li id="home"><a href="<?=base_url()?>dcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
+					<li id="user"><a href="<?=base_url()?>dcs/users"><i class="fa fa-users fa-fw"></i> Users</a></li>
+					<li id="log"><a href="<?=base_url()?>dcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
+					<li id="setting"><a href="<?=base_url()?>dcs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
 				</ul>
 			</li>
 			<li id="gcs">
@@ -20,9 +20,10 @@
 					<i class="fa fa-leaf fa-fw"></i> Greenhouse Control System<span class="fa arrow"></span>
 				</a>
 				<ul class="nav nav-second-level">
-					<li id="home"><a href="/gcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
-					<li id="log"><a href="/gcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
-					<li id="setting"><a href="/gcs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
+					<li id="home"><a href="<?=base_url()?>gcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
+					<li id="log"><a href="<?=base_url()?>gcs/plants"><i class="fa fa-leaf fa-fw"></i> Plants</a></li>
+					<li id="log"><a href="<?=base_url()?>gcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
+					<li id="setting"><a href="<?=base_url()?>gcs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
 				</ul>
 			</li>
 			<li id="hcs">

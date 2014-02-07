@@ -66,7 +66,6 @@
 </div>
 <?php
 	$this->load->view('template/footer');
-	$this->load->view('dcs/dcs_footer');
 ?>
 <script>
 	function dcs_status(){

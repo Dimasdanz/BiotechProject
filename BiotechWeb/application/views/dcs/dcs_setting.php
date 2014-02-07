@@ -103,7 +103,6 @@
 </div>
 <?php
 	$this->load->view('template/footer');
-	$this->load->view('dcs/dcs_footer');
 ?>
 <script src="<?=base_url()?>assets/js/bootstrap-switch.js"></script>
 <script>
