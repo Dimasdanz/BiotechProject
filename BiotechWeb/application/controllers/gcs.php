@@ -24,7 +24,7 @@ class gcs extends CI_Controller{
 	}
 	
 	public function setting(){
-		$this->load->view('gcs/gcs_home');
+		$this->load->view('gcs/gcs_setting');
 	}
 	
 	public function insert(){

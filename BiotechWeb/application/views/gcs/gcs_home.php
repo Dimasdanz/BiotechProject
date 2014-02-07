@@ -8,7 +8,7 @@
 				<div class="panel-heading">
 					<i class="fa fa-bar-chart-o"></i> Temperature
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" id="temp-chart">
 					
 				</div>
 			</div>
@@ -18,7 +18,7 @@
 				<div class="panel-heading">
 					<i class="fa fa-bar-chart-o"></i> Lux
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" id="lux-chart">
 					
 				</div>
 			</div>
@@ -28,3 +28,92 @@
 <?php
 	$this->load->view('template/footer');
 ?>
+<script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts.js"></script>
+<script src="<?=base_url()?>assets/js/plugins/highcharts/exporting.js"></script>
+<script type="text/javascript">
+function requestTemp() {
+    $.ajax({
+        url: '<?=base_url()?>api/gcs_temperature',
+        success: function(point) {
+            var series = chart.series[0],
+                shift = series.data.length > 20;
+            chart.series[0].addPoint(point, true, shift);
+            setTimeout(requestTemp, 1000);    
+        },
+        cache: false
+    });
+}
+function requestLux() {
+    $.ajax({
+        url: '<?=base_url()?>api/gcs_lux',
+        success: function(point) {
+            var series = chart2.series[0],
+                shift = series.data.length > 20;
+            chart2.series[0].addPoint(point, true, shift);
+            setTimeout(requestLux, 1000);    
+        },
+        cache: false
+    });
+}
+$(document).ready(function() {
+	chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'temp-chart',
+			defaultSeriesType: 'spline',
+			events: {
+				load: requestTemp
+			}
+		},
+		title: {
+			text: 'Live Temperature'
+		},
+		xAxis: {
+			type: 'datetime',
+			tickPixelInterval: 150,
+			maxZoom: 20 * 10000
+		},
+		yAxis: {
+			minPadding: 0.2,
+			maxPadding: 0.2,
+			title: {
+				text: 'Value',
+				margin: 80
+			}
+		},
+		series: [{
+			name: 'Temperature',
+			data: []
+		}]
+	});
+
+	chart2 = new Highcharts.Chart({
+		chart: {
+			renderTo: 'lux-chart',
+			defaultSeriesType: 'spline',
+			events: {
+				load: requestLux
+			}
+		},
+		title: {
+			text: 'Live Lux'
+		},
+		xAxis: {
+			type: 'datetime',
+			tickPixelInterval: 150,
+			maxZoom: 20 * 10000
+		},
+		yAxis: {
+			minPadding: 0.2,
+			maxPadding: 0.2,
+			title: {
+				text: 'Value',
+				margin: 80
+			}
+		},
+		series: [{
+			name: 'Lux',
+			data: []
+		}]
+	});
+});
+</script>
