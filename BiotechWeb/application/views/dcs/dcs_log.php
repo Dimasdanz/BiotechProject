@@ -43,7 +43,6 @@
 </div>
 <?php
 	$this->load->view('template/footer');
-	$this->load->view('dcs/dcs_footer');
 ?>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
