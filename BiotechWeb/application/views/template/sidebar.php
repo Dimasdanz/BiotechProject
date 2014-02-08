@@ -31,8 +31,8 @@
 					<i class="fa fa-home fa-fw"></i> Home Control System<span class="fa arrow"></span>
 				</a>
 				<ul class="nav nav-second-level">
-					<li><a href="#"><i class="fa fa-home fa-fw"></i> Home</a></li>
-					<li><a href="#"><i class="fa fa-list fa-fw"></i> Log</a></li>
+					<li><a href="<?=base_url()?>hcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
+					<li><a href="<?=base_url()?>hcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
 				</ul>
 			</li>
 			<li id="scs">
