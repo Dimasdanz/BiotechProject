@@ -69,7 +69,7 @@
 <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form role="form" method="post" action="/dcs/insert" id="user_form">
+			<form role="form" method="post" action="<?=base_url()?>/dcs/insert" id="user_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="myModalLabel">User Form</h4>
@@ -119,7 +119,7 @@
                 <p id="confirm_str"></p>
             </div>
             <div class="modal-footer">
-            	<?=form_open("/dcs/delete")?>
+            	<?=form_open(base_url()."dcs/delete")?>
 	            	<input type="hidden" name="user_id" id="user_id">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
 	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
@@ -159,7 +159,7 @@
 		});
 
 		$('.add').click(function (){
-			$('#user_form').attr('action', '/dcs/insert');
+			$('#user_form').attr('action', '<?=base_url()?>dcs/insert');
 			$('#add').show();
 			$('#update').hide();
 			$('#id').val("<?=$user_id?>");
@@ -168,7 +168,7 @@
 		});
 
 		$('.edit').click(function (){
-			$('#user_form').attr('action', '/dcs/update');
+			$('#user_form').attr('action', '<?=base_url()?>dcs/update');
 			$('#add').hide();
 			$('#update').show();
 			$('#id').val(this.id);

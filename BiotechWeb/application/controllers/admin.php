@@ -3,7 +3,7 @@ class admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		if($this->session->userdata('logged_in') == NULL){
-			redirect('/login','refresh');
+			redirect(base_url().'login','refresh');
 		}
 		$this->load->model('db_admin');
 		$this->load->view('template/header');
@@ -26,7 +26,7 @@ class admin extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = array($username, validation_errors());
 			$this->session->set_flashdata('error', $msg);
-			redirect('/admin', 'refresh');
+			redirect(base_url().'admin', 'refresh');
 		}else{
 			$this->load->library('PasswordHash');
 			
@@ -38,7 +38,7 @@ class admin extends CI_Controller{
 			);
 			$this->db_admin->insert($data);
 			$this->session->set_flashdata('success', 'New Admin has been added');
-			redirect('/admin', 'refresh');
+			redirect(base_url().'admin', 'refresh');
 		}
 	}
 	
@@ -46,11 +46,11 @@ class admin extends CI_Controller{
 		$username = $this->input->post('username');
 		if($username == $this->session->userdata('logged_in')){
 			$this->session->set_flashdata('delete_error', 'Deleting logged in account is restricted');
-			redirect('/admin', 'refresh');
+			redirect(base_url().'admin', 'refresh');
 		}
 		$this->db_admin->delete($username);
 		$this->session->set_flashdata('success', $username.' has been deleted');
-		redirect('/admin', 'refresh');
+		redirect(base_url().'admin', 'refresh');
 	}
 	
 	public function username_check($str){
@@ -70,7 +70,7 @@ class admin extends CI_Controller{
 		$data = array('password'=>$password);
 		$this->db_admin->reset_password($username, $data);
 		$this->session->set_flashdata('success', $username.' password has been reset to default');
-		redirect('/admin', 'refresh');
+		redirect(base_url().'admin', 'refresh');
 	}
 }
 ?>

@@ -39,7 +39,7 @@ class gcs extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect('/gcs/plants', 'refresh');
+			redirect(base_url().'gcs/plants', 'refresh');
 		}else{
 			$data = array(
 					'name'=> $name,
@@ -48,7 +48,7 @@ class gcs extends CI_Controller{
 			);
 			$this->db_gcs_plants->insert($data);
 			$this->session->set_flashdata('success', 'New Plant has been added');
-			redirect('/gcs/plants', 'refresh');
+			redirect(base_url().'gcs/plants', 'refresh');
 		}
 	}
 	
@@ -65,7 +65,7 @@ class gcs extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect('/gcs/plants', 'refresh');
+			redirect(base_url().'gcs/plants', 'refresh');
 		}else{
 			$data = array(
 					'name'=> $name,
@@ -74,13 +74,13 @@ class gcs extends CI_Controller{
 			);
 			$this->db_gcs_plants->update($id, $data);
 			$this->session->set_flashdata('success', 'New Plant has been added');
-			redirect('/gcs/plants', 'refresh');
+			redirect(base_url().'gcs/plants', 'refresh');
 		}
 	}
 	
 	public function delete(){
 		$this->db_gcs_plants->delete($this->input->post('plant_id'));
 		$this->session->set_flashdata('success', 'Plant has been deleted');
-		redirect('/gcs/plants', 'refresh');
+		redirect(base_url().'gcs/plants', 'refresh');
 	}
 }

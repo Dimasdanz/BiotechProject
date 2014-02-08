@@ -46,7 +46,7 @@
 								<i class="fa fa-Keyboard-o"></i> Password Attempts
 							</div>
 							<div class="panel-body">
-								<form class="form-inline" role="form" method="post" action="/dcs/change_attempt">
+								<form class="form-inline" role="form" method="post" action="<?=base_url()?>dcs/change_attempt">
 									<div class="form-group">
 										<input type="text" class="form-control" name="password_attempts" value="<?=$password_attempts?>" placeholder="Attempts">
 									</div>
@@ -69,7 +69,7 @@
 						</div>
 						<div class="panel-body">
 							<p class="text-danger text-center">Device is locked!</p>
-							<a href="/dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Unlock</a>
+							<a href="<?=base_url()?>/dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Unlock</a>
 						</div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
                 <p id="confirm_str"></p>
             </div>
             <div class="modal-footer">
-            	<?=form_open("/dcs/change_status")?>
+            	<?=form_open(base_url().'dcs/change_status')?>
 	            	<input type="hidden" name="status" id="status_value">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
 	                <button type="button" class="btn btn-danger no" data-dismiss="modal">No</button>

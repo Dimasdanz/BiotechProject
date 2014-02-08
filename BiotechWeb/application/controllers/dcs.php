@@ -35,10 +35,6 @@ class dcs extends CI_Controller{
 		$this->load->view('dcs/dcs_setting',$data);
 	}
 	
-	public function test(){
-		$this->db_dcs_users->get_id();
-	}
-	
 	public function insert(){
 		$this->form_validation->set_rules('name', 'Name', 'trim|required|alpha|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|numeric|xss_clean');
@@ -50,7 +46,7 @@ class dcs extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect('/dcs/users', 'refresh');
+			redirect(base_url().'dcs/users', 'refresh');
 		}else{
 			$data = array(
 					'user_id' => $id,
@@ -59,7 +55,7 @@ class dcs extends CI_Controller{
 			);
 			$this->db_dcs_users->insert($data);
 			$this->session->set_flashdata('success', 'New User has been added');
-			redirect('/dcs/users', 'refresh');
+			redirect(base_url().'dcs/users', 'refresh');
 		}
 	}
 	
@@ -74,7 +70,7 @@ class dcs extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect('/dcs/users', 'refresh');
+			redirect(base_url().'dcs/users', 'refresh');
 		}else{
 			$data = array(
 				'name'=> $name,
@@ -82,14 +78,14 @@ class dcs extends CI_Controller{
 			);
 			$this->db_dcs_users->update($id, $data);
 			$this->session->set_flashdata('success', $name.' has been updated');
-			redirect('/dcs/users', 'refresh');
+			redirect(base_url().'dcs/users', 'refresh');
 		}
 	}
 	
 	public function delete(){
 		$this->db_dcs_users->delete($this->input->post('user_id'));
 		$this->session->set_flashdata('success', 'User has been deleted');
-		redirect('/dcs/users', 'refresh');
+		redirect(base_url().'dcs/users', 'refresh');
 	}
 	
 	public function insert_log(){
@@ -101,7 +97,7 @@ class dcs extends CI_Controller{
 	public function change_attempt(){
 		if(read_file("assets/device/dcs/condition.txt") == 1){
 			$this->session->set_flashdata('message', array('danger', 'Please unlock the device first'));
-			redirect('/dcs/setting', 'refresh');
+			redirect(base_url().'dcs/setting', 'refresh');
 			return;
 		}
 		
@@ -111,18 +107,18 @@ class dcs extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = array('danger', validation_errors());
 			$this->session->set_flashdata('message', $msg);
-			redirect('/dcs/setting', 'refresh');
+			redirect(base_url().'dcs/setting', 'refresh');
 		}else{
 			write_file("assets/device/dcs/password_attempts.txt", $password_attempts);
 			$this->session->set_flashdata('message', array('success', 'Password Attempts has been changed'));
-			redirect('/dcs/setting', 'refresh');
+			redirect(base_url().'dcs/setting', 'refresh');
 		}
 	}
 	
 	public function change_status(){
 		if(read_file("assets/device/dcs/condition.txt") == 1){
 			$this->session->set_flashdata('message', array('danger', 'Please unlock the device first'));
-			redirect('/dcs/setting', 'refresh');
+			redirect(base_url().'dcs/setting', 'refresh');
 			return;
 		}
 		if($this->input->post('status') == 'on'){
@@ -132,12 +128,12 @@ class dcs extends CI_Controller{
 		}
 		write_file("assets/device/dcs/status.txt", $status);
 		$this->session->set_flashdata('message', array('success', 'Device has been turned '.$this->input->post('status')));
-		redirect('/dcs/setting', 'refresh');
+		redirect(base_url().'dcs/setting', 'refresh');
 	}
 	
 	public function unlock(){
 		write_file("assets/device/dcs/condition.txt", "0");
 		$this->session->set_flashdata('message', array('success', 'Device has been unlocked'));
-		redirect('/dcs/setting', 'refresh');
+		redirect(base_url().'dcs/setting', 'refresh');
 	}
 }
