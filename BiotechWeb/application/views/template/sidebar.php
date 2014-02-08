@@ -40,9 +40,9 @@
 					<i class="fa fa-cogs fa-fw"></i> Server Room Control System<span class="fa arrow"></span>
 				</a>
 				<ul class="nav nav-second-level">
-					<li><a href="#"><i class="fa fa-home fa-fw"></i> Home</a></li>
-					<li><a href="#"><i class="fa fa-list fa-fw"></i> Log</a></li>
-					<li><a href="#"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
+					<li><a href="<?=base_url()?>scs"><i class="fa fa-home fa-fw"></i> Home</a></li>
+					<li><a href="<?=base_url()?>scs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
+					<li><a href="<?=base_url()?>scs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
 				</ul>
 			</li>
 			<li id="wms">
@@ -50,9 +50,9 @@
 					<i class="fa fa-tint fa-fw"></i> Water Monitoring System<span class="fa arrow"></span>
 				</a>
 				<ul class="nav nav-second-level">
-					<li><a href="#"><i class="fa fa-desktop fa-fw"></i> Home</a></li>
-					<li><a href="#"><i class="fa fa-list fa-fw"></i> Log</a></li>
-					<li><a href="#"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
+					<li><a href="<?=base_url()?>wms"><i class="fa fa-desktop fa-fw"></i> Home</a></li>
+					<li><a href="<?=base_url()?>wms/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
+					<li><a href="<?=base_url()?>wms/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
 				</ul>
 			</li>
 		</ul>

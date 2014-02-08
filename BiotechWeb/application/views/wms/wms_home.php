@@ -1,6 +1,6 @@
 <div id="page-wrapper">
 <?php
-	$this->load->view('gcs/gcs_header');
+	$this->load->view('wms/wms_header');
 ?>
 	<div class="row">
 		
