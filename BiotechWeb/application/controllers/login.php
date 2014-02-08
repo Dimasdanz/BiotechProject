@@ -23,7 +23,7 @@ class login extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect('/login', 'refresh');
+			redirect(base_url().'login', 'refresh');
 		}else{
 			redirect(base_url(), 'refresh');
 		}
@@ -50,7 +50,7 @@ class login extends CI_Controller{
 	public function logout(){
 		$this->session->unset_userdata('logged_in');
 		$this->session->sess_destroy();
-		redirect('/login', 'refresh');
+		redirect(base_url().'login', 'refresh');
 	}
 }
 ?>

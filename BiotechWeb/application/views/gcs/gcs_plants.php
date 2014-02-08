@@ -72,7 +72,7 @@
 <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form role="form" method="post" action="/gcs/insert" id="user_form">
+			<form role="form" method="post" action="<?=base_url()?>gcs/insert" id="user_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="myModalLabel">Plant Form</h4>
@@ -127,7 +127,7 @@
                 <p id="confirm_str"></p>
             </div>
             <div class="modal-footer">
-            	<?=form_open("/gcs/delete")?>
+            	<?=form_open(base_url()."gcs/delete")?>
 	            	<input type="hidden" name="plant_id" id="pid">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
 	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
@@ -167,7 +167,7 @@
 		});
 		
 		$('.add').click(function (){
-			$('#user_form').attr('action', '/gcs/insert');
+			$('#user_form').attr('action', '<?=base_url()?>gcs/insert');
 			$('#add').show();
 			$('#update').hide();
 			$('#name').val("");
@@ -175,7 +175,7 @@
 		});
 
 		$('.edit').click(function (){
-			$('#user_form').attr('action', '/gcs/update');
+			$('#user_form').attr('action', '<?=base_url()?>gcs/update');
 			$('#add').hide();
 			$('#update').show();
 			$('#id').val(this.id);

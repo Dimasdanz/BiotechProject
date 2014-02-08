@@ -69,7 +69,7 @@
 ?>
 <script>
 	function dcs_status(){
-		$('.dcs_status').load('/api/dcs_status');
+		$('.dcs_status').load('api/dcs_status');
 	}
 	setInterval('dcs_status()', 1000);
 </script>

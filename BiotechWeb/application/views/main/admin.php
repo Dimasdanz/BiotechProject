@@ -57,10 +57,10 @@
 <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<?=form_open('/admin/insert')?>
+			<?=form_open(base_url().'admin/insert')?>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Form Admin</h4>
+						<h4 class="modal-title" id="myModalLabel">Admin Form</h4>
 				</div>
 				<div class="modal-body">
 					<?php
@@ -119,7 +119,7 @@
 						}
 					?>
             		<div class="col-sm-offset-3">
-            		<?=form_open('/admin/reset_password')?>
+            		<?=form_open(base_url().'admin/reset_password')?>
 	            		<input type="hidden" name="username" id="username">
 						<button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Reset Password</button>
 						<a href="#" class="btn btn-danger delete" data-toggle="modal" data-target="#modal_confirm" id="delete"><i class="fa fa-trash-o"></i> Delete This Account</a>
@@ -145,8 +145,8 @@
                 <p id="confirm_str"></p>
             </div>
             <div class="modal-footer">
-            	<?=form_open("/admin/delete")?>
-	            	<input type="hidden" name="username" id="user">
+            	<?=form_open(base_url().'admin/delete')?>
+	            	<input type="hidden" name="username" id="name" value="asd">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
 	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                 <?=form_close()?>
@@ -203,9 +203,9 @@
 		});
 		
 		$(".delete").click(function() {
-			var username = $("#username").val();
-			$("#user").val(username);
-			$("#confirm_str").html('Are you sure want to delete <b>'+username+'</b>?');
+			var name = $("#username").val();
+			$("#name").val(name);
+			$("#confirm_str").html('Are you sure want to delete <b>'+name+'</b>?');
 		});
 	});
 </script>
