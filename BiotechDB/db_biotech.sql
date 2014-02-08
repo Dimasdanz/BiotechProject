@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2014 at 05:59 PM
--- Server version: 5.6.11
--- PHP Version: 5.5.3
+-- Generation Time: Feb 08, 2014 at 03:14 PM
+-- Server version: 5.6.14
+-- PHP Version: 5.5.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_biotech`
 --
-CREATE DATABASE IF NOT EXISTS `db_biotech` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `db_biotech`;
 
 -- --------------------------------------------------------
 
@@ -33,14 +31,15 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(255) NOT NULL,
   `password` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`) VALUES
-(2, 'dimas', '$2a$08$mZd9.SCr5UBfswJCuTn55OXcjd7v3nEucSZ406TI0DT1ClioTwbVm');
+(10, 'dimas', '$2a$08$fc65mYcIfPG6OZoKlphyN.ZiTMPahkk1hFM2x9G4WElHCfy1c.r6W'),
+(12, 'admin', '$2a$08$AgtLVfj.8V3EFmKumk9Zg.PZuFmSghGXK0XpDWmlIrnT6haOnnVY6');
 
 -- --------------------------------------------------------
 
@@ -53,7 +52,14 @@ CREATE TABLE IF NOT EXISTS `dcs_log` (
   `name` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`dcs_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `dcs_log`
+--
+
+INSERT INTO `dcs_log` (`dcs_id`, `name`, `time`) VALUES
+(1, 'test', '2014-02-06 13:54:14');
 
 -- --------------------------------------------------------
 
@@ -69,6 +75,14 @@ CREATE TABLE IF NOT EXISTS `dcs_user` (
   UNIQUE KEY `id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dcs_user`
+--
+
+INSERT INTO `dcs_user` (`user_id`, `name`, `password`) VALUES
+('001', 'Dimas', '1234'),
+('002', 'admin', '123');
+
 -- --------------------------------------------------------
 
 --
@@ -81,7 +95,20 @@ CREATE TABLE IF NOT EXISTS `gcs_log` (
   `lux` decimal(10,0) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`gcs_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `gcs_log`
+--
+
+INSERT INTO `gcs_log` (`gcs_id`, `temperature`, `lux`, `time`) VALUES
+(1, '35', '6500', '2014-02-07 05:26:56'),
+(2, '30', '8000', '2014-02-07 08:48:43'),
+(3, '28', '4500', '2014-02-07 08:48:53'),
+(5, '35', '8000', '2014-02-07 09:47:25'),
+(6, '32', '65000', '2014-02-07 09:55:10'),
+(7, '36', '14000', '2014-02-07 09:58:20'),
+(8, '28', '1500', '2014-02-07 09:58:30');
 
 -- --------------------------------------------------------
 
@@ -95,7 +122,15 @@ CREATE TABLE IF NOT EXISTS `gcs_plants` (
   `humidity` varchar(255) NOT NULL,
   `lux` decimal(10,0) NOT NULL,
   PRIMARY KEY (`plant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `gcs_plants`
+--
+
+INSERT INTO `gcs_plants` (`plant_id`, `name`, `humidity`, `lux`) VALUES
+(1, 'Durian', 'dry', '6500'),
+(3, 'Rambutan', 'humid', '12500');
 
 -- --------------------------------------------------------
 
@@ -109,6 +144,20 @@ CREATE TABLE IF NOT EXISTS `hcs_log` (
   `condition` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`hcs_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scs_log`
+--
+
+CREATE TABLE IF NOT EXISTS `scs_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `temperature` decimal(10,0) NOT NULL,
+  `smoke` decimal(10,0) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
