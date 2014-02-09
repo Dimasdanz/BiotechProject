@@ -4,6 +4,7 @@
     <script src="<?=base_url()?>assets/js/jquery-1.10.2.js"></script>
     <script>
 		$(document).ready(function(){
+			$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("selected");
 			$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("active");
 		});
 	</script>
