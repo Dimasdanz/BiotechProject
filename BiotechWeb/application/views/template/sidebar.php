@@ -23,7 +23,6 @@
 					<li id="home"><a href="<?=base_url()?>gcs"><i class="fa fa-home fa-fw"></i> Home</a></li>
 					<li id="log"><a href="<?=base_url()?>gcs/plants"><i class="fa fa-leaf fa-fw"></i> Plants</a></li>
 					<li id="log"><a href="<?=base_url()?>gcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
-					<li id="setting"><a href="<?=base_url()?>gcs/setting"><i class="fa fa-wrench fa-fw"></i> Setting</a></li>
 				</ul>
 			</li>
 			<li id="hcs">

@@ -48,9 +48,9 @@
 										<input type="hidden" id="humidity_<?=$row->plant_id?>" value="<?=$row->humidity?>">
 									</td>
 									<td>
-										<a href="#" class="btn btn-default edit" data-toggle="modal" data-target="#modal_add" id="<?=$row->plant_id?>">
-										<i class="fa fa-edit"></i> Edit</a>
-										<a href="#" class="btn btn-danger delete" id="<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Delete</a>
+										<a href="#" class="btn btn-default edit" data-toggle="modal" data-target="#modal_add" id="edit_<?=$row->plant_id?>"><i class="fa fa-edit"></i> Edit</a>
+										<a href="#" class="btn btn-danger delete" id="delete_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Delete</a>
+										<a href="#" class="btn btn-primary select" id="select_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-check"></i> Select</a>
 									</td>
 								</tr>
 							<?php 
@@ -127,11 +127,11 @@
                 <p id="confirm_str"></p>
             </div>
             <div class="modal-footer">
-            	<?=form_open(base_url()."gcs/delete")?>
+            	<form role="form" method="post" id="confirm_form">
 	            	<input type="hidden" name="plant_id" id="pid">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
 	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                <?=form_close()?>
+                </form>
             </div>
         </div>
     </div>
@@ -143,6 +143,8 @@
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
 	$(document).ready(function(){
+		$('#select_<?=$selected_plant->plant_id?>').attr('disabled', 'disabled');
+		$('#select_<?=$selected_plant->plant_id?>').html('Selected');
 		<?php
 			if($this->session->flashdata('error')){
 		?>
@@ -175,19 +177,30 @@
 		});
 
 		$('.edit').click(function (){
+			var edit_id = this.id.substr(5);
 			$('#user_form').attr('action', '<?=base_url()?>gcs/update');
 			$('#add').hide();
 			$('#update').show();
-			$('#id').val(this.id);
-			$('#name').val($('#name_'+this.id).val());
-			$('#lux').val($('#lux_'+this.id).val());
-			$('#humidity').val($('#humidity_'+this.id).val());
+			$('#id').val(edit_id);
+			$('#name').val($('#name_'+edit_id).val());
+			$('#lux').val($('#lux_'+edit_id).val());
+			$('#humidity').val($('#humidity_'+edit_id).val());
 		});
 
 		$(".delete").click(function() {
-			var name = $('#name_'+this.id).val();
-			$("#pid").val(this.id);
+			var delete_id = this.id.substr(7);
+			var name = $('#name_'+delete_id).val();
+			$("#pid").val(delete_id);
+			$('#confirm_form').attr('action', '<?=base_url()?>gcs/delete');
 			$("#confirm_str").html('Are you sure want to delete <b>'+name+'</b>?');
+		});
+
+		$(".select").click(function() {
+			var select_id = this.id.substr(7);
+			var name = $('#name_'+select_id).val();
+			$("#pid").val(select_id);
+			$('#confirm_form').attr('action', '<?=base_url()?>gcs/select');
+			$("#confirm_str").html('Are you sure want to select <b>'+name+'</b>?');
 		});
 	});
 </script>
