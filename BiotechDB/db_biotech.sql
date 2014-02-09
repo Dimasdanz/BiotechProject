@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2014 at 03:14 PM
+-- Generation Time: Feb 09, 2014 at 04:13 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `gcs_plants` (
   `humidity` varchar(255) NOT NULL,
   `lux` decimal(10,0) NOT NULL,
   PRIMARY KEY (`plant_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `gcs_plants`
@@ -144,7 +144,18 @@ CREATE TABLE IF NOT EXISTS `hcs_log` (
   `condition` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`hcs_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `hcs_log`
+--
+
+INSERT INTO `hcs_log` (`hcs_id`, `lamp`, `condition`, `time`) VALUES
+(1, 'Lamp 1', 'Off', '2014-02-09 15:03:35'),
+(2, 'Lamp 2', 'Off', '2014-02-09 15:03:41'),
+(3, 'Lamp 1', 'On', '2014-02-09 15:03:46'),
+(4, 'Lamp 2', 'On', '2014-02-09 15:06:38'),
+(5, 'Lamp 4', 'Off', '2014-02-09 15:10:46');
 
 -- --------------------------------------------------------
 
