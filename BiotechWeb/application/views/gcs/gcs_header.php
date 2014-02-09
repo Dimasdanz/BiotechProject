@@ -8,10 +8,6 @@
 			$header = ucfirst($this->uri->segment(2));
 			$icon = 'list';
 			break;
-		case 'setting':
-			$header = ucfirst($this->uri->segment(2));
-			$icon = 'wrench';
-			break;
 		default:
 			$header = 'Home';
 			$icon = 'home';

@@ -14,6 +14,8 @@ class gcs extends CI_Controller{
 	}
 	
 	public function plants(){
+		$selected_plant = read_file("assets/device/gcs/selected_plant.txt"); 
+		$data['selected_plant'] = $this->db_gcs_plants->get_single($selected_plant);
 		$data['gcs_plants'] = $this->db_gcs_plants->get_all();
 		$this->load->view('gcs/gcs_plants', $data);
 	}
@@ -21,10 +23,6 @@ class gcs extends CI_Controller{
 	public function log(){
 		$data['gcs_log'] = $this->db_gcs_log->get_all();
 		$this->load->view('gcs/gcs_log', $data);
-	}
-	
-	public function setting(){
-		$this->load->view('gcs/gcs_setting');
 	}
 	
 	public function insert(){
@@ -81,6 +79,31 @@ class gcs extends CI_Controller{
 	public function delete(){
 		$this->db_gcs_plants->delete($this->input->post('plant_id'));
 		$this->session->set_flashdata('success', 'Plant has been deleted');
+		redirect(base_url().'gcs/plants', 'refresh');
+	}
+	
+	public function select(){
+		$plant_id = $this->input->post('plant_id');
+		$selected_plant = $this->db_gcs_plants->get_single($plant_id);
+		switch ($selected_plant->humidity) {
+			case 'dry':
+				$upper = 300;
+				$lower = 0;
+			break;
+			case 'humid':
+				$upper = 700;
+				$lower = 301;
+			break;
+			case 'wet':
+				$upper = 1023;
+				$lower = 701;
+			break;
+		}
+		write_file("assets/device/gcs/lux_target.txt", $selected_plant->lux);
+		write_file("assets/device/gcs/humidity_upper_threshold.txt", $upper);
+		write_file("assets/device/gcs/humidity_lower_threshold.txt", $lower);
+		write_file("assets/device/gcs/selected_plant.txt", $plant_id);
+		$this->session->set_flashdata('success', 'Plant has been selected');
 		redirect(base_url().'gcs/plants', 'refresh');
 	}
 }
