@@ -58,7 +58,7 @@
 						</table>
 					</div>
 				<div class="panel-footer clearfix">
-					<a href="#" class="btn btn-primary pull-right"><i class="fa fa-list"></i> View Complete Log <i class="fa fa-chevron-right"></i></a>
+					<a href="<?=base_url()?>dcs/log" class="btn btn-primary pull-right"><i class="fa fa-list"></i> View Complete Log <i class="fa fa-chevron-right"></i></a>
 				</div>
 			</div>
 		</div>

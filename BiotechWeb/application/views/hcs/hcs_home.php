@@ -41,6 +41,54 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<i class="fa fa-list"></i> Today's Log
+				</div>
+					<div class="table-responsive">
+						<table class="table table-hover table-condensed">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Lamp</th>
+									<th>Condition</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php 
+								$no = 1;
+								if($today_log != NULL){
+									foreach ($today_log as $row){
+								?>
+									<tr>
+										<td><?=$no?></td>
+										<td><?=$row->lamp?></td>
+										<td><?=$row->condition?></td>
+										<td><?=date('h:i:s', strtotime($row->time))?></td>
+									</tr>
+								<?php 
+										$no++;
+										}
+									}else{
+								?>
+									<tr>
+										<td colspan="3">No Log for today</td>
+									</tr>
+								<?php 
+									}
+								?>
+							</tbody>
+						</table>
+					</div>
+				<div class="panel-footer clearfix">
+					<a href="<?=base_url()?>hcs/log" class="btn btn-primary pull-right"><i class="fa fa-list"></i> View Complete Log <i class="fa fa-chevron-right"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal fade" id="modal_confirm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -65,6 +113,7 @@
 </div>
 <?php
 	$this->load->view('template/footer');
+	var_dump($today_log);
 ?>
 <script src="<?=base_url()?>assets/js/bootstrap-switch.js"></script>
 <script>
