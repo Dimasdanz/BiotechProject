@@ -7,6 +7,7 @@
     <!-- Core CSS -->
     <link href="<?=base_url()?>assets/css/bootstrap.css" rel="stylesheet">
     <link href="<?=base_url()?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?=base_url()?>assets/css/bootstrap-switch.css" rel="stylesheet">
 
     <!-- Plugin CSS -->
 	<link href="<?=base_url()?>assets/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">

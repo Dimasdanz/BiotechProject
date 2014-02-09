@@ -1,4 +1,3 @@
-<link href="<?=base_url()?>assets/css/bootstrap-switch.css" rel="stylesheet">
 <div id="page-wrapper">
 <?php
 	$this->load->view('dcs/dcs_header');
@@ -85,7 +84,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close no" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-left">Confirmation</h4>
             </div>
             <div class="modal-body">
@@ -95,7 +94,7 @@
             	<?=form_open(base_url().'dcs/change_status')?>
 	            	<input type="hidden" name="status" id="status_value">
 	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
-	                <button type="button" class="btn btn-danger no" data-dismiss="modal">No</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                 <?=form_close()?>
             </div>
         </div>
@@ -131,7 +130,7 @@
 			}
 			$('#modal_confirm').modal('show');
 		});
-		$('.no').click(function(){
+		$('#modal_confirm').on('hide.bs.modal', function (e) {
 			$('#status').bootstrapSwitch('toggleState');
 		});
 	});
