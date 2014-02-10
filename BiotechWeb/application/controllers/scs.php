@@ -5,7 +5,6 @@ class scs extends CI_Controller{
 		$this->load->view('template/header');
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');
-		$this->load->model('db_scs_log');
 	}
 	
 	public function index(){
@@ -13,8 +12,7 @@ class scs extends CI_Controller{
 	}
 	
 	public function log(){
-		$data['scs_log'] = $this->db_scs_log->get_all();
-		$this->load->view('scs/scs_log', $data);
+		$this->load->view('scs/scs_log');
 	}
 	
 	public function setting(){
