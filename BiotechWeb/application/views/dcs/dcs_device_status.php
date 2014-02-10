@@ -1,3 +1,3 @@
 <li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b><?=$status?></b></div></li>
-<li class="list-group-item clearfix"><div class="pull-left">Password Attempts</div><div class="pull-right"><b><?=$password_attempts?></b></div></li>
-<li class="list-group-item clearfix"><div class="pull-left">Condition</div><div class="pull-right"><b><?=$condition?></b></div></li>
+<li class="list-group-item clearfix"><div class="pull-left">Percobaan Kata Sandi</div><div class="pull-right"><b><?=$password_attempts?></b></div></li>
+<li class="list-group-item clearfix"><div class="pull-left">Kondisi</div><div class="pull-right"><b><?=$condition?></b></div></li>

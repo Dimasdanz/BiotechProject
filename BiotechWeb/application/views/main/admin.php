@@ -23,8 +23,8 @@
 							<thead>
 								<tr>
 									<th width="5%">No.</th>
-									<th>Name</th>
-									<th>Action</th>
+									<th>Nama</th>
+									<th>Aksi</th>
 								</tr>
 							</thead>
 							<?php
@@ -36,7 +36,7 @@
 								<tr>
 									<td><?=$no?></td>
 									<td><?=$row->username?></td>
-									<td><button data-toggle="modal" data-target="#modal_edit" class="btn btn-success edit" id="<?=$row->username?>"><i class="fa fa-edit"></i> Edit</button></td>
+									<td><button data-toggle="modal" data-target="#modal_edit" class="btn btn-success edit" id="<?=$row->username?>"><i class="fa fa-edit"></i> Ubah</button></td>
 								</tr>
 							</tbody>
 							<?php 
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="panel-footer clearfix">
-					<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_add">Add New Admin</button>
+					<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_add">Tambah Admin Baru</button>
 				</div>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 			<?=form_open(base_url().'admin/insert')?>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Admin Form</h4>
+						<h4 class="modal-title" id="myModalLabel">Form Admin</h4>
 				</div>
 				<div class="modal-body">
 					<?php
@@ -78,21 +78,21 @@
 						}
 					?>
 					<div class="form-group">
-						<label>Username</label>
-						<input class="form-control" placeholder="Username" type="text" name="username" value="<?=$username?>" required>
+						<label>Nama Pengguna</label>
+						<input class="form-control" placeholder="Nama Pengguna" type="text" name="username" value="<?=$username?>" required>
 					</div>
 					<div class="form-group">
-						<label>Password</label>
-						<input class="form-control" placeholder="Password" type="password" name="password" required>
+						<label>Kata Sandi</label>
+						<input class="form-control" placeholder="Kata Sandi" type="password" name="password" required>
 					</div>
 					<div class="form-group">
-						<label>Confirm Password</label>
-						<input class="form-control" placeholder="Confirm Password" type="password" name="confirm_password" required>
+						<label>Konfirmasi Kata Sandi</label>
+						<input class="form-control" placeholder="Konfirmasi Kata Sandi" type="password" name="confirm_password" required>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Add New Admin</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary">Tambah Admin Baru</button>
 				</div>
 			<?=form_close()?>
 		</div>
@@ -121,14 +121,14 @@
             		<div class="col-sm-offset-3">
             		<?=form_open(base_url().'admin/reset_password')?>
 	            		<input type="hidden" name="username" id="username">
-						<button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Reset Password</button>
-						<a href="#" class="btn btn-danger delete" data-toggle="modal" data-target="#modal_confirm" id="delete"><i class="fa fa-trash-o"></i> Delete This Account</a>
+						<button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Reset Kata Sandi</button>
+						<a href="#" class="btn btn-danger delete" data-toggle="modal" data-target="#modal_confirm" id="delete"><i class="fa fa-trash-o"></i> Hapus Akun Ini</a>
 					<?=form_close()?>										
 				</div>
 			</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
             </div>
         </div>
     </div>
@@ -139,7 +139,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-left">Confirmation</h4>
+                <h4 class="modal-title text-left">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 <p id="confirm_str"></p>
@@ -147,8 +147,8 @@
             <div class="modal-footer">
             	<?=form_open(base_url().'admin/delete')?>
 	            	<input type="hidden" name="username" id="name" value="asd">
-	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
-	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	                <button type="submit" class="btn btn-success" id="yes">Ya</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 <?=form_close()?>
             </div>
         </div>

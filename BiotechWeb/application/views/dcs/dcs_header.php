@@ -1,15 +1,15 @@
 <?php 
 	switch ($this->uri->segment(2)) {
 		case 'users':
-			$header = ucfirst($this->uri->segment(2));
+			$header = 'Pengguna';
 			$icon = 'users';
 		break;
 		case 'log':
-			$header = ucfirst($this->uri->segment(2));
+			$header = 'Log';
 			$icon = 'list';
 			break;
 		case 'setting':
-			$header = ucfirst($this->uri->segment(2));
+			$header = 'Pengaturan';
 			$icon = 'wrench';
 			break;
 		default:

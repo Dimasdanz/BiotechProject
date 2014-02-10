@@ -1,7 +1,7 @@
 <?php 
 	switch ($this->uri->segment(2)) {
 		case 'plants':
-			$header = ucfirst($this->uri->segment(2));
+			$header = "Tanaman";
 			$icon = 'leaf';
 			break;
 		case 'log':
@@ -9,7 +9,7 @@
 			$icon = 'list';
 			break;
 		default:
-			$header = 'Home';
+			$header = 'Beranda';
 			$icon = 'home';
 		break;
 	}

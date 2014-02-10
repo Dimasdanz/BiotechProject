@@ -11,10 +11,10 @@
 							<thead>
 								<tr>
 									<th width="5%">No.</th>
-									<th>Temperature</th>
-									<th>Lux</th>
-									<th>Time</th>
-									<th>Date</th>
+									<th>Temperatur</th>
+									<th>Intensitas Cahaya</th>
+									<th>Waktu</th>
+									<th>Tanggal</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -52,6 +52,20 @@
 	$(document).ready(function(){
 		$('#dataTables-gcs_log').dataTable({
 			"iDisplayLength": 50,
+			"oLanguage": {
+				"sLengthMenu": "Tampilkan _MENU_ data per halaman",
+				"sInfo": "Menampilkan _START_ ke _END_ dari _TOTAL_ records",
+				"sInfoEmpty": "Menampilkan 0 ke 0 dari 0 baris",
+				"sZeroRecords": "Belum ada data",
+				"sSearch": "Pencarian",
+				"oPaginate" : {
+					"sNext" : "Berikut",
+					"sPrevious" : "Sebelum",
+					"sFirst": "Halaman Pertama",
+					"sLast": "Halaman Terakhir",
+					
+				}
+			},
 		<?php 
 			if($gcs_log != NULL){
 		?>
