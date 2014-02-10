@@ -13,7 +13,7 @@ class api extends CI_Controller{
 	}
 	
 	public function gcs_temperature(){
-		//header("Content-type: text/json");
+		header("Content-type: text/json");
 		$log = $this->db_gcs_log->get_last_log();
 		$x = strtotime($log->time)*1000;
 		$y = intval($log->temperature); //change this from device
