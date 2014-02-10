@@ -3,6 +3,7 @@ class api extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('db_gcs_log');
+		$this->load->model('db_scs_log');
 	}
 	
 	public function dcs_status(){
@@ -30,8 +31,32 @@ class api extends CI_Controller{
 		echo json_encode($ret);
 	}
 	
+	public function scs_temperature(){
+		header("Content-type: text/json");
+		$log = $this->db_scs_log->get_last_log();
+		$x = strtotime($log->time)*1000;
+		$y = intval($log->temperature); //change this from device
+		$ret = array($x, $y);
+		echo json_encode($ret);
+	}
+	
+	public function scs_smoke(){
+		header("Content-type: text/json");
+		$log = $this->db_scs_log->get_last_log();
+		$x = strtotime($log->time)*1000;
+		$y = intval($log->smoke); //change this from device
+		$ret = array($x, $y);
+		echo json_encode($ret);
+	}
+	
 	public function test(){
 		echo $this->db->last_query();
 		print_r($this->db_gcs_log->get_last_log());
 	}
+<<<<<<< HEAD
 }
+=======
+	
+	
+}
+>>>>>>> origin/scs
