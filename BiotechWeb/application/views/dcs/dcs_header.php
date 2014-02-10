@@ -8,12 +8,12 @@
 			$header = ucfirst($this->uri->segment(2));
 			$icon = 'list';
 			break;
-		case 'setting':
+		case 'Pengaturan':
 			$header = ucfirst($this->uri->segment(2));
 			$icon = 'wrench';
 			break;
 		default:
-			$header = 'Home';
+			$header = 'Beranda';
 			$icon = 'home';
 		break;
 	}
