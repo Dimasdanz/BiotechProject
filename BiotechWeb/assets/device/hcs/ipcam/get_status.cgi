@@ -1,0 +1,15 @@
+var id='00B00200A966';
+var sys_ver='4.37.2.43';
+var app_ver='4.5.3.46';
+var alias='';
+var now=1392048593;
+var tz=-25200;
+var alarm_status=0;
+var ddns_status=2;
+var ddns_host='dieware.dyndns-web.com';
+var oray_type=0;
+var upnp_status=0;
+var p2p_status=0;
+var p2p_local_port=27615;
+var msn_status=0;
+var wifi_status=0;

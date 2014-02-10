@@ -12,6 +12,18 @@
     <?php 
     	}
     ?>
+    <div class="row">
+    	<div class="col-sm-12">
+    		<div class="panel panel-primary">
+				<div class="panel-heading">
+					<i class="fa fa-lightbulb-o"></i> IP Camera
+				</div>
+				<div class="panel-body" align="center">
+					<img src="http://192.168.4.5:888/videostream.cgi" id="video_stream">
+				</div>
+			</div>
+    	</div>
+    </div>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-primary">
@@ -88,6 +100,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		
 	</div>
 </div>
 <div class="modal fade" id="modal_confirm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
