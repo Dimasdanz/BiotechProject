@@ -21,10 +21,10 @@
 							<thead>
 								<tr>
 									<th width="5%">No.</th>
-									<th>Name</th>
+									<th>Nama</th>
 									<th>ID</th>
-									<th>Password</th>
-									<th>Action</th>
+									<th>Kata Sandi</th>
+									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -46,8 +46,8 @@
 									</td>
 									<td>
 										<a href="#" class="btn btn-default edit" data-toggle="modal" data-target="#modal_add" id="<?=$row->user_id?>">
-										<i class="fa fa-edit"></i> Edit</a>
-										<a href="#" class="btn btn-danger delete" id="<?=$row->user_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Delete</a>
+										<i class="fa fa-edit"></i> Ubah</a>
+										<a href="#" class="btn btn-danger delete" id="<?=$row->user_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Hapus</a>
 									</td>
 								</tr>
 							<?php 
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				<div class="panel-footer clearfix">
-					<button class="btn btn-primary pull-right add" data-toggle="modal" data-target="#modal_add">Add New User</button>
+					<button class="btn btn-primary pull-right add" data-toggle="modal" data-target="#modal_add">Tambah User Baru</button>
 				</div>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 			<form role="form" method="post" action="<?=base_url()?>/dcs/insert" id="user_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">User Form</h4>
+						<h4 class="modal-title" id="myModalLabel">Form Pengguna</h4>
 				</div>
 				<div class="modal-body">
 					<?php
@@ -90,19 +90,19 @@
 						<input class="form-control" placeholder="ID" type="text" name="id" id="id" value="<?=$user_id?>" readonly>
 					</div>
 					<div class="form-group">
-						<label>Name</label>
-						<input class="form-control" placeholder="Name" type="text" name="name" id="name" required>
+						<label>Nama</label>
+						<input class="form-control" placeholder="Nama" type="text" name="name" id="name" required>
 					</div>
 					<div class="form-group">
-						<label>Password</label>
-						<input class="form-control" placeholder="Password" type="text" name="password" id="password" required>
-						<p class="help-block">Must be numeric 0-9</p>
+						<label>Kata Sandi</label>
+						<input class="form-control" placeholder="Kata Sandi" type="text" name="password" id="password" required>
+						<p class="help-block">Kata sandi harus berupa angka 0-9</p>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="add">Add New User</button>
-					<button type="submit" class="btn btn-primary" id="update">Update User</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary" id="add">Tambah Pengguna Baru</button>
+					<button type="submit" class="btn btn-primary" id="update">Perbaharui Pengguna</button>
 				</div>
 			</form>
 		</div>
@@ -113,7 +113,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-left">Confirmation</h4>
+                <h4 class="modal-title text-left">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 <p id="confirm_str"></p>
@@ -121,8 +121,8 @@
             <div class="modal-footer">
             	<?=form_open(base_url()."dcs/delete")?>
 	            	<input type="hidden" name="user_id" id="user_id">
-	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
-	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	                <button type="submit" class="btn btn-success" id="yes">Ya</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 <?=form_close()?>
             </div>
         </div>
@@ -150,6 +150,20 @@
 					{
 						$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
 					}
+				}
+			},
+			"oLanguage": {
+				"sLengthMenu": "Tampilkan _MENU_ data per halaman",
+				"sInfo": "Menampilkan _START_ ke _END_ dari _TOTAL_ records",
+				"sInfoEmpty": "Menampilkan 0 ke 0 dari 0 baris",
+				"sZeroRecords": "Belum ada data",
+				"sSearch": "Pencarian",
+				"oPaginate" : {
+					"sNext" : "Berikut",
+					"sPrevious" : "Sebelum",
+					"sFirst": "Halaman Pertama",
+					"sLast": "Halaman Terakhir",
+					
 				}
 			},
 			"aoColumnDefs": [

@@ -30,7 +30,7 @@
 					<div class="col-sm-4">
 						<div class="panel panel-primary">
 							<div class="panel-heading" align="center">
-								<i class="fa fa-power-off"></i> Device Status
+								<i class="fa fa-power-off"></i> Status Perangkat
 							</div>
 							<div class="panel-body" align="center">
 								<form class="form-inline" role="form">
@@ -42,7 +42,7 @@
 					<div class="col-sm-4">
 						<div class="panel panel-primary">
 							<div class="panel-heading" align="center">
-								<i class="fa fa-Keyboard-o"></i> Password Attempts
+								<i class="fa fa-Keyboard-o"></i> Percobaan Kata Sandi
 							</div>
 							<div class="panel-body">
 								<form class="form-inline" role="form" method="post" action="<?=base_url()?>dcs/change_attempt">
@@ -64,11 +64,11 @@
 				<div class="col-sm-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading" align="center">
-							<i class="fa fa-key"></i> Condition
+							<i class="fa fa-key"></i> Kondisi
 						</div>
 						<div class="panel-body">
-							<p class="text-danger text-center">Device is locked!</p>
-							<a href="<?=base_url()?>/dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Unlock</a>
+							<p class="text-danger text-center">Perangkat terkunci!</p>
+							<a href="<?=base_url()?>/dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Buka Kunci</a>
 						</div>
 					</div>
 				</div>
@@ -85,7 +85,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-left">Confirmation</h4>
+                <h4 class="modal-title text-left">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 <p id="confirm_str"></p>
@@ -93,8 +93,8 @@
             <div class="modal-footer">
             	<?=form_open(base_url().'dcs/change_status')?>
 	            	<input type="hidden" name="status" id="status_value">
-	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
-	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	                <button type="submit" class="btn btn-success" id="yes">Ya</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 <?=form_close()?>
             </div>
         </div>
@@ -123,10 +123,10 @@
 		$('#status').on('switch-change', function (e, data) {
 			if (data.value == true) {
 				$("#status_value").val("on");
-				$("#confirm_str").html('Are you sure want to turn on the device?');
+				$("#confirm_str").html('Apakah Anda ingin menyalakan perangkat?');
 			}else{
 				$("#status_value").val("off");
-				$("#confirm_str").html('Are you sure want to turn off the device?');
+				$("#confirm_str").html('Apakah Anda ingin mematikan perangkat?');
 			}
 			$('#modal_confirm').modal('show');
 		});

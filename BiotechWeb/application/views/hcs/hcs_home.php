@@ -16,24 +16,24 @@
 		<div class="col-sm-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<i class="fa fa-lightbulb-o"></i> Lamp Condition
+					<i class="fa fa-lightbulb-o"></i> Status Lampu
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-sm-3 text-center">
-							<h4>Lamp 1</h4>
+							<h4>Lampu 1</h4>
 							<input type="checkbox" id="lamp_1" checked data-on="success" data-off="danger">
 						</div>
 						<div class="col-sm-3 text-center">
-							<h4>Lamp 2</h4>
+							<h4>Lampu 2</h4>
 							<input type="checkbox" id="lamp_2" checked data-on="success" data-off="danger">
 						</div>
 						<div class="col-sm-3 text-center">
-							<h4>Lamp 3</h4>
+							<h4>Lampu 3</h4>
 							<input type="checkbox" id="lamp_3" checked data-on="success" data-off="danger">
 						</div>
 						<div class="col-sm-3 text-center">
-							<h4>Lamp 4</h4>
+							<h4>Lampu 4</h4>
 							<input type="checkbox" id="lamp_4" checked data-on="success" data-off="danger">
 						</div>
 					</div>
@@ -45,16 +45,16 @@
 		<div class="col-sm-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<i class="fa fa-list"></i> Today's Log
+					<i class="fa fa-list"></i> Log Hari Ini
 				</div>
 					<div class="table-responsive">
 						<table class="table table-hover table-condensed">
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>Lamp</th>
-									<th>Condition</th>
-									<th>Time</th>
+									<th>Lampu</th>
+									<th>Status</th>
+									<th>Waktu</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -75,7 +75,7 @@
 									}else{
 								?>
 									<tr>
-										<td colspan="3">No Log for today</td>
+										<td colspan="3">Tidak ada Log untuk hari ini</td>
 									</tr>
 								<?php 
 									}
@@ -84,7 +84,7 @@
 						</table>
 					</div>
 				<div class="panel-footer clearfix">
-					<a href="<?=base_url()?>hcs/log" class="btn btn-primary pull-right"><i class="fa fa-list"></i> View Complete Log <i class="fa fa-chevron-right"></i></a>
+					<a href="<?=base_url()?>hcs/log" class="btn btn-primary pull-right"><i class="fa fa-list"></i> Lihat Semua Log <i class="fa fa-chevron-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -95,7 +95,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-left">Confirmation</h4>
+                <h4 class="modal-title text-left">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 <p id="confirm_str"></p>
@@ -104,8 +104,8 @@
             	<?=form_open(base_url().'hcs/change_status')?>
             		<input type="hidden" name="lamp" id="lid">
 					<input type="hidden" name="status" id="status_value">
-					<button type="submit" class="btn btn-success" id="yes">Yes</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+					<button type="submit" class="btn btn-success" id="yes">Ya</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 <?=form_close()?>
             </div>
         </div>

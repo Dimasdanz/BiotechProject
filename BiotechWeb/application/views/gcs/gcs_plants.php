@@ -21,10 +21,10 @@
 							<thead>
 								<tr>
 									<th width="5%">No.</th>
-									<th>Name</th>
-									<th>Lux Threshold</th>
-									<th>Humidity</th>
-									<th>Action</th>
+									<th>Nama</th>
+									<th>Ambang Batas Intensitas Cahaya</th>
+									<th>Kelembaban</th>
+									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -48,9 +48,9 @@
 										<input type="hidden" id="humidity_<?=$row->plant_id?>" value="<?=$row->humidity?>">
 									</td>
 									<td>
-										<a href="#" class="btn btn-default edit" data-toggle="modal" data-target="#modal_add" id="edit_<?=$row->plant_id?>"><i class="fa fa-edit"></i> Edit</a>
-										<a href="#" class="btn btn-danger delete" id="delete_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Delete</a>
-										<a href="#" class="btn btn-primary select" id="select_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-check"></i> Select</a>
+										<a href="#" class="btn btn-default edit" data-toggle="modal" data-target="#modal_add" id="edit_<?=$row->plant_id?>"><i class="fa fa-edit"></i> Ubah</a>
+										<a href="#" class="btn btn-danger delete" id="delete_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-trash-o"></i> Hapus</a>
+										<a href="#" class="btn btn-primary select" id="select_<?=$row->plant_id?>" data-toggle="modal" data-target="#modal_confirm"><i class="fa fa-check"></i> Pilih</a>
 									</td>
 								</tr>
 							<?php 
@@ -63,7 +63,7 @@
 					</div>
 				</div>
 				<div class="panel-footer clearfix">
-					<button class="btn btn-primary pull-right add" data-toggle="modal" data-target="#modal_add">Add New Plant</button>
+					<button class="btn btn-primary pull-right add" data-toggle="modal" data-target="#modal_add">Tambah Tanaman Baru</button>
 				</div>
 			</div>
 		</div>
@@ -75,7 +75,7 @@
 			<form role="form" method="post" action="<?=base_url()?>gcs/insert" id="user_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Plant Form</h4>
+						<h4 class="modal-title" id="myModalLabel">Form Tanaman</h4>
 				</div>
 				<div class="modal-body">
 					<?php
@@ -89,28 +89,28 @@
 						}
 					?>
 					<div class="form-group">
-						<label>Name</label>
-						<input class="form-control" placeholder="Name" type="text" name="name" id="name" required>
+						<label>Nama</label>
+						<input class="form-control" placeholder="Nama" type="text" name="name" id="name" required>
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-						<label>Lux Threshold</label>
-						<input class="form-control" placeholder="Lux Threshold" type="text" name="lux" id="lux" required>
-						<p class="help-block">Must be numeric</p>
+						<label>Ambang Batas Intesitas Cahaya</label>
+						<input class="form-control" placeholder="Ambang Batas Intesitas Cahay" type="text" name="lux" id="lux" required>
+						<p class="help-block">Harus berupa angka</p>
 					</div>
 					<div class="form-group">
 						<select class="form-control" name="humidity" id="humidity" required>
-							<option disabled="disabled" selected value="">--Please Select--</option>
-							<option value="dry">Dry</option>
-							<option value="humid">Humid</option>
-							<option value="wet">Wet</option>
+							<option disabled="disabled" selected value="">--Pilih--</option>
+							<option value="dry">Kering</option>
+							<option value="humid">Lembab</option>
+							<option value="wet">Basah</option>
 						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="add">Add New Plant</button>
-					<button type="submit" class="btn btn-primary" id="update">Update Plant</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary" id="add">Tambah Tanaman Baru</button>
+					<button type="submit" class="btn btn-primary" id="update">Perbaharui Tanaman</button>
 				</div>
 			</form>
 		</div>
@@ -121,7 +121,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-left">Confirmation</h4>
+                <h4 class="modal-title text-left">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 <p id="confirm_str"></p>
@@ -129,8 +129,8 @@
             <div class="modal-footer">
             	<form role="form" method="post" id="confirm_form">
 	            	<input type="hidden" name="plant_id" id="pid">
-	                <button type="submit" class="btn btn-success" id="yes">Yes</button>
-	                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+	                <button type="submit" class="btn btn-success" id="yes">Ya</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                 </form>
             </div>
         </div>
@@ -160,6 +160,19 @@
 					{
 						$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
 					}
+				}
+			},
+			"oLanguage": {
+				"sLengthMenu": "Tampilkan _MENU_ data per halaman",
+				"sInfo": "Menampilkan _START_ ke _END_ dari _TOTAL_ records",
+				"sInfoEmpty": "Menampilkan 0 ke 0 dari 0 baris",
+				"sZeroRecords": "Belum ada data",
+				"sSearch": "Pencarian",
+				"oPaginate" : {
+					"sNext" : "Berikut",
+					"sPrevious" : "Sebelum",
+					"sFirst": "Halaman Pertama",
+					"sLast": "Halaman Terakhir",
 				}
 			},
 			"aoColumnDefs": [

@@ -5,11 +5,11 @@
 			$icon = 'list';
 			break;
 		case 'setting':
-			$header = ucfirst($this->uri->segment(2));
+			$header = 'Pengaturan';
 			$icon = 'wrench';
 			break;
 		default:
-			$header = 'Home';
+			$header = 'Beranda';
 			$icon = 'home';
 		break;
 	}

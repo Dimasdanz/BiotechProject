@@ -6,7 +6,7 @@
 		<div class="col-sm-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<i class="fa fa-bar-chart-o"></i> Temperature
+					<i class="fa fa-bar-chart-o"></i> Temperatur
 				</div>
 				<div class="panel-body" id="temp-chart">
 					
@@ -16,7 +16,7 @@
 		<div class="col-sm-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<i class="fa fa-bar-chart-o"></i> Lux
+					<i class="fa fa-bar-chart-o"></i> Intensitas Cahaya
 				</div>
 				<div class="panel-body" id="lux-chart">
 					
@@ -65,7 +65,7 @@ $(document).ready(function() {
 			}
 		},
 		title: {
-			text: 'Live Temperature'
+			text: 'Temperatur'
 		},
 		xAxis: {
 			type: 'datetime',
@@ -76,12 +76,12 @@ $(document).ready(function() {
 			minPadding: 0.2,
 			maxPadding: 0.2,
 			title: {
-				text: 'Value',
+				text: 'Nilai',
 				margin: 80
 			}
 		},
 		series: [{
-			name: 'Temperature',
+			name: 'Temperatur',
 			data: []
 		}]
 	});
@@ -95,7 +95,7 @@ $(document).ready(function() {
 			}
 		},
 		title: {
-			text: 'Live Lux'
+			text: 'Intensitas Cahaya'
 		},
 		xAxis: {
 			type: 'datetime',
@@ -106,12 +106,12 @@ $(document).ready(function() {
 			minPadding: 0.2,
 			maxPadding: 0.2,
 			title: {
-				text: 'Value',
+				text: 'Nilai',
 				margin: 80
 			}
 		},
 		series: [{
-			name: 'Lux',
+			name: 'Intensitas Cahaya',
 			data: []
 		}]
 	});

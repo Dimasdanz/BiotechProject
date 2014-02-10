@@ -14,9 +14,9 @@
 				<i class="fa fa-user fa-fw"></i> <?=$this->session->userdata('logged_in')?> <i class="fa fa-caret-down"></i>
 			</a>
 			<ul class="dropdown-menu dropdown-messages">
-				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Change Password</a></li>
+				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Ubah Kata Sandi</a></li>
 				<li class="divider"></li>
-				<li><a href="<?=base_url()?>login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+				<li><a href="<?=base_url()?>login/logout"><i class="fa fa-sign-out fa-fw"></i> Keluar</a></li>
 			</ul>
 		</li>
 	</ul>
