@@ -8,10 +8,13 @@
 			$header = 'Log';
 			$icon = 'list';
 			break;
+<<<<<<< HEAD
 		case 'setting':
 			$header = 'Pengaturan';
+=======
 		case 'Pengaturan':
 			$header = ucfirst($this->uri->segment(2));
+>>>>>>> origin/scs
 			$icon = 'wrench';
 			break;
 		default:
