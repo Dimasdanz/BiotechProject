@@ -1,3 +1,4 @@
+
 <?php 
 	switch ($this->uri->segment(2)) {
 		case 'plants':
