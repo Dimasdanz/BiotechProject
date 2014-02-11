@@ -73,6 +73,51 @@
 											<td>Ganteng</td>
 											<td>14:56:59</td>
 										</tr>
+                                        <tr>
+											<td>11. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>12. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>13. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>14. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>15. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+                                        <tr>
+											<td>16. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>17. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+										<tr>
+											<td>18. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
+                                        <tr>
+											<td>19. </td>
+											<td>Ganteng</td>
+											<td>14:56:59</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -114,7 +159,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="row">
-						<div class="col-sm-8">
+						<div class="col-sm-12">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<i class="fa fa-tint fa-fw"></i> Pemantauan Air
@@ -126,24 +171,35 @@
 											<h2>120 CM</h2>
 										</div>
 										<div class="col-sm-6">
-											<h5>Kekeruhan</h5>
+											<h5>Turbiditas</h5>
 											<h2>0%</h2>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-12">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<i class="fa fa-cogs fa-fw"></i> Ruang Server
 								</div>
 								<div class="panel-body text-center">
-									<h5>Temperatur</h5>
-									<h2>38&deg;C</h2>
+									<div class="row">
+										<div class="col-sm-6">
+											<h5>Temperatur</h5>
+											<h2>32&deg;C</h2>
+											
+										</div>
+										<div class="col-sm-6">
+											<h5>Kadar Asap</h5>
+											<h2>110 PPM</h2>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 			</div>
