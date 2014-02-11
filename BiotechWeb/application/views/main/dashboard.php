@@ -68,50 +68,50 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<i class="fa fa-tint fa-fw"></i> Pemantauan Air
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<i class="fa fa-tint fa-fw"></i> Pemantauan Air
+						</div>
+						<div class="panel-body text-center">
+							<div class="row">
+								<div class="col-sm-6">
+									<h5>Tinggi Air</h5>
+									<h2>120 CM</h2>
 								</div>
-								<div class="panel-body text-center">
-									<div class="row">
-										<div class="col-sm-6">
-											<h5>Tinggi Air</h5>
-											<h2>120 CM</h2>
-										</div>
-										<div class="col-sm-6">
-											<h5>Turbiditas</h5>
-											<h2>0%</h2>
-										</div>
-									</div>
+								<div class="col-sm-6">
+									<h5>Turbiditas</h5>
+									<h2>0%</h2>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12">
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<i class="fa fa-cogs fa-fw"></i> Ruang Server
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<i class="fa fa-cogs fa-fw"></i> Ruang Server
+						</div>
+						<div class="panel-body text-center">
+							<div class="row">
+								<div class="col-sm-6">
+									<h5>Temperatur</h5>
+										<?php if($last_log != NULL) {?>
+									<h2><?= $last_log->temperature?> &deg;C</h2>
+										<?php } else {?>
+									<h2>Tidak Ada Data</h2>
+										<?php } ?>
+									<h2 class="text-success"><strong><?=$temp_indicator;?></strong></h2>                      
 								</div>
-								<div class="panel-body text-center">
-									<div class="row">
-										<div class="col-sm-6">
-											<h5>Temperatur</h5>
-                                    		<?php if($last_log != NULL) {?>
-											<h2><?= $last_log->temperature?> &deg;C</h2>
-                                    		<?php } else echo "<h2>Tidak Ada Data</h2>";?>
-											<h2 class="text-success"><strong><?=$temp_indicator;?></strong></h2>                      
-										</div>
-										<div class="col-sm-6">
-											<h5>Kadar Asap</h5>
-                                            <?php if($last_log != NULL) {?>
-											<h2><?= $last_log->smoke?> ppm</h2>
-                                            <?php } else echo "<h2>Tidak Ada Data</h2>";?>
-                                            <h2 class="text-success"><strong><?=$smoke_indicator;?></strong></h2>                      
-										</div>
-									</div>
+								<div class="col-sm-6">
+									<h5>Kadar Asap</h5>
+										<?php if($last_log != NULL) {?>
+									<h2><?= $last_log->smoke?> ppm</h2>
+										<?php } else {?>
+									<h2>Tidak Ada Data</h2>
+										<?php } ?>
+									<h2 class="text-success"><strong><?=$smoke_indicator;?></strong></h2>                      
 								</div>
 							</div>
 						</div>
@@ -124,7 +124,6 @@
 						<div class="panel-heading">
 							<i class="fa fa-leaf"></i> Rumah Kaca
 						</div>
-						
                         <div class="panel-body text-center">
 							<h4>Tanaman : Anggrek</h4>
 							<div class="row">
