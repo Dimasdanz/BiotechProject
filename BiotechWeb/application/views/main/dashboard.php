@@ -23,100 +23,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1. </td>
-											<td>Dimas</td>
-											<td>13:05:59</td>
-										</tr>
-										<tr>
-											<td>2. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>3. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>4. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>5. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>6. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>7. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>8. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>9. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>10. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
                                         <tr>
-											<td>11. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>12. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>13. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>14. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>15. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-                                        <tr>
-											<td>16. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>17. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-										<tr>
-											<td>18. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
-										</tr>
-                                        <tr>
-											<td>19. </td>
-											<td>Ganteng</td>
-											<td>14:56:59</td>
+											<td></td>
+											<td></td>
+											<td></td>
 										</tr>
 									</tbody>
 								</table>
@@ -189,12 +99,17 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<h5>Temperatur</h5>
-											<h2>32&deg;C</h2>
-											
+                                    		<?php if($last_log != NULL) {?>
+											<h2><?= $last_log->temperature?> &deg;C</h2>
+                                    		<?php } else echo "<h2>Tidak Ada Data</h2>";?>
+											<h2 class="text-success"><strong><?=$temp_indicator;?></strong></h2>                      
 										</div>
 										<div class="col-sm-6">
 											<h5>Kadar Asap</h5>
-											<h2>110 PPM</h2>
+                                            <?php if($last_log != NULL) {?>
+											<h2><?= $last_log->smoke?> ppm</h2>
+                                            <?php } else echo "<h2>Tidak Ada Data</h2>";?>
+                                            <h2 class="text-success"><strong><?=$smoke_indicator;?></strong></h2>                      
 										</div>
 									</div>
 								</div>
@@ -209,7 +124,8 @@
 						<div class="panel-heading">
 							<i class="fa fa-leaf"></i> Rumah Kaca
 						</div>
-						<div class="panel-body text-center">
+						
+                        <div class="panel-body text-center">
 							<h4>Tanaman : Anggrek</h4>
 							<div class="row">
 								<div class="col-sm-4">
