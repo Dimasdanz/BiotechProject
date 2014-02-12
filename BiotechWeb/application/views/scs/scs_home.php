@@ -38,7 +38,7 @@ function requestTemp() {
             var series = chart.series[0],
                 shift = series.data.length > 20;
             chart.series[0].addPoint(point, true, shift);
-            setTimeout(requestTemp, 1000);    
+            setTimeout(requestTemp, 5000);    
         },
         cache: false
     });
@@ -50,7 +50,7 @@ function requestSmoke() {
             var series = chart2.series[0],
                 shift = series.data.length > 20;
             chart2.series[0].addPoint(point, true, shift);
-            setTimeout(requestSmoke, 1000);    
+            setTimeout(requestSmoke, 5000);    
         },
         cache: false
     });

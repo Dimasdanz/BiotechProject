@@ -18,7 +18,7 @@ class api extends CI_Controller{
 		header("Content-type: text/json");
 		$log = $this->db_gcs_log->get_last_log();
 		$x = strtotime($log->time)*1000;
-		$y = intval($log->temperature); //change this from device
+		$y = intval($log->temperature);
 		$ret = array($x, $y);
 		echo json_encode($ret);
 	}
@@ -27,16 +27,22 @@ class api extends CI_Controller{
 		header("Content-type: text/json");
 		$log = $this->db_gcs_log->get_last_log();
 		$x = strtotime($log->time)*1000;
-		$y = intval($log->lux); //change this from device
+		$y = intval($log->lux);
 		$ret = array($x, $y);
 		echo json_encode($ret);
+	}
+	
+	public function hcs_lamp_value($param){
+		header("Content-type: text/json");
+		$val = intval(read_file("assets/device/hcs/".$param.".txt"));
+		echo json_encode($val);
 	}
 	
 	public function scs_temperature(){
 		header("Content-type: text/json");
 		$log = $this->db_scs_log->get_last_log();
 		$x = strtotime($log->time)*1000;
-		$y = intval($log->temperature); //change this from device
+		$y = floatval($log->temperature);
 		$ret = array($x, $y);
 		echo json_encode($ret);
 	}
@@ -45,31 +51,34 @@ class api extends CI_Controller{
 		header("Content-type: text/json");
 		$log = $this->db_scs_log->get_last_log();
 		$x = strtotime($log->time)*1000;
-		$y = intval($log->smoke); //change this from device
+		$y = intval($log->smoke);
 		$ret = array($x, $y);
 		echo json_encode($ret);
+	}
+	
+	public function scs_insert_log(){
+		$temp = $this->input->post('temp');
+		$smoke = $this->input->post('smoke');
+		$data = array(
+			'temperature'=>$temp,
+			'smoke'=>$smoke
+		);
+		$this->db_scs_log->insert($data);
 	}
 	
 	public function wms_water_level(){
 		header("Content-type: text/json");
 		$log = $this->db_wms_log->get_last_log();
-		$y = intval($log->water_level); //change this from device
-		echo json_encode($y); 
+		$y = intval($log->water_level);
+		echo json_encode($y);
 	}
 	
 	public function wms_turbidity(){
 		header("Content-type: text/json");
 		$log = $this->db_wms_log->get_last_log();
 		$x = strtotime($log->time)*1000;
-		$y = intval($log->turbidity); //change this from device
+		$y = intval($log->turbidity);
 		$ret = array($x, $y);
 		echo json_encode($ret); 
 	}
-	
-	public function test(){
-		echo $this->db->last_query();
-		print_r($this->db_gcs_log->get_last_log());
-	}
-
-
 }
