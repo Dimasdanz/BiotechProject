@@ -104,8 +104,13 @@ class api extends CI_Controller{
 		echo json_encode($ret); 
 	}
 	
-	public function test(){
-		$log = $this->db_scs_log->get_last_log();
-		echo date('H:i:s', (strtotime($log->time)));
+	public function wms_insert_log(){
+		$water_level = $this->input->post('var1');
+		$turbidity = $this->input->post('var2');
+		$data = array(
+				'water_level'=>$water_level,
+				'turbidity'=>$turbidity
+		);
+		$this->db_wms_log->insert($data);
 	}
 }
