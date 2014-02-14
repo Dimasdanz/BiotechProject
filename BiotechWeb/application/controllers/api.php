@@ -38,6 +38,28 @@ class api extends CI_Controller{
 		echo json_encode($val);
 	}
 	
+	public function scs_today_temperature(){
+		header("Content-type: text/json");
+		$ret = array();
+		foreach($this->db_scs_log->get_today() as $row){
+			$log[0] = strtotime($row->time)*1000;
+			$log[1] = floatval($row->temperature);
+			array_push($ret, $log);
+		}
+		echo json_encode($ret);
+	}
+	
+	public function scs_today_smoke(){
+		header("Content-type: text/json");
+		$ret = array();
+		foreach($this->db_scs_log->get_today() as $row){
+			$log[0] = strtotime($row->time)*1000;
+			$log[1] = intval($row->smoke);
+			array_push($ret, $log);
+		}
+		echo json_encode($ret);
+	}
+	
 	public function scs_temperature(){
 		header("Content-type: text/json");
 		$log = $this->db_scs_log->get_last_log();
@@ -80,5 +102,10 @@ class api extends CI_Controller{
 		$y = intval($log->turbidity);
 		$ret = array($x, $y);
 		echo json_encode($ret); 
+	}
+	
+	public function test(){
+		$log = $this->db_scs_log->get_last_log();
+		echo date('H:i:s', (strtotime($log->time)));
 	}
 }

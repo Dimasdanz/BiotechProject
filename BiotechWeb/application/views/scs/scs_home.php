@@ -31,89 +31,118 @@
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
-function requestTemp() {
-    $.ajax({
-        url: '<?=base_url()?>api/scs_temperature',
-        success: function(point) {
-            var series = chart.series[0],
-                shift = series.data.length > 20;
-            chart.series[0].addPoint(point, true, shift);
-            setTimeout(requestTemp, 5000);    
-        },
-        cache: false
+$(document).ready(function() {  
+	Highcharts.setOptions({
+        global : {
+            useUTC : false
+        }
     });
-}
-function requestSmoke() {
-    $.ajax({
-        url: '<?=base_url()?>api/scs_smoke',
-        success: function(point) {
-            var series = chart2.series[0],
-                shift = series.data.length > 20;
-            chart2.series[0].addPoint(point, true, shift);
-            setTimeout(requestSmoke, 5000);    
-        },
-        cache: false
-    });
-}
-$(document).ready(function() {
-	chart = new Highcharts.Chart({
-		chart: {
-			renderTo: 'temp-chart',
-			defaultSeriesType: 'spline',
-			events: {
-				load: requestTemp
-			}
-		},
-		title: {
-			text: 'Temperatur'
-		},
-		xAxis: {
-			type: 'datetime',
-			tickPixelInterval: 150,
-			maxZoom: 20 * 10000
-		},
-		yAxis: {
-			minPadding: 0.2,
-			maxPadding: 0.2,
+	
+	$.getJSON('<?=base_url()?>api/scs_today_smoke', function(data) {
+		var option2 = {
+			chart: {
+				renderTo: 'smoke-chart',
+				defaultSeriesType: 'spline',
+				events: {
+					load: requestSmoke
+				}
+			},
 			title: {
-				text: 'Nilai (oC)',
-				margin: 80
-			}
-		},
-		series: [{
-			name: 'Temperatur',
-			data: []
-		}]
-	});
+				text: 'Kadar Asap'
+			},
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150,
+				maxZoom: 20 * 10000
+			},
+			yAxis: {
+				minPadding: 0.2,
+				maxPadding: 0.2,
+				title: {
+					text: 'Nilai (ppm)',
+					margin: 80
+				}
+			},
+			series: [{
+				name: 'Asap',
+				data: []
+			}]
+		};
 
-	chart2 = new Highcharts.Chart({
-		chart: {
-			renderTo: 'smoke-chart',
-			defaultSeriesType: 'spline',
-			events: {
-				load: requestSmoke
-			}
-		},
-		title: {
-			text: 'Kadar Asap'
-		},
-		xAxis: {
-			type: 'datetime',
-			tickPixelInterval: 150,
-			maxZoom: 20 * 10000
-		},
-		yAxis: {
-			minPadding: 0.2,
-			maxPadding: 0.2,
-			title: {
-				text: 'Nilai (ppm)',
-				margin: 80
-			}
-		},
-		series: [{
-			name: 'Asap',
-			data: []
-		}]
+		option2.series[0].data = data;
+        var chart2 = new Highcharts.Chart(option2);
+
+
+        function requestSmoke() {
+            $.ajax({
+                url: '<?=base_url()?>api/scs_smoke',
+                success: function(point) {
+                    var series = chart2.series[0],
+                        shift = series.data.length > 20,
+                        data_length = chart2.series[0].xData.length - 1,
+                        data = chart2.series[0].xData;
+                    
+                    if(data[data_length] != point[0]){
+                    	chart2.series[0].addPoint(point, true, shift);
+                    }
+                    setTimeout(requestSmoke, 1000);    
+                },
+                cache: false
+            });
+        }
 	});
+	
+	$.getJSON('<?=base_url()?>api/scs_today_temperature', function(data) {
+		var option1 = {
+			chart: {
+				renderTo: 'temp-chart',
+				defaultSeriesType: 'spline',
+				events: {
+					load: requestTemp
+				}
+			},
+			title: {
+				text: 'Temperatur'
+			},
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150,
+				maxZoom: 20 * 10000
+			},
+			yAxis: {
+				minPadding: 0.2,
+				maxPadding: 0.2,
+				title: {
+					text: 'Nilai (oC)',
+					margin: 80
+				}
+			},
+			series: [{
+				name: 'Temperatur',
+				data: []
+			}]
+		};
+		
+        option1.series[0].data = data;
+        var chart = new Highcharts.Chart(option1);
+        
+        function requestTemp() {
+    	    $.ajax({
+    	        url: '<?=base_url()?>api/scs_temperature',
+    	        success: function(point) {
+    	            var series = chart.series[0],
+    	                shift = series.data.length > 20,
+    	                data_length = chart.series[0].xData.length - 1,
+    	                data = chart.series[0].xData;
+    	            
+    	            if(data[data_length] != point[0]){
+    	            	chart.series[0].addPoint(point, true, shift);
+    	            }
+    	            setTimeout(requestTemp, 1000);    
+    	        },
+    	        cache: false
+    	    });
+    	}
+    });
 });
 </script>
