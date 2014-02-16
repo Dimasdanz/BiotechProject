@@ -22,12 +22,8 @@
 											<th>Waktu</th>
 										</tr>
 									</thead>
-									<tbody>
-                                        <tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
+									<tbody id="dcs_log_table">
+									
 									</tbody>
 								</table>
 							</div>
@@ -168,6 +164,7 @@ $(document).ready(function(){
 	        cache: false
 	    });
 	}
+	requestScsSmoke();
 	function requestScsTemp() {
 	    $.ajax({
 	        url: '<?=base_url()?>api/scs_temperature',
@@ -191,9 +188,7 @@ $(document).ready(function(){
 	        cache: false
 	    });
 	}
-	requestScsSmoke();
 	requestScsTemp();
-
 	function getWmsValue(){
 		$.ajax({
 	        url: '<?=base_url()?>api/wms_realtime_value',
@@ -203,12 +198,16 @@ $(document).ready(function(){
 		        $("#wms_water_level").html(water_level+" cm");
 		        $("#wms_turbidity").html(lux+"%");
 		        
-	            setTimeout(getWmsValue, 1000);   
+	            setTimeout(getWmsValue, 1000);
 	        },
 	        cache: false
 	    });
 	}
-
 	getWmsValue();
+	function getDcsLog(){
+		$("#dcs_log_table").load('<?=base_url()?>api/dcs_today_log');
+		setTimeout(getDcsLog, 1000);
+	}
+	getDcsLog();
 });
 </script>

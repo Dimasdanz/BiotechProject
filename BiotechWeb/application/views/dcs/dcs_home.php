@@ -9,9 +9,9 @@
 					<i class="fa fa-info-circle"></i> Status Pintu
 				</div>
 				<ul class="list-group dcs_status">
-					<li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b><?=$status?></b></div></li>
-					<li class="list-group-item clearfix"><div class="pull-left">Percobaan Kata Sandi</div><div class="pull-right"><b><?=$password_attempts?></b></div></li>
-  					<li class="list-group-item clearfix"><div class="pull-left">Kondisi</div><div class="pull-right"><b><?=$condition?></b></div></li>
+					<li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b id="status"></b></div></li>
+					<li class="list-group-item clearfix"><div class="pull-left">Percobaan Kata Sandi</div><div class="pull-right"><b id="password_attempts"></b></div></li>
+  					<li class="list-group-item clearfix"><div class="pull-left">Kondisi</div><div class="pull-right"><b id="condition"></b></div></li>
   				</ul>
   				<div class="panel-footer clearfix">
 					<a href="#" class="btn btn-primary pull-right"><i class="fa fa-wrench"></i> Ubah Pengaturan <i class="fa fa-chevron-right"></i></a>
@@ -32,28 +32,7 @@
 									<th>Waktu</th>
 								</tr>
 							</thead>
-							<tbody>
-								<?php 
-								$no = 1;
-								if($today_log != NULL){
-									foreach ($today_log as $row){
-								?>
-									<tr>
-										<td><?=$no?></td>
-										<td><?=$row->name?></td>
-										<td><?=date('h:i:s', strtotime($row->time))?></td>
-									</tr>
-								<?php 
-										$no++;
-										}
-									}else{
-								?>
-									<tr>
-										<td colspan="3">Tidak ada Log untuk hari ini</td>
-									</tr>
-								<?php 
-									}
-								?>
+							<tbody id="today_log">
 							</tbody>
 						</table>
 					</div>
@@ -68,8 +47,21 @@
 	$this->load->view('template/footer');
 ?>
 <script>
-	function dcs_status(){
-		$('.dcs_status').load('api/dcs_status');
-	}
-	setInterval('dcs_status()', 1000);
+	$(document).ready(function() {
+		function get_dcs_status(){
+			$.getJSON('<?=base_url()?>api/dcs_status', function(data) {
+				$("#status").html(data[0]);
+				$("#password_attempts").html(data[1]);
+				$("#condition").html(data[2]);
+				setTimeout(get_dcs_status, 1000);
+			});
+		}
+		get_dcs_status();
+
+		function get_today_log(){
+			$("#today_log").load('<?=base_url()?>api/dcs_today_log');
+			setTimeout(get_today_log, 1000);
+		}
+		get_today_log();
+	});
 </script>

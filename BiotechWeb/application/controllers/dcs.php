@@ -10,11 +10,7 @@ class dcs extends CI_Controller{
 	}
 	
 	public function index(){
-		$data['status'] = (read_file("assets/device/dcs/status.txt") == 1 ? "Armed" : "Disarmed");
-		$data['password_attempts'] = read_file("assets/device/dcs/password_attempts.txt");
-		$data['condition'] = (read_file("assets/device/dcs/condition.txt") == 1 ? "Locked" : "Unlocked");
-		$data['today_log'] = $this->db_dcs_log->get_today();
-		$this->load->view('dcs/dcs_home', $data);
+		$this->load->view('dcs/dcs_home');
 	}
 	
 	public function users(){
@@ -86,12 +82,6 @@ class dcs extends CI_Controller{
 		$this->db_dcs_users->delete($this->input->post('user_id'));
 		$this->session->set_flashdata('success', 'User has been deleted');
 		redirect(base_url().'dcs/users', 'refresh');
-	}
-	
-	public function insert_log(){
-		$name = $this->input->post('name');
-		$data = array('name'=>$name);
-		$this->db_dcs_log->insert($data);
 	}
 	
 	public function change_attempt(){

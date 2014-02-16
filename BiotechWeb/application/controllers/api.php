@@ -2,16 +2,29 @@
 class api extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('db_dcs_log');
 		$this->load->model('db_gcs_log');
 		$this->load->model('db_scs_log');
 		$this->load->model('db_wms_log');
 	}
 	
 	public function dcs_status(){
-		$data['status'] = (read_file("assets/device/dcs/status.txt") == 1 ? "Armed" : "Disarmed");
-		$data['password_attempts'] = read_file("assets/device/dcs/password_attempts.txt");
-		$data['condition'] = (read_file("assets/device/dcs/condition.txt") == 1 ? "Locked" : "Unlocked");
-		$this->load->view('dcs/dcs_device_status', $data);
+		$status = (read_file("assets/device/dcs/status.txt") == 1 ? "Armed" : "Disarmed");
+		$password_attempts = read_file("assets/device/dcs/password_attempts.txt");
+		$condition = (read_file("assets/device/dcs/condition.txt") == 1 ? "Locked" : "Unlocked");
+		$val = array($status, $password_attempts, $condition);
+		echo json_encode($val);
+	}
+	
+	public function dcs_today_log(){
+		$data['today_log'] = $this->db_dcs_log->get_today();
+		$this->load->view('dcs/dcs_today_log', $data);
+	}
+	
+	public function dcs_insert_log(){
+		$name = $this->input->post('name');
+		$data = array('name'=>$name);
+		$this->db_dcs_log->insert($data);
 	}
 	
 	public function gcs_temperature(){
