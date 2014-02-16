@@ -88,6 +88,25 @@ class api extends CI_Controller{
 		$this->db_scs_log->insert($data);
 	}
 	
+	public function wms_today_turbidity(){
+		header("Content-type: text/json");
+		$ret = array();
+		foreach($this->db_wms_log->get_today() as $row){
+			$log[0] = strtotime($row->time)*1000;
+			$log[1] = intval($row->turbidity);
+			array_push($ret, $log);
+		}
+		echo json_encode($ret);
+	}
+	
+	public function wms_realtime_value(){
+		header("Content-type: text/json");
+		$turbidity = intval(read_file("assets/device/wms/lux.txt"));
+		$water_level = intval(read_file("assets/device/wms/water_level.txt"));
+		$val = array($turbidity, $water_level);
+		echo json_encode($val);
+	}
+	
 	public function wms_water_level(){
 		header("Content-type: text/json");
 		$log = $this->db_wms_log->get_last_log();
@@ -105,12 +124,21 @@ class api extends CI_Controller{
 	}
 	
 	public function wms_insert_log(){
-		$water_level = $this->input->post('var1');
-		$turbidity = $this->input->post('var2');
-		$data = array(
-				'water_level'=>$water_level,
-				'turbidity'=>$turbidity
-		);
-		$this->db_wms_log->insert($data);
+		$water_level = 250-($this->input->post('var1'));
+		if($this->input->post('var2') > 1000){
+			$turbidity = 0;
+		}else{
+			$turbidity = 100-(($this->input->post('var2'))/10);
+		}
+		$old_turbidity = read_file("assets/device/wms/lux.txt");
+		write_file("assets/device/wms/water_level.txt", $water_level);
+		write_file("assets/device/wms/lux.txt", $turbidity);
+		if($old_turbidity-$turbidity > 2 || $turbidity-$old_turbidity > 2){
+			$data = array(
+					'water_level'=>$water_level,
+					'turbidity'=>$turbidity
+			);
+			$this->db_wms_log->insert($data);
+		}
 	}
 }

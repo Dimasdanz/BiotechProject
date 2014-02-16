@@ -76,11 +76,11 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<h5>Tinggi Air</h5>
-									<h2>120 CM</h2>
+									<h2 id="wms_water_level">n/a</h2>
 								</div>
 								<div class="col-sm-6">
 									<h5>Turbiditas</h5>
-									<h2>0%</h2>
+									<h2 id="wms_turbidity">n/a</h2>
 								</div>
 							</div>
 						</div>
@@ -190,5 +190,22 @@ $(document).ready(function(){
 	}
 	requestScsSmoke();
 	requestScsTemp();
+
+	function getWmsValue(){
+		$.ajax({
+	        url: '<?=base_url()?>api/wms_realtime_value',
+	        success: function(points) {
+		        var water_level = points[1],
+		        	lux = points[0];
+		        $("#wms_water_level").html(water_level+" cm");
+		        $("#wms_turbidity").html(lux+"%");
+		        
+	            setTimeout(getWmsValue, 1000);   
+	        },
+	        cache: false
+	    });
+	}
+
+	getWmsValue();
 });
 </script>

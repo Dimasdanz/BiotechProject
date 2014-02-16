@@ -3,28 +3,26 @@
 	$this->load->view('wms/wms_header');
 ?>
 	<div class="row">
-			<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-tint fa-fw"></i> Ketinggian Air
 				</div>
 				<div class="panel-body" id="water-level-chart">
-					
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-tint fa-fw"></i> Kekeruhan Air
 				</div>
 				<div class="panel-body" id="turbidity-chart">
-					
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 <?php
@@ -35,48 +33,65 @@
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts-more.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/exporting.js"></script>
 <script>
-function requestTemp() {
-    $.ajax({
-        url: '<?=base_url()?>api/wms_turbidity',
-        success: function(point) {
-            var series = chart2.series[0],
-                shift = series.data.length > 20;
-            chart2.series[0].addPoint(point, true, shift);
-            setTimeout(requestTemp, 1000);    
-        },
-        cache: false
-    });
-}
 $(document).ready(function () {
-	chart2 = new Highcharts.Chart({
-		chart: {
-			renderTo: 'turbidity-chart',
-			defaultSeriesType: 'spline',
-			events: {
-				load: requestTemp
-			}
-		},
-		title: {
-			text: 'Kekeruhan Air'
-		},
-		xAxis: {
-			type: 'datetime',
-			tickPixelInterval: 150,
-			maxZoom: 20 * 10000
-		},
-		yAxis: {
-			minPadding: 0.2,
-			maxPadding: 0.2,
+	Highcharts.setOptions({
+        global : {
+            useUTC : false
+        }
+    });
+    
+	$.getJSON('<?=base_url()?>api/wms_today_turbidity', function(data) {
+		var option1 = {
+			chart: {
+				renderTo: 'turbidity-chart',
+				defaultSeriesType: 'spline',
+				events: {
+					load: requestData
+				}
+			},
 			title: {
-				text: 'Nilai (%)',
-				margin: 80
-			}
-		},
-		series: [{
-			name: 'Kekeruhan Air',
-			data: []
-		}]
-	});
+				text: 'Turbiditas'
+			},
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 50,
+				maxZoom: 20 * 100
+			},
+			yAxis: {
+				minPadding: 0.2,
+				maxPadding: 0.2,
+				title: {
+					text: 'Nilai (%)',
+					margin: 80
+				}
+			},
+			series: [{
+				name: 'Turbiditas',
+				data: []
+			}]
+		};
+		
+        option1.series[0].data = data;
+        var chart = new Highcharts.Chart(option1);
+        
+        function requestData() {
+    	    $.ajax({
+    	        url: '<?=base_url()?>api/wms_turbidity',
+    	        success: function(point) {
+    	            var series = chart.series[0],
+    	                shift = series.data.length > 20,
+    	                data_length = chart.series[0].xData.length - 1,
+    	                data = chart.series[0].xData;
+    	            
+    	            if(data[data_length] != point[0]){
+    	            	chart.series[0].addPoint(point, true, shift);
+    	            }
+    	            setTimeout(requestData, 1000);    
+    	        },
+    	        cache: false
+    	    });
+    	}
+    });
 	
     $('#water-level-chart').highcharts({
 	    chart: {
@@ -171,14 +186,14 @@ $(document).ready(function () {
 	    }]
 	
 	}, 
-	// Add some life
+
 	function (chart) {
 		setInterval(function () {
-			$.getJSON("<?=base_url()?>api/wms_water_level", function (data, textStatus) {
+			$.getJSON("<?=base_url()?>api/wms_realtime_value", function (data, textStatus) {
 				var point = chart.series[0].points[0];
 				point.update(data);
 			});
-		}, 3000);
+		}, 1000);
 	});
 });
 </script>
