@@ -150,14 +150,17 @@ $(document).ready(function(){
 	        success: function(point) {
 		        var ppm = point[1];
 		        $("#scs_smoke_value").html(ppm+" ppm");
-		        if(ppm >= 100 && ppm <= 200){
+		        if(ppm >= 100 && ppm <= 350){
 			        $("#scs_smoke_status").addClass("text-success");
 		        	$("#scs_smoke_status").html("<strong>Baik<strong>");
-			    }else if(ppm >= 201 && ppm <= 500){
+			    }else if(ppm >= 351 && ppm <= 450){
 			    	$("#scs_smoke_status").addClass("text-warning");
 			    	$("#scs_smoke_status").html("<strong>Normal<strong>");
-			    }else if(ppm >= 501){
-			    	$("#scs_smoke_status").addClass("text-danger");
+			    }else if(ppm >= 451 && ppm <= 600){
+			    	$("#scs_smoke_status").addClass("text-warning");
+			    	$("#scs_smoke_status").html("<strong>Rata-rata<strong>");
+				}else if(ppm >= 600) {
+					$("#scs_smoke_status").addClass("text-danger");
 			    	$("#scs_smoke_status").html("<strong>Bahaya<strong>");
 				}
 	            setTimeout(requestScsSmoke, 1000);   
