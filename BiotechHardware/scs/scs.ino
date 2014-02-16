@@ -50,4 +50,5 @@ void send_log(float temp, float smoke){
     client.print("\n\n");
     client.print(data);
   }
+  client.stop();
 }

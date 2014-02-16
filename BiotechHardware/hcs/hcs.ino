@@ -24,18 +24,17 @@ void setup() {
 
 void loop()
 {
-  Serial.println(lamp1(lamp1_path));
-  if(lamp1(lamp1_path).toInt() == 1){
+  Serial.println(get_lamp(lamp1_path));
+  if(get_lamp(lamp1_path).toInt() == 1){
     digitalWrite(lamp1_pin, HIGH);
   }else{
     digitalWrite(lamp1_pin, LOW);
   }
 }
 
-String lamp1(const char lamp[]){
-  int err =0;
+String get_lamp(const char lamp[]){
+  int err = 0;
   int stringPos = 0; 
-  boolean startRead = false;
   char inString[32];
   memset( &inString, 0, 32 );
   EthernetClient c;
@@ -55,6 +54,7 @@ String lamp1(const char lamp[]){
     }
     return inString;
   }
+  http.stop();
 }
 
 
