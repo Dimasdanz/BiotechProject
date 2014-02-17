@@ -77,6 +77,7 @@
 								<div class="col-sm-6">
 									<h5>Turbiditas</h5>
 									<h2 id="wms_turbidity">n/a</h2>
+                                    <h2 id="wms_turb_status">n/a</h2>
 								</div>
 							</div>
 						</div>
@@ -171,10 +172,10 @@ $(document).ready(function(){
 	        success: function(points) {
 		        var temp = points[1];
 		        $("#scs_temp_value").html(temp+" &deg;C");
-		        if(temp >= 20 && temp <= 24){
+		        if(temp >= 20 && temp <= 22){
 			        $("#scs_temp_status").addClass("text-success");
 		        	$("#scs_temp_status").html("<strong>Baik<strong>");
-			    }else if(temp >= 25 && temp <= 35){
+			    }else if(temp >= 22 && temp <= 35){
 			    	$("#scs_temp_status").addClass("text-warning");
 			    	$("#scs_temp_status").html("<strong>Normal<strong>");
 			    }else if(temp >= 35){
@@ -204,6 +205,30 @@ $(document).ready(function(){
 	    });
 	}
 	getWmsValue();
+	function requestWmsTurbidity() {
+	    $.ajax({
+	        url: '<?=base_url()?>api/wms_turbidity',
+	        success: function(points) {
+		        var turb = points[1];
+		        $("#wms_turb_value").html(turb+" %");
+		        if(turb >= 0 && turb <= 24){
+			        $("#wms_turb_status").addClass("text-success");
+		        	$("#wms_turb_status").html("<strong>Jernih<strong>");
+			    }else if(turb >= 25 && turb <= 49){
+			    	$("#wms_turb_status").addClass("text-warning");
+			    	$("#wms_turb_status").html("<strong>Normal<strong>");
+			    }else if(turb >= 50){
+			    	$("#wms_turb_status").addClass("text-danger");
+			    	$("#wms_turb_status").html("<strong>Keruh<strong>");
+				}else{
+
+				}
+	            setTimeout(requestWmsTurbidity, 1000);   
+	        },
+	        cache: false
+	    });
+	}
+	requestWmsTurbidity();
 	function getDcsLog(){
 		$("#dcs_log_table").load('<?=base_url()?>api/dcs_today_log');
 		setTimeout(getDcsLog, 1000);
