@@ -54,7 +54,6 @@ String get_lamp(const char lamp[]){
     }
     return inString;
   }
-  http.stop();
 }
 
 
