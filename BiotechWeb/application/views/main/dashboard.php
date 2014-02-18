@@ -151,27 +151,27 @@ $(document).ready(function(){
 		        $("#scs_temp_value").html(temp+" &deg;C");
 		        
 				if(ppm >= 100 && ppm <= 350){
-			        $("#scs_smoke_status").addClass("text-success");
+			        $("#scs_smoke_status").attr("class", "text-success");
 		        	$("#scs_smoke_status").html("<strong>Baik<strong>");
 			    }else if(ppm >= 351 && ppm <= 450){
-			    	$("#scs_smoke_status").addClass("text-warning");
+			    	$("#scs_smoke_status").attr("class", "text-warning");
 			    	$("#scs_smoke_status").html("<strong>Normal<strong>");
 			    }else if(ppm >= 451 && ppm <= 600){
-			    	$("#scs_smoke_status").addClass("text-warning");
+			    	$("#scs_smoke_status").attr("class", "text-warning");
 			    	$("#scs_smoke_status").html("<strong>Rata-rata<strong>");
 				}else if(ppm >= 600) {
-					$("#scs_smoke_status").addClass("text-danger");
+					$("#scs_smoke_status").attr("class", "text-danger");
 			    	$("#scs_smoke_status").html("<strong>Bahaya<strong>");
 				}
 				
 				if(temp >= 20 && temp <= 22){
-			        $("#scs_temp_status").addClass("text-success");
+			        $("#scs_temp_status").attr("class", "text-success");
 		        	$("#scs_temp_status").html("<strong>Baik<strong>");
 			    }else if(temp >= 22 && temp <= 35){
-			    	$("#scs_temp_status").addClass("text-warning");
+			    	$("#scs_temp_status").attr("class", "text-warning");
 			    	$("#scs_temp_status").html("<strong>Normal<strong>");
 			    }else if(temp >= 35){
-			    	$("#scs_temp_status").addClass("text-danger");
+			    	$("#scs_temp_status").attr("class", "text-danger");
 			    	$("#scs_temp_status").html("<strong>Bahaya<strong>");
 				}else{
 
@@ -193,13 +193,13 @@ $(document).ready(function(){
 		        $("#wms_turbidity").html(lux+"%");
 
 		        if(lux >= 0 && lux <= 24){
-			        $("#wms_turb_status").addClass("text-success");
+			        $("#wms_turb_status").attr("class", "text-success");
 		        	$("#wms_turb_status").html("<strong>Jernih<strong>");
 			    }else if(lux >= 25 && lux <= 49){
-			    	$("#wms_turb_status").addClass("text-warning");
+			    	$("#wms_turb_status").attr("class", "text-warning");
 			    	$("#wms_turb_status").html("<strong>Normal<strong>");
 			    }else if(lux >= 50){
-			    	$("#wms_turb_status").addClass("text-danger");
+			    	$("#wms_turb_status").attr("class", "text-danger");
 			    	$("#wms_turb_status").html("<strong>Keruh<strong>");
 				}else{
 
