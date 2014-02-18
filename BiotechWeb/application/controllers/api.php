@@ -76,6 +76,13 @@ class api extends CI_Controller{
 		echo json_encode($ret);
 	}
 	
+	public function gcs_get_value(){
+		$h_lower = intval(read_file("assets/device/gcs/humidity_lower_threshold.txt"));
+		$h_upper = intval(read_file("assets/device/gcs/humidity_upper_threshold.txt"));
+		$lux_target = intval(read_file("assets/device/gcs/lux_target.txt"));
+		echo $h_lower.";".$h_upper.";".$lux_target;
+	}
+	
 	public function hcs_lamp_value($param){
 		header("Content-type: text/json");
 		$val = intval(read_file("assets/device/hcs/".$param.".txt"));
