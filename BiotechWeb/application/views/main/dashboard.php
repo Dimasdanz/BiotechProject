@@ -116,17 +116,21 @@
                         <div class="panel-body text-center">
 							<h4>Tanaman : Anggrek</h4>
 							<div class="row">
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<h5>Intensitas Cahaya</h5>
-									<h2>6000 lx</h2>
+									<h2 id="gcs_lux">n/a</h2>
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<h5>Kelembaban</h5>
-									<h2>Lembab</h2>
+									<h2 id="gcs_humidity">n/a</h2>
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<h5>Temperatur</h5>
-									<h2>32&deg;C</h2>
+									<h2 id="gcs_temp">n/a</h2>
+								</div>
+								<div class="col-sm-3">
+									<h5>Kelembaban Udara</h5>
+									<h2 id="gcs_air_humidity">n/a</h2>
 								</div>
 							</div>
 						</div>
@@ -211,6 +215,24 @@ $(document).ready(function(){
 	    });
 	}
 	getWmsValue();
+	function getGcsValue(){
+		$.ajax({
+	        url: '<?=base_url()?>api/gcs_realtime_value',
+	        success: function(points) {
+		        var lux = points[0],
+		        	temp = points[1],
+					humidity = points[2],
+					air_humidity = points[3];
+		        $("#gcs_lux").html(lux+" lx");
+		        $("#gcs_temp").html(temp+" &deg;C");
+				$("#gcs_humidity").html(humidity+" %");
+				$("#gcs_air_humidity").html(air_humidity+" %");
+	            setTimeout(getGcsValue, 1000);
+	        },
+	        cache: false
+	    });
+	}
+	getGcsValue();
 	function getDcsLog(){
 		$("#dcs_log_table").load('<?=base_url()?>api/dcs_today_log');
 		setTimeout(getDcsLog, 1000);

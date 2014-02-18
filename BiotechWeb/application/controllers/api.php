@@ -83,6 +83,32 @@ class api extends CI_Controller{
 		echo $h_lower.";".$h_upper.";".$lux_target;
 	}
 	
+	public function gcs_insert_log(){
+		$lux = $this->input->post('var1');
+		$temp = $this->input->post('var2');
+		$humidity = $this->input->post('var3');
+		$air_humidity = $this->input->post('var4');
+		write_file("assets/device/gcs/lux.txt", $lux);
+		write_file("assets/device/gcs/temp.txt", $temp);
+		write_file("assets/device/gcs/humidity.txt", $humidity);
+		write_file("assets/device/gcs/air_humidity.txt", $air_humidity);
+		/*$data = array(
+				'temperature'=>$temp,
+				'smoke'=>$smoke
+		);
+		$this->db_scs_log->insert($data);*/
+	}
+	
+	public function gcs_realtime_value(){
+		header("Content-type: text/json");
+		$lux = intval(read_file("assets/device/gcs/lux.txt"));
+		$temp = floatval(read_file("assets/device/gcs/temp.txt"));
+		$humidity = intval(read_file("assets/device/gcs/humidity.txt"));
+		$air_humidity = floatval(read_file("assets/device/gcs/air_humidity.txt"));
+		$val = array($lux, $temp, $humidity, $air_humidity);
+		echo json_encode($val);
+	}
+	
 	public function hcs_lamp_value($param){
 		header("Content-type: text/json");
 		$val = intval(read_file("assets/device/hcs/".$param.".txt"));
@@ -146,7 +172,7 @@ class api extends CI_Controller{
 			'temperature'=>$temp,
 			'smoke'=>$smoke
 		);
-		//$this->db_scs_log->insert($data);
+		$this->db_scs_log->insert($data);
 	}
 	
 	public function wms_today_turbidity(){
