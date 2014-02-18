@@ -141,13 +141,16 @@
 ?>
 <script>
 $(document).ready(function(){
-	function requestScsSmoke() {
-	    $.ajax({
-	        url: '<?=base_url()?>api/scs_smoke',
-	        success: function(point) {
-		        var ppm = point[1];
+	function getScsValue(){
+		$.ajax({
+	        url: '<?=base_url()?>api/scs_realtime_value',
+	        success: function(points) {
+		        var ppm = points[0],
+		        	temp = points[1];
 		        $("#scs_smoke_value").html(ppm+" ppm");
-		        if(ppm >= 100 && ppm <= 350){
+		        $("#scs_temp_value").html(temp+" &deg;C");
+		        
+				if(ppm >= 100 && ppm <= 350){
 			        $("#scs_smoke_status").addClass("text-success");
 		        	$("#scs_smoke_status").html("<strong>Baik<strong>");
 			    }else if(ppm >= 351 && ppm <= 450){
@@ -160,19 +163,8 @@ $(document).ready(function(){
 					$("#scs_smoke_status").addClass("text-danger");
 			    	$("#scs_smoke_status").html("<strong>Bahaya<strong>");
 				}
-	            setTimeout(requestScsSmoke, 1000);   
-	        },
-	        cache: false
-	    });
-	}
-	requestScsSmoke();
-	function requestScsTemp() {
-	    $.ajax({
-	        url: '<?=base_url()?>api/scs_temperature',
-	        success: function(points) {
-		        var temp = points[1];
-		        $("#scs_temp_value").html(temp+" &deg;C");
-		        if(temp >= 20 && temp <= 22){
+				
+				if(temp >= 20 && temp <= 22){
 			        $("#scs_temp_status").addClass("text-success");
 		        	$("#scs_temp_status").html("<strong>Baik<strong>");
 			    }else if(temp >= 22 && temp <= 35){
@@ -184,12 +176,13 @@ $(document).ready(function(){
 				}else{
 
 				}
-	            setTimeout(requestScsTemp, 1000);   
+				
+	            setTimeout(getScsValue, 1000);
 	        },
 	        cache: false
 	    });
 	}
-	requestScsTemp();
+	getScsValue();
 	function getWmsValue(){
 		$.ajax({
 	        url: '<?=base_url()?>api/wms_realtime_value',
@@ -198,6 +191,19 @@ $(document).ready(function(){
 		        	lux = points[0];
 		        $("#wms_water_level").html(water_level+" cm");
 		        $("#wms_turbidity").html(lux+"%");
+
+		        if(lux >= 0 && lux <= 24){
+			        $("#wms_turb_status").addClass("text-success");
+		        	$("#wms_turb_status").html("<strong>Jernih<strong>");
+			    }else if(lux >= 25 && lux <= 49){
+			    	$("#wms_turb_status").addClass("text-warning");
+			    	$("#wms_turb_status").html("<strong>Normal<strong>");
+			    }else if(lux >= 50){
+			    	$("#wms_turb_status").addClass("text-danger");
+			    	$("#wms_turb_status").html("<strong>Keruh<strong>");
+				}else{
+
+				}
 		        
 	            setTimeout(getWmsValue, 1000);
 	        },
@@ -205,30 +211,6 @@ $(document).ready(function(){
 	    });
 	}
 	getWmsValue();
-	function requestWmsTurbidity() {
-	    $.ajax({
-	        url: '<?=base_url()?>api/wms_turbidity',
-	        success: function(points) {
-		        var turb = points[1];
-		        $("#wms_turb_value").html(turb+" %");
-		        if(turb >= 0 && turb <= 24){
-			        $("#wms_turb_status").addClass("text-success");
-		        	$("#wms_turb_status").html("<strong>Jernih<strong>");
-			    }else if(turb >= 25 && turb <= 49){
-			    	$("#wms_turb_status").addClass("text-warning");
-			    	$("#wms_turb_status").html("<strong>Normal<strong>");
-			    }else if(turb >= 50){
-			    	$("#wms_turb_status").addClass("text-danger");
-			    	$("#wms_turb_status").html("<strong>Keruh<strong>");
-				}else{
-
-				}
-	            setTimeout(requestWmsTurbidity, 1000);   
-	        },
-	        cache: false
-	    });
-	}
-	requestWmsTurbidity();
 	function getDcsLog(){
 		$("#dcs_log_table").load('<?=base_url()?>api/dcs_today_log');
 		setTimeout(getDcsLog, 1000);
