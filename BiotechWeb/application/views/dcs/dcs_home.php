@@ -14,7 +14,7 @@
   					<li class="list-group-item clearfix"><div class="pull-left">Kondisi</div><div class="pull-right"><b id="condition"></b></div></li>
   				</ul>
   				<div class="panel-footer clearfix">
-					<a href="#" class="btn btn-primary pull-right"><i class="fa fa-wrench"></i> Ubah Pengaturan <i class="fa fa-chevron-right"></i></a>
+					<a href="<?=base_url()?>dcs/setting" class="btn btn-primary pull-right"><i class="fa fa-wrench"></i> Ubah Pengaturan <i class="fa fa-chevron-right"></i></a>
 				</div>
 			</div>
 		</div>

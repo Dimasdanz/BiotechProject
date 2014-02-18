@@ -68,7 +68,7 @@
 						</div>
 						<div class="panel-body">
 							<p class="text-danger text-center">Perangkat terkunci!</p>
-							<a href="<?=base_url()?>/dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Buka Kunci</a>
+							<a href="<?=base_url()?>dcs/unlock" class="btn btn-warning btn-block btn-lg"><i class="fa fa-unlock"></i> Buka Kunci</a>
 						</div>
 					</div>
 				</div>

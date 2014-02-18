@@ -30,6 +30,7 @@ class api extends CI_Controller{
 		if($data != NULL){
 			if($password == $data->password){
 				write_file("assets/device/dcs/result.txt", 1);
+				$this->dcs_insert_log($data->name);
 				echo 1;
 			}else{
 				write_file("assets/device/dcs/result.txt", 0);
@@ -41,10 +42,15 @@ class api extends CI_Controller{
 		}		
 	}
 	
-	public function dcs_get_result(){
+	public function dcs_get_value($param){
 		header("Content-type: text/json");
-		$status = intval(read_file("assets/device/dcs/result.txt"));
-		echo json_encode($status);
+		$status = intval(read_file("assets/device/dcs/".$param.".txt"));
+		echo json_encode("<".$status.">");
+	}
+	
+	public function dcs_lock(){
+		write_file("assets/device/dcs/condition.txt", 1);
+		$this->dcs_insert_log("Perangkat Terkunci");
 	}
 	
 	public function dcs_insert_log($name){

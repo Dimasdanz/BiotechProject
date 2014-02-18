@@ -4,8 +4,6 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include <Servo.h>
-#include <HttpClient.h>
-#include <EthernetClient.h>
 
 const byte ROWS = 4;
 const byte COLS = 3;
@@ -21,7 +19,7 @@ byte colPins[COLS] = {6, 7, 8};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 LiquidCrystal_I2C lcd(0x27,20,4);
-
+EthernetClient client;
 
 const char server[] = "192.168.1.3";
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
@@ -31,41 +29,89 @@ const int sensor = A0;
 
 int attempt = 0;
 int count = 0;
+int max_attempt;
 String disp = "";
 char pass[255];
 
+boolean display_armed = false;
+boolean display_disarmed = false;
+boolean display_locked = false;
+boolean display_unlocked = false;
+
 void setup(){
-  Serial.begin(9600);
   lcd.init();
   lcd.backlight();
   lcd.setCursor(3, 0);
   lcd.print("Danz  Security");
   lcd.setCursor(0,1);
-  lcd.print("Initializing...");
-  lcd_init();
+  lcd.print("Inisialisasi...");
   Ethernet.begin(mac, ip);
+  check_device();
+  lcd_init();
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
 }
 
 void loop(){
-  char key = keypad.getKey();
-  if (key != NO_KEY){
-    disp += "*";
-    lcd.setCursor(0,2);
-    lcd.print(disp);
-    pass[count] = key;
-    count++;
+  if(check_device()){
+    if(check_condition()){
+      char key = keypad.getKey();
+      if (key != NO_KEY){
+        disp += "*";
+        lcd.setCursor(0,2);
+        lcd.print(disp);
+        pass[count] = key;
+        count++;
+      }
+      if(key == '*'){
+        attempt++;
+        send_password(pass);
+        sys_init();
+        lcd_init();
+      }
+      if(key == '#'){
+        sys_init();
+        lcd_init();
+      }
+    }else{
+      check_condition();
+    }
   }
-  if(key == '*'){
-    attempt++;
-    send_password(pass);
-    sys_init();
-    lcd_init();
+}
+
+boolean check_device(){
+  if(read_server("/api/dcs_get_value/status") == "1"){
+    if(!display_armed){
+      lcd_init();
+      display_armed = true;
+    }
+    display_disarmed = false;
+    return true;
+  }else{
+    if(!display_disarmed){
+      lcd_print("Perangkat non-aktif");
+      display_disarmed = true;
+    }
+    display_armed = false;
+    return false;
   }
-  if(key == '#'){
-    sys_init();
-    lcd_init();
+}
+
+boolean check_condition(){
+  if(read_server("/api/dcs_get_value/condition") == "0"){
+    if(!display_unlocked){
+      lcd_init();
+      display_unlocked = true;
+    }
+    display_locked = false;
+    return true;
+  }else{
+    if(!display_locked){
+      lcd_print("Perangkat terkunci");
+      display_locked = true;
+    }
+    display_unlocked = false;
+    return false;
   }
 }
 
@@ -94,6 +140,16 @@ void lcd_print(String s){
   lcd.print(s);
 }
 
+void lcd_attempts(int tried, int attempts){
+  lcd.setCursor(0,3);
+  lcd.print("Percobaan :");
+  lcd.setCursor(13,3);
+  lcd.print(tried);
+  lcd.setCursor(15,3);
+  lcd.print("/");
+  lcd.print(attempts);
+}
+
 void send_password(char password[]){
   String data ="";
   EthernetClient client;
@@ -113,36 +169,88 @@ void send_password(char password[]){
     client.print(data);
   }
   delay(50);
-  int result = read_server("/api/dcs_get_result").toInt();
-  if(result == 1){
+  check_result(read_server("/api/dcs_get_value/result"));
+}
+
+void check_result(String result){
+  if(attempt == 1){
+    max_attempt = read_server("/api/dcs_get_value/password_attempts").toInt();
+    lcd_attempts(attempt, max_attempt);
+  }
+  if(result == "1"){
+    attempt = 0;
     lcd_print("Pintu Terbuka");
-    delay(2000);
+    delay(3000);
+    int val = digitalRead(sensor);
+    while(digitalRead(sensor) == HIGH){
+      val = digitalRead(sensor);
+    }
+    delay(1000);
   }else{
     lcd_print("Password Salah");
-    delay(2000);
+    lcd_attempts(attempt, max_attempt);
+    delay(1000);
+    if(attempt >= max_attempt){
+      attempt = 0;
+      lock_device();
+    }
   }
 }
 
-String read_server(char url[]){
-  int err = 0;
+String read_server(String url){
+  if (client.connect(server, 80)) {
+    client.print("GET ");
+    client.println(url);
+    client.println();
+    return readData();
+  }
+  else{
+    return "connection failed";
+  }
+}
+
+String readData(){
   int stringPos = 0; 
+  boolean startRead = false;
   char inString[32];
+
   memset( &inString, 0, 32 );
-  EthernetClient c;
-  HttpClient http(c);
-  err = http.get(server, url);
-  if (err == 0){
-    http.skipResponseHeaders();
-    int bodyLen = http.contentLength();
-    char c;
-    while ((http.connected() || http.available())){
-      if (http.available()){
-        c = http.read();
-        inString[stringPos] = c;
-        stringPos ++;
-        bodyLen--;
+  while(true){
+    if (client.available()) {
+      char c = client.read();
+      if (c == '<' ) {
+        startRead = true;
+      }
+      else if(startRead){
+        if(c != '>'){
+          inString[stringPos] = c;
+          stringPos ++;
+        }
+        else{
+          startRead = false;
+          client.stop();
+          client.flush();
+          return inString;
+        }
       }
     }
-    return inString;
+  }
+}
+
+void lock_device(){
+  String data ="";
+  EthernetClient client;
+  data = "1";
+
+  if (client.connect(server,80))
+  {
+    client.print("POST /api/dcs_lock HTTP/1.1\n");
+    client.print("Host: 192.168.1.3\n");
+    client.print("Connection: close\n");
+    client.print("Content-Type: application/x-www-form-urlencoded\n");
+    client.print("Content-Length: ");
+    client.print(data.length());
+    client.print("\n\n");
+    client.print(data);
   }
 }
