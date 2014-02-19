@@ -92,11 +92,36 @@ class api extends CI_Controller{
 		write_file("assets/device/gcs/temp.txt", $temp);
 		write_file("assets/device/gcs/humidity.txt", $humidity);
 		write_file("assets/device/gcs/air_humidity.txt", $air_humidity);
-		/*$data = array(
-				'temperature'=>$temp,
-				'smoke'=>$smoke
-		);
-		$this->db_scs_log->insert($data);*/
+		$log = $this->db_gcs_log->get_last_log();
+		if((time()) > (strtotime($log->time)+60)){
+			$data = array(
+					'lux'=>$lux,
+					'temperature'=>$temp
+			);
+			$this->db_gcs_log->insert($data);
+		}		
+	}
+	
+	public function gcs_today_temperature(){
+		header("Content-type: text/json");
+		$ret = array();
+		foreach($this->db_gcs_log->get_today() as $row){
+			$log[0] = strtotime($row->time)*1000;
+			$log[1] = floatval($row->temperature);
+			array_push($ret, $log);
+		}
+		echo json_encode($ret);
+	}
+	
+	public function gcs_today_lux(){
+		header("Content-type: text/json");
+		$ret = array();
+		foreach($this->db_gcs_log->get_today() as $row){
+			$log[0] = strtotime($row->time)*1000;
+			$log[1] = floatval($row->lux);
+			array_push($ret, $log);
+		}
+		echo json_encode($ret);
 	}
 	
 	public function gcs_realtime_value(){

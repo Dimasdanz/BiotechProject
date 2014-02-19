@@ -31,89 +31,115 @@
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
-function requestTemp() {
-    $.ajax({
-        url: '<?=base_url()?>api/gcs_temperature',
-        success: function(point) {
-            var series = chart.series[0],
-                shift = series.data.length > 20;
-            chart.series[0].addPoint(point, true, shift);
-            setTimeout(requestTemp, 1000);    
-        },
-        cache: false
-    });
-}
-function requestLux() {
-    $.ajax({
-        url: '<?=base_url()?>api/gcs_lux',
-        success: function(point) {
-            var series = chart2.series[0],
-                shift = series.data.length > 20;
-            chart2.series[0].addPoint(point, true, shift);
-            setTimeout(requestLux, 1000);    
-        },
-        cache: false
-    });
-}
 $(document).ready(function() {
-	chart = new Highcharts.Chart({
-		chart: {
-			renderTo: 'temp-chart',
-			defaultSeriesType: 'spline',
-			events: {
-				load: requestTemp
-			}
-		},
-		title: {
-			text: 'Temperatur'
-		},
-		xAxis: {
-			type: 'datetime',
-			tickPixelInterval: 150,
-			maxZoom: 20 * 10000
-		},
-		yAxis: {
-			minPadding: 0.2,
-			maxPadding: 0.2,
+	Highcharts.setOptions({
+        global : {
+            useUTC : false
+        }
+    });
+	$.getJSON('<?=base_url()?>api/gcs_today_lux', function(data) {
+		var option2 = {
+			chart: {
+				renderTo: 'lux-chart',
+				defaultSeriesType: 'spline',
+				events: {
+					load: requestLux
+				}
+			},
 			title: {
-				text: 'Nilai',
-				margin: 80
-			}
-		},
-		series: [{
-			name: 'Temperatur',
-			data: []
-		}]
-	});
-
-	chart2 = new Highcharts.Chart({
-		chart: {
-			renderTo: 'lux-chart',
-			defaultSeriesType: 'spline',
-			events: {
-				load: requestLux
-			}
-		},
-		title: {
-			text: 'Intensitas Cahaya'
-		},
-		xAxis: {
-			type: 'datetime',
-			tickPixelInterval: 150,
-			maxZoom: 20 * 10000
-		},
-		yAxis: {
-			minPadding: 0.2,
-			maxPadding: 0.2,
+				text: 'Intensitas Cahaya'
+			},
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150,
+				maxZoom: 20 * 10000
+			},
+			yAxis: {
+				minPadding: 0.2,
+				maxPadding: 0.2,
+				title: {
+					text: 'Nilai (lx)',
+					margin: 80
+				}
+			},
+			series: [{
+				name: 'Intensitas Cahaya',
+				data: []
+			}]
+		};
+		
+        option2.series[0].data = data;
+        var chart2 = new Highcharts.Chart(option2);
+        
+        function requestLux() {
+    	    $.ajax({
+    	        url: '<?=base_url()?>api/gcs_lux',
+    	        success: function(point) {
+    	            var series = chart2.series[0],
+    	                shift = series.data.length > 20,
+    	                data_length = chart2.series[0].xData.length - 1,
+    	                data = chart2.series[0].xData;
+    	            
+    	            if(data[data_length] != point[0]){
+    	            	chart2.series[0].addPoint(point, true, shift);
+    	            }
+    	            setTimeout(requestLux, 1000);    
+    	        },
+    	        cache: false
+    	    });
+    	}
+    });
+	$.getJSON('<?=base_url()?>api/gcs_today_temperature', function(data) {
+		var option1 = {
+			chart: {
+				renderTo: 'temp-chart',
+				defaultSeriesType: 'spline',
+				events: {
+					load: requestTemp
+				}
+			},
 			title: {
-				text: 'Nilai',
-				margin: 80
-			}
-		},
-		series: [{
-			name: 'Intensitas Cahaya',
-			data: []
-		}]
-	});
+				text: 'Temperatur'
+			},
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150,
+				maxZoom: 20 * 10000
+			},
+			yAxis: {
+				minPadding: 0.2,
+				maxPadding: 0.2,
+				title: {
+					text: 'Nilai (oC)',
+					margin: 80
+				}
+			},
+			series: [{
+				name: 'Temperatur',
+				data: []
+			}]
+		};
+		
+        option1.series[0].data = data;
+        var chart = new Highcharts.Chart(option1);
+        
+        function requestTemp() {
+    	    $.ajax({
+    	        url: '<?=base_url()?>api/gcs_temperature',
+    	        success: function(point) {
+    	            var series = chart.series[0],
+    	                shift = series.data.length > 20,
+    	                data_length = chart.series[0].xData.length - 1,
+    	                data = chart.series[0].xData;
+    	            
+    	            if(data[data_length] != point[0]){
+    	            	chart.series[0].addPoint(point, true, shift);
+    	            }
+    	            setTimeout(requestTemp, 1000);    
+    	        },
+    	        cache: false
+    	    });
+    	}
+    });
 });
 </script>
