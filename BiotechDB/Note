@@ -3,3 +3,10 @@ SRC
 -Suhu dari waktu ke waktu
 -Smoke logger
 -Time
+
+
+GCS
+-Soil Moiture : >900 Kering
+				450 - 550 Sedang
+				350 - 400 Lembab
+				200 - 300 Sangat Lembab
