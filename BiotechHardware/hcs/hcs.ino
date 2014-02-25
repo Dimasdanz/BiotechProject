@@ -14,21 +14,43 @@ const char lamp4_path[] = "/api/hcs_lamp_value/lamp_4";
 IPAddress ip(192,168,4,3);
 
 const int lamp1_pin = 2;
+const int lamp2_pin = 3;
+const int lamp3_pin = 4;
+const int lamp4_pin = 5;
 
 void setup() {
-  Serial.begin(9600);
   Ethernet.begin(mac, ip);
   pinMode(lamp1_pin, OUTPUT);
+  pinMode(lamp2_pin, OUTPUT);
+  pinMode(lamp3_pin, OUTPUT);
+  pinMode(lamp4_pin, OUTPUT);
   delay(1000);
 }
 
 void loop()
 {
-  Serial.println(get_lamp(lamp1_path));
   if(get_lamp(lamp1_path).toInt() == 1){
     digitalWrite(lamp1_pin, HIGH);
   }else{
     digitalWrite(lamp1_pin, LOW);
+  }
+  
+  if(get_lamp(lamp2_path).toInt() == 1){
+    digitalWrite(lamp2_pin, HIGH);
+  }else{
+    digitalWrite(lamp2_pin, LOW);
+  }
+  
+  if(get_lamp(lamp3_path).toInt() == 1){
+    digitalWrite(lamp3_pin, HIGH);
+  }else{
+    digitalWrite(lamp3_pin, LOW);
+  }
+  
+  if(get_lamp(lamp4_path).toInt() == 1){
+    digitalWrite(lamp4_pin, HIGH);
+  }else{
+    digitalWrite(lamp4_pin, LOW);
   }
 }
 
