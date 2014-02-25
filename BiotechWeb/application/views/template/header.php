@@ -11,9 +11,6 @@
 
     <!-- Plugin CSS -->
 	<link href="<?=base_url()?>assets/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
-	<link href="<?=base_url()?>assets/css/plugins/social-buttons/social-buttons.css" rel="stylesheet">
-    <link href="<?=base_url()?>assets/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="<?=base_url()?>assets/css/plugins/timeline/timeline.css" rel="stylesheet">
 
     <!-- SB Admin CSS -->
     <link href="<?=base_url()?>assets/css/sb-admin.css" rel="stylesheet">
