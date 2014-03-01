@@ -4,53 +4,109 @@
 #include <EthernetClient.h>
 
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30 };
-
 const char hostname[] = "192.168.1.3";
-const char lamp1_path[] = "/api/hcs_lamp_value/lamp_1";
-const char lamp2_path[] = "/api/hcs_lamp_value/lamp_2";
-const char lamp3_path[] = "/api/hcs_lamp_value/lamp_3";
-const char lamp4_path[] = "/api/hcs_lamp_value/lamp_4";
-
 IPAddress ip(192,168,4,3);
+
+int commaPosition;
+String lamp1_val;
+String lamp2_val;
+String lamp3_val;
+String lamp4_val;
 
 const int lamp1_pin = 2;
 const int lamp2_pin = 3;
 const int lamp3_pin = 4;
 const int lamp4_pin = 5;
+const int led_power = A5;
+const int lamp1_power = A4;
+const int lamp2_power = A3;
+const int lamp3_power = A2;
+const int lamp4_power = A1;
 
-void setup() {
+void setup(){
+  Serial.begin(9600);
   Ethernet.begin(mac, ip);
   pinMode(lamp1_pin, OUTPUT);
   pinMode(lamp2_pin, OUTPUT);
   pinMode(lamp3_pin, OUTPUT);
   pinMode(lamp4_pin, OUTPUT);
+  pinMode(led_power, OUTPUT);
+  pinMode(lamp1_power, OUTPUT);
+  pinMode(lamp2_power, OUTPUT);
+  pinMode(lamp3_power, OUTPUT);
+  pinMode(lamp4_power, OUTPUT);
+  digitalWrite(lamp1_pin, HIGH);
+  digitalWrite(lamp2_pin, HIGH);
+  digitalWrite(lamp3_pin, HIGH);
+  digitalWrite(lamp4_pin, HIGH);
+  digitalWrite(led_power, HIGH);
+  digitalWrite(lamp1_power, LOW);
+  digitalWrite(lamp2_power, LOW);
+  digitalWrite(lamp3_power, LOW);
+  digitalWrite(lamp4_power, LOW);
   delay(1000);
+  Serial.println("Dimas Ganteng");
 }
 
-void loop()
-{
-  if(get_lamp(lamp1_path).toInt() == 1){
-    digitalWrite(lamp1_pin, HIGH);
-  }else{
+void loop(){
+  String val = get_lamp("/api/hcs_get_lamp");
+  Serial.println(val);
+  
+  commaPosition = val.indexOf(';');
+  lamp1_val = val.substring(0,commaPosition);
+  val = val.substring(commaPosition+1, val.length());
+  Serial.println(lamp1_val);
+  
+  commaPosition = val.indexOf(';');
+  lamp2_val = val.substring(0,commaPosition);
+  val = val.substring(commaPosition+1, val.length());
+  Serial.println(lamp2_val);
+  
+  commaPosition = val.indexOf(';');
+  lamp3_val = val.substring(0,commaPosition);
+  Serial.println(lamp3_val);
+  
+  lamp4_val = val.substring(commaPosition+1, val.length());
+  Serial.println(lamp4_val);
+  
+  if(lamp1_val == "1"){
     digitalWrite(lamp1_pin, LOW);
+    digitalWrite(lamp1_power, HIGH);
+    Serial.println("Lampu 1 Hidup");
+  }else{
+    digitalWrite(lamp1_pin, HIGH);
+    digitalWrite(lamp1_power, LOW);
+    Serial.println("Lampu 1 Mati");
   }
   
-  if(get_lamp(lamp2_path).toInt() == 1){
-    digitalWrite(lamp2_pin, HIGH);
-  }else{
+  if(lamp2_val == "1"){
     digitalWrite(lamp2_pin, LOW);
+    digitalWrite(lamp2_power, HIGH);
+    Serial.println("Lampu 2 Hidup");
+  }else{
+    digitalWrite(lamp2_pin, HIGH);
+    digitalWrite(lamp2_power, LOW);
+    Serial.println("Lampu 2 Mati");
   }
   
-  if(get_lamp(lamp3_path).toInt() == 1){
-    digitalWrite(lamp3_pin, HIGH);
-  }else{
+  if(lamp3_val == "1"){
     digitalWrite(lamp3_pin, LOW);
+    digitalWrite(lamp3_power, HIGH);
+    Serial.println("Lampu 3 Hidup");
+  }else{
+    digitalWrite(lamp3_pin, HIGH);
+    digitalWrite(lamp3_power, LOW);
+    Serial.println("Lampu 3 Mati");
   }
   
-  if(get_lamp(lamp4_path).toInt() == 1){
-    digitalWrite(lamp4_pin, HIGH);
-  }else{
+  if(lamp4_val == "1"){
     digitalWrite(lamp4_pin, LOW);
+    digitalWrite(lamp4_power, HIGH);
+    Serial.println("Lampu 4 Hidup");
+  }else{
+    digitalWrite(lamp4_pin, HIGH);
+    digitalWrite(lamp4_power, LOW);
+    Serial.println("Lampu 4 Mati");
   }
 }
 

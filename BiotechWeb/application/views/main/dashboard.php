@@ -154,7 +154,7 @@ $(document).ready(function(){
 		        $("#scs_smoke_value").html(ppm+" ppm");
 		        $("#scs_temp_value").html(temp+" &deg;C");
 		        
-				if(ppm >= 100 && ppm <= 350){
+				if(ppm <= 350){
 			        $("#scs_smoke_status").attr("class", "text-success");
 		        	$("#scs_smoke_status").html("<strong>Baik<strong>");
 			    }else if(ppm >= 351 && ppm <= 450){
@@ -168,17 +168,17 @@ $(document).ready(function(){
 			    	$("#scs_smoke_status").html("<strong>Bahaya<strong>");
 				}
 				
-				if(temp >= 20 && temp <= 22){
+				if(temp <= 22){
 			        $("#scs_temp_status").attr("class", "text-success");
 		        	$("#scs_temp_status").html("<strong>Baik<strong>");
-			    }else if(temp >= 22 && temp <= 35){
+			    }else if(temp >= 22 && temp <= 39){
 			    	$("#scs_temp_status").attr("class", "text-warning");
 			    	$("#scs_temp_status").html("<strong>Normal<strong>");
-			    }else if(temp >= 35){
+			    }else if(temp >= 40){
 			    	$("#scs_temp_status").attr("class", "text-danger");
 			    	$("#scs_temp_status").html("<strong>Bahaya<strong>");
 				}else{
-
+					
 				}
 				
 	            setTimeout(getScsValue, 1000);

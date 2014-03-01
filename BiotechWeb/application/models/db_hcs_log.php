@@ -1,6 +1,7 @@
 <?php
 class db_hcs_log extends CI_Model{
 	function get_all(){
+		$this->db->order_by('time', 'desc');
 		$q = $this->db->get('hcs_log');
 		return $q->result();
 	}

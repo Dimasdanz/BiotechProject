@@ -140,6 +140,15 @@ class api extends CI_Controller{
 		echo json_encode($val);
 	}
 	
+	public function hcs_get_lamp(){
+		header("Content-type: text/json");
+		$val = intval(read_file("assets/device/hcs/lamp_1.txt"));
+		$val .= ";".intval(read_file("assets/device/hcs/lamp_2.txt"));
+		$val .= ";".intval(read_file("assets/device/hcs/lamp_3.txt"));
+		$val .= ";".intval(read_file("assets/device/hcs/lamp_4.txt"));
+		echo $val;
+	}
+	
 	public function scs_today_temperature(){
 		header("Content-type: text/json");
 		$ret = array();
@@ -164,7 +173,7 @@ class api extends CI_Controller{
 	
 	public function scs_realtime_value(){
 		header("Content-type: text/json");
-		$smoke = intval(read_file("assets/device/scs/smoke.txt"));
+		$smoke = floatval(read_file("assets/device/scs/smoke.txt"));
 		$temp = floatval(read_file("assets/device/scs/temp.txt"));
 		$val = array($smoke, $temp);
 		echo json_encode($val);
@@ -197,7 +206,7 @@ class api extends CI_Controller{
 			'temperature'=>$temp,
 			'smoke'=>$smoke
 		);
-		$this->db_scs_log->insert($data);
+		//$this->db_scs_log->insert($data);
 	}
 	
 	public function wms_today_turbidity(){
