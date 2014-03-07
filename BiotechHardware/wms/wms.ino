@@ -3,21 +3,26 @@
 #include <Ethernet.h>
 #include <EthernetClient.h>
 #include <Wire.h>
-#include <BH1750.h>
+#include <math.h>
 
-byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30 };
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30 };
 const char server[] = "192.168.1.3";
 IPAddress ip(192,168,4,3);
 
 const int pingPin = 2;
+const int relay1 = 3;
+const int relay2 = 4;
 
-BH1750 lightMeter;
+int BH1750address = 0x23;
+byte buff[2];
 
 void setup() {
   Serial.begin(9600);
-  lightMeter.begin();
   Ethernet.begin(mac, ip);
+  pinMode(relay1, OUTPUT);
+  pinMode(relay2, OUTPUT);
   delay(1000);
+  Serial.println("Start");
 }
 
 void loop(){
@@ -31,18 +36,25 @@ void loop(){
 
   pinMode(pingPin, INPUT);
   duration = pulseIn(pingPin, HIGH);
-  
+
   cm = (duration/58);
-  
+
   Serial.print(cm);
   Serial.print("cm");
   Serial.println();
-  
-  uint16_t lux = lightMeter.readLightLevel();
-  Serial.print("Light: ");
-  Serial.print(lux);
-  Serial.println(" lx");
-  send_log(cm, lux);
+
+  uint16_t lux=0;
+  BH1750_Init(BH1750address);
+  delay(200);
+
+  if(2==BH1750_Read(BH1750address))
+  {
+    lux=((buff[0]<<8)|buff[1]);
+    Serial.print("Light: ");
+    Serial.print(lux);
+    Serial.println(" lx");
+    send_log(cm, lux);
+  }
   delay(1000);
 }
 
@@ -66,3 +78,25 @@ void send_log(int var1, int var2){
     client.print(data);
   }
 }
+
+int BH1750_Read(int address) //
+{
+  int i=0;
+  Wire.beginTransmission(address);
+  Wire.requestFrom(address, 2);
+  while(Wire.available()) //
+  {
+    buff[i] = Wire.read();  // receive one byte
+    i++;
+  }
+  Wire.endTransmission();  
+  return i;
+}
+
+void BH1750_Init(int address) 
+{
+  Wire.beginTransmission(address);
+  Wire.write(0x10);//1lx reolution 120ms
+  Wire.endTransmission();
+}
+

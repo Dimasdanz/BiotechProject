@@ -25,7 +25,7 @@ const char server[] = "192.168.1.3";
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
 IPAddress ip(192,168,4,3);
 
-const int sensor = A0;
+const int sensor = A2;
 
 int attempt = 0;
 int count = 0;
@@ -74,7 +74,7 @@ void loop(){
         lcd_init();
       }
     }else{
-      check_condition();
+      //check_condition();
     }
   }
 }

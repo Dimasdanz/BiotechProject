@@ -3,14 +3,14 @@
 	$this->load->view('dcs/dcs_header');
 ?>
 	<div class="row">
-		<div class="col-sm-3">
+		<div class="col-sm-5">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-info-circle"></i> Status Pintu
 				</div>
 				<ul class="list-group dcs_status">
 					<li class="list-group-item clearfix"><div class="pull-left">Status</div><div class="pull-right"><b id="status"></b></div></li>
-					<li class="list-group-item clearfix"><div class="pull-left">Percobaan Kata Sandi</div><div class="pull-right"><b id="password_attempts"></b></div></li>
+					<li class="list-group-item clearfix"><div class="pull-left">Batas Pengulangan Kata Sandi</div><div class="pull-right"><b id="password_attempts"></b></div></li>
   					<li class="list-group-item clearfix"><div class="pull-left">Kondisi</div><div class="pull-right"><b id="condition"></b></div></li>
   				</ul>
   				<div class="panel-footer clearfix">
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-list"></i> Log Hari Ini
@@ -27,7 +27,7 @@
 						<table class="table table-hover table-condensed">
 							<thead>
 								<tr>
-									<th>No.</th>
+									<th style="width: 5%;">No.</th>
 									<th>Nama</th>
 									<th>Waktu</th>
 								</tr>
