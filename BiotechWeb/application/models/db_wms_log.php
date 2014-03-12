@@ -7,6 +7,7 @@ class db_wms_log extends CI_Model{
 	
 	function get_today(){
 		$this->db->where('date(time)', date('Y-m-d'));
+		$this->db->order_by('time', 'desc');
 		$q = $this->db->get('wms_log');
 		return $q->result();
 	}

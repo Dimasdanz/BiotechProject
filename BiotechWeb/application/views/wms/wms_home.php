@@ -3,7 +3,7 @@
 	$this->load->view('wms/wms_header');
 ?>
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-tint fa-fw"></i> Ketinggian Air
@@ -12,14 +12,23 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<i class="fa fa-tint fa-fw"></i> Kekeruhan Air
 				</div>
-				<div class="panel-body" id="turbidity-chart">
+				<div class="table-responsive">
+					<table class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th style="width: 5%;">No.</th>
+								<th>Nama</th>
+								<th>Waktu</th>
+							</tr>
+						</thead>
+							<tbody id="today_log">
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -40,59 +49,6 @@ $(document).ready(function () {
         }
     });
     
-	$.getJSON('<?=base_url()?>api/wms_today_turbidity', function(data) {
-		var option1 = {
-			chart: {
-				renderTo: 'turbidity-chart',
-				defaultSeriesType: 'spline',
-				events: {
-					load: requestData
-				}
-			},
-			title: {
-				text: 'Turbiditas'
-			},
-			xAxis: {
-				type: 'datetime',
-				tickPixelInterval: 50,
-				maxZoom: 20 * 100
-			},
-			yAxis: {
-				minPadding: 0.2,
-				maxPadding: 0.2,
-				title: {
-					text: 'Nilai (%)',
-					margin: 80
-				}
-			},
-			series: [{
-				name: 'Turbiditas',
-				data: []
-			}]
-		};
-		
-        option1.series[0].data = data;
-        var chart = new Highcharts.Chart(option1);
-        
-        function requestData() {
-    	    $.ajax({
-    	        url: '<?=base_url()?>api/wms_turbidity',
-    	        success: function(point) {
-    	            var series = chart.series[0],
-    	                shift = series.data.length > 20,
-    	                data_length = chart.series[0].xData.length - 1,
-    	                data = chart.series[0].xData;
-    	            
-    	            if(data[data_length] != point[0]){
-    	            	chart.series[0].addPoint(point, true, shift);
-    	            }
-    	            setTimeout(requestData, 1000);    
-    	        },
-    	        cache: false
-    	    });
-    	}
-    });
-	
     $('#water-level-chart').highcharts({
 	    chart: {
 	        type: 'gauge',
@@ -142,7 +98,7 @@ $(document).ready(function () {
 	    // the value axis
 	    yAxis: {
 	        min: 0,
-	        max: 200,
+	        max: <?=$water_tank_height?>,
 	        
 	        minorTickInterval: 'auto',
 	        minorTickWidth: 1,
@@ -172,7 +128,7 @@ $(document).ready(function () {
 	            color: '#DDDF0D' // yellow
 	        }, {
 	            from: 120,
-	            to: 200,
+	            to: <?=$water_tank_height?>,
 	            color: '#55BF3B' // green
 	        }]        
 	    },
@@ -195,5 +151,11 @@ $(document).ready(function () {
 			});
 		}, 1000);
 	});
+
+    function get_today_log(){
+		$("#today_log").load('<?=base_url()?>api/wms_today_log');
+		setTimeout(get_today_log, 1000);
+	}
+	get_today_log();
 });
 </script>

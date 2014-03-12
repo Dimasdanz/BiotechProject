@@ -9,6 +9,7 @@ class api extends CI_Controller{
 		$this->load->model('db_wms_log');
 	}
 	
+	/* DCS API */
 	public function dcs_status(){
 		$status = (read_file("assets/device/dcs/status.txt") == 1 ? "Aktif" : "Non-Aktif");
 		$password_attempts = read_file("assets/device/dcs/password_attempts.txt");
@@ -57,7 +58,9 @@ class api extends CI_Controller{
 		$data = array('name'=>$name);
 		$this->db_dcs_log->insert($data);
 	}
+	/* END DCS API */
 	
+	/* GCS API */
 	public function gcs_temperature(){
 		header("Content-type: text/json");
 		$log = $this->db_gcs_log->get_last_log();
@@ -133,7 +136,10 @@ class api extends CI_Controller{
 		$val = array($lux, $temp, $humidity, $air_humidity);
 		echo json_encode($val);
 	}
+	/* END GCS API */
 	
+	
+	/* HCS API */
 	public function hcs_lamp_value($param){
 		header("Content-type: text/json");
 		$val = intval(read_file("assets/device/hcs/".$param.".txt"));
@@ -146,9 +152,11 @@ class api extends CI_Controller{
 		$val .= ";".intval(read_file("assets/device/hcs/lamp_2.txt"));
 		$val .= ";".intval(read_file("assets/device/hcs/lamp_3.txt"));
 		$val .= ";".intval(read_file("assets/device/hcs/lamp_4.txt"));
-		echo $val;
+		echo json_encode($val);
 	}
+	/* END HCS API */
 	
+	/* SCS API */
 	public function scs_today_temperature(){
 		header("Content-type: text/json");
 		$ret = array();
@@ -206,23 +214,25 @@ class api extends CI_Controller{
 			'temperature'=>$temp,
 			'smoke'=>$smoke
 		);
-		//$this->db_scs_log->insert($data);
+		$this->db_scs_log->insert($data);
+	}
+	/* END SCS API */
+	
+	/* WMS API */
+	public function wms_today_log(){
+		$data['today_log'] = $this->db_wms_log->get_today();
+		$this->load->view('wms/wms_today_log', $data);
 	}
 	
-	public function wms_today_turbidity(){
+	public function wms_get_value(){
 		header("Content-type: text/json");
-		$ret = array();
-		foreach($this->db_wms_log->get_today() as $row){
-			$log[0] = strtotime($row->time)*1000;
-			$log[1] = intval($row->turbidity);
-			array_push($ret, $log);
-		}
-		echo json_encode($ret);
+		$val = intval(read_file("assets/device/wms/water_tank_height.txt"));
+		echo json_encode($val);
 	}
-	
+		
 	public function wms_realtime_value(){
 		header("Content-type: text/json");
-		$turbidity = intval(read_file("assets/device/wms/lux.txt"));
+		$turbidity = read_file("assets/device/wms/lux.txt");
 		$water_level = intval(read_file("assets/device/wms/water_level.txt"));
 		$val = array($turbidity, $water_level);
 		echo json_encode($val);
@@ -235,31 +245,25 @@ class api extends CI_Controller{
 		echo json_encode($y);
 	}
 	
-	public function wms_turbidity(){
-		header("Content-type: text/json");
-		$log = $this->db_wms_log->get_last_log();
-		$x = strtotime($log->time)*1000;
-		$y = intval($log->turbidity);
-		$ret = array($x, $y);
-		echo json_encode($ret); 
-	}
-	
 	public function wms_insert_log(){
-		$water_level = 250-($this->input->post('var1'));
-		if($this->input->post('var2') > 1000){
-			$turbidity = 0;
+		$water_level = intval(read_file("assets/device/wms/water_tank_height.txt"))-($this->input->post('var1'));
+		if($this->input->post('var2') > 200){
+			$turbidity = 'Jernih';
+		}else if ($this->input->post('var2') > 150){
+			$turbidity = 'Sedang';
 		}else{
-			$turbidity = 100-(($this->input->post('var2'))/10);
+			$turbidity = 'Keruh';
 		}
 		$old_turbidity = read_file("assets/device/wms/lux.txt");
 		write_file("assets/device/wms/water_level.txt", $water_level);
 		write_file("assets/device/wms/lux.txt", $turbidity);
-		if($old_turbidity-$turbidity > 2 || $turbidity-$old_turbidity > 2){
+		if($old_turbidity != $turbidity){
 			$data = array(
-					'water_level'=>$water_level,
-					'turbidity'=>$turbidity
+				'water_level'=>$water_level,
+				'turbidity'=>$turbidity
 			);
 			$this->db_wms_log->insert($data);
 		}
 	}
+	/* END WMS API */
 }

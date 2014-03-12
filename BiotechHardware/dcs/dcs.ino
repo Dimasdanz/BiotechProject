@@ -8,10 +8,7 @@
 const byte ROWS = 4;
 const byte COLS = 3;
 char keys[ROWS][COLS] = {
-  {'1','2','3'},
-  {'4','5','6'},
-  {'7','8','9'},
-  {'*','0','#'}
+  {'1','2','3'},{'4','5','6'},{'7','8','9'},{'*','0','#'}
 };
 
 byte rowPins[ROWS] = {2, 3, 4, 5};
@@ -26,6 +23,7 @@ byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
 IPAddress ip(192,168,4,3);
 
 const int sensor = A2;
+const int solenoid = 9;
 
 int attempt = 0;
 int count = 0;
@@ -50,6 +48,7 @@ void setup(){
   lcd_init();
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
+  pinMode(solenoid, OUTPUT);
 }
 
 void loop(){
@@ -73,7 +72,8 @@ void loop(){
         sys_init();
         lcd_init();
       }
-    }else{
+    }
+    else{
       //check_condition();
     }
   }
@@ -87,7 +87,8 @@ boolean check_device(){
     }
     display_disarmed = false;
     return true;
-  }else{
+  }
+  else{
     if(!display_disarmed){
       lcd_print("Perangkat non-aktif");
       display_disarmed = true;
@@ -105,7 +106,8 @@ boolean check_condition(){
     }
     display_locked = false;
     return true;
-  }else{
+  }
+  else{
     if(!display_locked){
       lcd_print("Perangkat terkunci");
       display_locked = true;
@@ -178,15 +180,9 @@ void check_result(String result){
     lcd_attempts(attempt, max_attempt);
   }
   if(result == "1"){
-    attempt = 0;
-    lcd_print("Pintu Terbuka");
-    delay(3000);
-    int val = digitalRead(sensor);
-    while(digitalRead(sensor) == HIGH){
-      val = digitalRead(sensor);
+      open_door();
     }
-    delay(1000);
-  }else{
+  else{
     lcd_print("Password Salah");
     lcd_attempts(attempt, max_attempt);
     delay(1000);
@@ -195,6 +191,19 @@ void check_result(String result){
       lock_device();
     }
   }
+}
+
+void open_door(){
+  attempt = 0;
+  lcd_print("Pintu Terbuka");
+  digitalWrite(solenoid, HIGH);
+  delay(3000);
+  int val = digitalRead(sensor);
+  while(digitalRead(sensor) == HIGH){
+    val = digitalRead(sensor);
+  }
+  delay(1000);
+  digitalWrite(solenoid, LOW);
 }
 
 String read_server(String url){
@@ -254,3 +263,4 @@ void lock_device(){
     client.print(data);
   }
 }
+

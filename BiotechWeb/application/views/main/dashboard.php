@@ -43,19 +43,19 @@
 							<div class="row">
 								<div class="col-sm-3">
 									<h5>Lampu 1</h5>
-									<h2>ON</h2>
+									<h2 id="lamp_1">n/a</h2>
 								</div>
 								<div class="col-sm-3">
 									<h5>Lampu 2</h5>
-									<h2>OFF</h2>
+									<h2 id="lamp_2">n/a</h2>
 								</div>
 								<div class="col-sm-3">
 									<h5>Lampu 3</h5>
-									<h2>OFF</h2>
+									<h2 id="lamp_3">n/a</h2>
 								</div>
 								<div class="col-sm-3">
 									<h5>Lampu 4</h5>
-									<h2>ON</h2>
+									<h2 id="lamp_4">n/a</h2>
 								</div>
 							</div>
 						</div>
@@ -77,7 +77,6 @@
 								<div class="col-sm-6">
 									<h5>Turbiditas</h5>
 									<h2 id="wms_turbidity">n/a</h2>
-                                    <h2 id="wms_turb_status">n/a</h2>
 								</div>
 							</div>
 						</div>
@@ -192,19 +191,16 @@ $(document).ready(function(){
 	        url: '<?=base_url()?>api/wms_realtime_value',
 	        success: function(points) {
 		        var water_level = points[1],
-		        	lux = points[0];
+		        	turbidity = points[0];
 		        $("#wms_water_level").html(water_level+" cm");
-		        $("#wms_turbidity").html(lux+"%");
+		        $("#wms_turbidity").html("<strong>"+turbidity+"</strong>");
 
-		        if(lux >= 0 && lux <= 24){
-			        $("#wms_turb_status").attr("class", "text-success");
-		        	$("#wms_turb_status").html("<strong>Jernih<strong>");
-			    }else if(lux >= 25 && lux <= 49){
-			    	$("#wms_turb_status").attr("class", "text-warning");
-			    	$("#wms_turb_status").html("<strong>Normal<strong>");
-			    }else if(lux >= 50){
-			    	$("#wms_turb_status").attr("class", "text-danger");
-			    	$("#wms_turb_status").html("<strong>Keruh<strong>");
+		        if(turbidity == "Jernih"){
+			        $("#wms_turbidity").attr("class", "text-success");
+			    }else if(turbidity == "Sedang"){
+			    	$("#wms_turbidity").attr("class", "text-warning");
+			    }else if(turbidity == "Keruh"){
+			    	$("#wms_turbidity").attr("class", "text-danger");
 				}else{
 
 				}
@@ -238,5 +234,25 @@ $(document).ready(function(){
 		setTimeout(getDcsLog, 1000);
 	}
 	getDcsLog();
+	function getHcsValue(){
+		$.ajax({
+	        url: '<?=base_url()?>api/hcs_get_lamp',
+	        success: function(points) {
+		        var str = points.split(';');
+		        for(var i=0; i<str.length; i++){
+		        	if(str[i]==1){
+			        	$("#lamp_"+(i+1)).attr("class", "text-success");
+						$("#lamp_"+(i+1)).html("ON");
+					}else{
+						$("#lamp_"+(i+1)).attr("class", "text-danger");
+						$("#lamp_"+(i+1)).html("OFF");
+					}
+				}
+	            setTimeout(getHcsValue, 1000);
+	        },
+	        cache: false
+	    });
+	}
+	getHcsValue();
 });
 </script>
