@@ -21,10 +21,6 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
   Serial.println("Start");
-  /*if(Ethernet.begin(mac) == 0){
-    Serial.println("Failed to configure Ethernet using DHCP");
-    Ethernet.begin(mac, ip);
-  }*/
   Ethernet.begin(mac, ip);
   pinMode(relay1, OUTPUT);
   pinMode(relay2, OUTPUT);
@@ -67,12 +63,13 @@ void loop(){
   
   if(lux < 50){
     Serial.println("Kuras");
+    digitalWrite(relay1, HIGH);
     digitalWrite(relay2, LOW);
     kuras = true;
   }
   
   if(kuras){
-    if((val.toInt()-cm) < 5){
+    if((val.toInt()-cm) < 10){
       Serial.println("Kosong abis kuras");
       digitalWrite(relay2, HIGH);
       digitalWrite(relay1, HIGH);
