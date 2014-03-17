@@ -17,7 +17,7 @@ int fan_speed = 255;
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30 };
 const char server[] = "192.168.1.3";
-IPAddress ip(192,168,4,3);
+IPAddress ip(192,168,3,5);
 
 OneWire oneWire(temp_pin);
 DallasTemperature temp_sensor(&oneWire);
