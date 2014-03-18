@@ -1,7 +1,3 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('gcs/gcs_header');
-?>
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="panel panel-primary">
@@ -24,10 +20,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
@@ -37,7 +29,7 @@ $(document).ready(function() {
             useUTC : false
         }
     });
-	$.getJSON('<?=base_url()?>api/gcs_today_lux', function(data) {
+	$.getJSON('<?=base_url()?>api/gcs/gcs_today_lux', function(data) {
 		var option2 = {
 			chart: {
 				renderTo: 'lux-chart',
@@ -73,7 +65,7 @@ $(document).ready(function() {
         
         function requestLux() {
     	    $.ajax({
-    	        url: '<?=base_url()?>api/gcs_lux',
+    	        url: '<?=base_url()?>api/gcs/gcs_lux',
     	        success: function(point) {
     	            var series = chart2.series[0],
     	                shift = series.data.length > 20,
@@ -89,7 +81,7 @@ $(document).ready(function() {
     	    });
     	}
     });
-	$.getJSON('<?=base_url()?>api/gcs_today_temperature', function(data) {
+	$.getJSON('<?=base_url()?>api/gcs/gcs_today_temperature', function(data) {
 		var option1 = {
 			chart: {
 				renderTo: 'temp-chart',
@@ -125,7 +117,7 @@ $(document).ready(function() {
         
         function requestTemp() {
     	    $.ajax({
-    	        url: '<?=base_url()?>api/gcs_temperature',
+    	        url: '<?=base_url()?>api/gcs/gcs_temperature',
     	        success: function(point) {
     	            var series = chart.series[0],
     	                shift = series.data.length > 20,

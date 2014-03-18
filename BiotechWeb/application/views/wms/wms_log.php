@@ -1,51 +1,43 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('wms/wms_header');
-?>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="table-responsive">
-						<table class="table table-hover table-condensed" id="dataTables-wms_log">
-							<thead>
-								<tr>
-									<th width="5%">No.</th>
-									<th>Ketinggian Air</th>
-									<th>Kejernihan Air</th>
-									<th>Waktu</th>
-									<th>Tanggal</th>
-								</tr>
-							</thead>
-							<tbody>
-							<?php 
-								$no = 1;
-								if($wms_log != NULL){
-									foreach ($wms_log as $row){
-							?>
-								<tr>
-									<td><?=$no?></td>
-									<td><?=$row->water_level?></td>
-									<td><?=$row->turbidity?></td>
-									<td><?=date('h:i:s', strtotime($row->time))?></td>
-									<td><?=date('d F Y', strtotime($row->time))?></td>
-								</tr>
-							<?php 
-									$no++;
-									}
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-hover table-condensed" id="dataTables-wms_log">
+						<thead>
+							<tr>
+								<th width="5%">No.</th>
+								<th>Ketinggian Air</th>
+								<th>Kejernihan Air</th>
+								<th>Waktu</th>
+								<th>Tanggal</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php 
+							$no = 1;
+							if($wms_log != NULL){
+								foreach ($wms_log as $row){
+						?>
+							<tr>
+								<td><?=$no?></td>
+								<td><?=$row->water_level?></td>
+								<td><?=$row->turbidity?></td>
+								<td><?=date('h:i:s', strtotime($row->time))?></td>
+								<td><?=date('d F Y', strtotime($row->time))?></td>
+							</tr>
+						<?php 
+								$no++;
 								}
-							?>
-							</tbody>
-						</table>
-					</div>
+							}
+						?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>

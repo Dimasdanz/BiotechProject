@@ -1,7 +1,3 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('dcs/dcs_header');
-?>
 	<?php 
 		if($this->session->flashdata('success')){
 	?>
@@ -77,25 +73,26 @@
 				<div class="modal-body">
 					<?php
 						if($this->session->flashdata('error')){
+							$form_data = $this->session->flashdata('error');
 					?>
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<?=$this->session->flashdata('error')?>
+							<?=$form_data[3]?>
 					</div>
 					<?php
 						}
 					?>
 					<div class="form-group">
 						<label>ID</label>
-						<input class="form-control" placeholder="ID" type="text" name="id" id="id" value="<?=$user_id?>" readonly>
+						<input class="form-control" placeholder="ID" type="text" name="id" id="id" value="<?=isset($form_data[0]) ? $form_data[0] : ''?>" readonly>
 					</div>
 					<div class="form-group">
 						<label>Nama</label>
-						<input class="form-control" placeholder="Nama" type="text" name="name" id="name" required>
+						<input class="form-control" placeholder="Nama" type="text" name="name" id="name" required value="<?=isset($form_data[1]) ? $form_data[1] : ''?>">
 					</div>
 					<div class="form-group">
 						<label>Kata Sandi</label>
-						<input class="form-control" placeholder="Kata Sandi" type="text" name="password" id="password" required>
+						<input class="form-control" placeholder="Kata Sandi" type="text" name="password" id="password" required value="<?=isset($form_data[2]) ? $form_data[2] : ''?>">
 						<p class="help-block">Kata sandi harus berupa angka 0-9</p>
 					</div>
 				</div>
@@ -128,17 +125,30 @@
         </div>
     </div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
 	$(document).ready(function(){
 		<?php
 			if($this->session->flashdata('error')){
+				$error = $this->session->flashdata('error')
 		?>
 			$('#modal_add').modal('show');
+			<?php 
+				if($error[4] == 'insert'){
+			?>
+					$('#user_form').attr('action', '<?=base_url()?>dcs/insert');
+					$('#add').show();
+					$('#update').hide();
+			<?php 
+				}else{
+			?>
+					$('#user_form').attr('action', '<?=base_url()?>dcs/update');
+					$('#add').hide();
+					$('#update').show();
+			<?php 
+				}
+			?>
 		<?php
 			}
 		?>
@@ -176,7 +186,7 @@
 			$('#user_form').attr('action', '<?=base_url()?>dcs/insert');
 			$('#add').show();
 			$('#update').hide();
-			$('#id').val("<?=$user_id?>");
+			$('#id').val("<?=$form_data[0]?>");
 			$('#name').val("");
 			$('#password').val("");
 		});
@@ -193,7 +203,7 @@
 		$(".delete").click(function() {
 			var name = $('#name_'+this.id).val();
 			$("#user_id").val(this.id);
-			$("#confirm_str").html('Are you sure want to delete <b>'+name+'</b>?');
+			$("#confirm_str").html('Apakah Anda yakin ingin menghapus <b>'+name+'</b>?');
 		});
 	});
 </script>

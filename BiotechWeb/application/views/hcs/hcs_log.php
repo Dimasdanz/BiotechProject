@@ -1,7 +1,3 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('gcs/gcs_header');
-?>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-default">
@@ -42,10 +38,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>

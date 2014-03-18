@@ -21,7 +21,7 @@
 				</a>
 				<ul class="nav nav-second-level">
 					<li id="home"><a href="<?=base_url()?>gcs"><i class="fa fa-home fa-fw"></i> Beranda</a></li>
-					<li id="log"><a href="<?=base_url()?>gcs/plants"><i class="fa fa-leaf fa-fw"></i> Tanaman</a></li>
+					<li id="plants"><a href="<?=base_url()?>gcs/plants"><i class="fa fa-leaf fa-fw"></i> Tanaman</a></li>
 					<li id="log"><a href="<?=base_url()?>gcs/log"><i class="fa fa-list fa-fw"></i> Log</a></li>
 				</ul>
 			</li>

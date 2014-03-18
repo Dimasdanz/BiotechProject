@@ -1,7 +1,3 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('dcs/dcs_header');
-?>
 	<div class="row">
 		<?php 
 			if($this->session->flashdata('message')){
@@ -100,9 +96,6 @@
         </div>
     </div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/bootstrap-switch.js"></script>
 <script>
 	$(document).ready(function() {

@@ -62,10 +62,6 @@ function SubmitAudioOff()
      cvcs.SetSound(0);
 }
 </script>
-<div id="page-wrapper">
-<?php
-	$this->load->view('gcs/gcs_header');
-?>
 	<?php 
 		if($this->session->flashdata('success')){
 	?>
@@ -207,10 +203,6 @@ function SubmitAudioOff()
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		
-	</div>
-</div>
 <div class="modal fade" id="modal_confirm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -232,9 +224,6 @@ function SubmitAudioOff()
         </div>
     </div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/bootstrap-switch.js"></script>
 <script>
 	$(document).ready(function() {

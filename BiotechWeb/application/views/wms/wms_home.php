@@ -1,42 +1,34 @@
-<div id="page-wrapper">
-<?php
-	$this->load->view('wms/wms_header');
-?>
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<i class="fa fa-tint fa-fw"></i> Ketinggian Air
-				</div>
-				<div class="panel-body" id="water-level-chart">
-				</div>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<i class="fa fa-tint fa-fw"></i> Ketinggian Air
+			</div>
+			<div class="panel-body" id="water-level-chart">
 			</div>
 		</div>
-		<div class="col-sm-6">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<i class="fa fa-tint fa-fw"></i> Kekeruhan Air
-				</div>
-				<div class="table-responsive">
-					<table class="table table-hover table-condensed">
-						<thead>
-							<tr>
-								<th style="width: 5%;">No.</th>
-								<th>Nama</th>
-								<th>Waktu</th>
-							</tr>
-						</thead>
-							<tbody id="today_log">
-						</tbody>
-					</table>
-				</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<i class="fa fa-tint fa-fw"></i> Kekeruhan Air
+			</div>
+			<div class="table-responsive">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th style="width: 5%;">No.</th>
+							<th>Nama</th>
+							<th>Waktu</th>
+						</tr>
+					</thead>
+						<tbody id="today_log">
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/highcharts/highcharts-more.js"></script>
@@ -145,7 +137,7 @@ $(document).ready(function () {
 
 	function (chart) {
 		setInterval(function () {
-			$.getJSON("<?=base_url()?>api/wms_realtime_value", function (data, textStatus) {
+			$.getJSON("<?=base_url()?>api/wms/wms_realtime_value", function (data, textStatus) {
 				var point = chart.series[0].points[0];
 				point.update(data);
 			});
@@ -153,7 +145,7 @@ $(document).ready(function () {
 	});
 
     function get_today_log(){
-		$("#today_log").load('<?=base_url()?>api/wms_today_log');
+		$("#today_log").load('<?=base_url()?>api/wms/wms_today_log');
 		setTimeout(get_today_log, 1000);
 	}
 	get_today_log();

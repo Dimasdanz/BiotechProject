@@ -1,136 +1,129 @@
-<div id="page-wrapper">
-	<div class="row">
-		<div class="col-sm-12">
-			<h1 class="page-header">Pratinjau</h1>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-unlock-alt"></i> Sistem Kendali Pintu
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover table-condensed">
+								<thead>
+									<tr>
+										<th>No.</th>
+										<th>Nama</th>
+										<th>Waktu</th>
+									</tr>
+								</thead>
+								<tbody id="dcs_log_table">
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-unlock-alt"></i> Sistem Kendali Pintu
-						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-hover table-condensed">
-									<thead>
-										<tr>
-											<th>No.</th>
-											<th>Nama</th>
-											<th>Waktu</th>
-										</tr>
-									</thead>
-									<tbody id="dcs_log_table">
-									
-									</tbody>
-								</table>
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-home fa-fw"></i> Sistem Kendali Rumah
+					</div>
+					<div class="panel-body text-center">
+						<div class="row">
+							<div class="col-sm-3">
+								<h5>Lampu 1</h5>
+								<h2 id="lamp_1">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Lampu 2</h5>
+								<h2 id="lamp_2">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Lampu 3</h5>
+								<h2 id="lamp_3">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Lampu 4</h5>
+								<h2 id="lamp_4">n/a</h2>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-home fa-fw"></i> Sistem Kendali Rumah
-						</div>
-						<div class="panel-body text-center">
-							<div class="row">
-								<div class="col-sm-3">
-									<h5>Lampu 1</h5>
-									<h2 id="lamp_1">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Lampu 2</h5>
-									<h2 id="lamp_2">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Lampu 3</h5>
-									<h2 id="lamp_3">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Lampu 4</h5>
-									<h2 id="lamp_4">n/a</h2>
-								</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-tint fa-fw"></i> Pemantauan Air
+					</div>
+					<div class="panel-body text-center">
+						<div class="row">
+							<div class="col-sm-6">
+								<h5>Tinggi Air</h5>
+								<h2 id="wms_water_level">n/a</h2>
+							</div>
+							<div class="col-sm-6">
+								<h5>Turbiditas</h5>
+								<h2 id="wms_turbidity">n/a</h2>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-tint fa-fw"></i> Pemantauan Air
-						</div>
-						<div class="panel-body text-center">
-							<div class="row">
-								<div class="col-sm-6">
-									<h5>Tinggi Air</h5>
-									<h2 id="wms_water_level">n/a</h2>
-								</div>
-								<div class="col-sm-6">
-									<h5>Turbiditas</h5>
-									<h2 id="wms_turbidity">n/a</h2>
-								</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-cogs fa-fw"></i> Ruang Server
+					</div>
+					<div class="panel-body text-center">
+						<div class="row">
+							<div class="col-sm-6">
+								<h5>Temperatur</h5>
+								<h2 id="scs_temp_value">n/a</h2>
+								<h2 id="scs_temp_status"></h2>
+							</div>
+							<div class="col-sm-6">
+								<h5>Kadar Asap</h5>
+								<h2 id="scs_smoke_value">n/a</h2>
+								<h2 id="scs_smoke_status"></h2>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-cogs fa-fw"></i> Ruang Server
-						</div>
-						<div class="panel-body text-center">
-							<div class="row">
-								<div class="col-sm-6">
-									<h5>Temperatur</h5>
-									<h2 id="scs_temp_value">n/a</h2>
-									<h2 id="scs_temp_status"></h2>                      
-								</div>
-								<div class="col-sm-6">
-									<h5>Kadar Asap</h5>
-									<h2 id="scs_smoke_value">n/a</h2>
-									<h2 id="scs_smoke_status"></h2>                      
-								</div>
-							</div>
-						</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-leaf"></i> Rumah Kaca
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<i class="fa fa-leaf"></i> Rumah Kaca
-						</div>
-                        <div class="panel-body text-center">
-							<h4>Tanaman : Anggrek</h4>
-							<div class="row">
-								<div class="col-sm-3">
-									<h5>Intensitas Cahaya</h5>
-									<h2 id="gcs_lux">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Kelembaban</h5>
-									<h2 id="gcs_humidity">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Temperatur</h5>
-									<h2 id="gcs_temp">n/a</h2>
-								</div>
-								<div class="col-sm-3">
-									<h5>Kelembaban Udara</h5>
-									<h2 id="gcs_air_humidity">n/a</h2>
-								</div>
+					<div class="panel-body text-center">
+						<h4>Tanaman : Anggrek</h4>
+						<div class="row">
+							<div class="col-sm-3">
+								<h5>Intensitas Cahaya</h5>
+								<h2 id="gcs_lux">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Kelembaban</h5>
+								<h2 id="gcs_humidity">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Temperatur</h5>
+								<h2 id="gcs_temp">n/a</h2>
+							</div>
+							<div class="col-sm-3">
+								<h5>Kelembaban Udara</h5>
+								<h2 id="gcs_air_humidity">n/a</h2>
 							</div>
 						</div>
 					</div>
@@ -139,14 +132,11 @@
 		</div>
 	</div>
 </div>
-<?php 
-	$this->load->view('template/footer');
-?>
 <script>
 $(document).ready(function(){
 	function getScsValue(){
 		$.ajax({
-	        url: '<?=base_url()?>api/scs_realtime_value',
+	        url: '<?=base_url()?>api/scs/scs_realtime_value',
 	        success: function(points) {
 		        var ppm = points[0],
 		        	temp = points[1];
@@ -188,7 +178,7 @@ $(document).ready(function(){
 	getScsValue();
 	function getWmsValue(){
 		$.ajax({
-	        url: '<?=base_url()?>api/wms_realtime_value',
+	        url: '<?=base_url()?>api/wms/wms_realtime_value',
 	        success: function(points) {
 		        var water_level = points[1],
 		        	turbidity = points[0];
@@ -213,7 +203,7 @@ $(document).ready(function(){
 	getWmsValue();
 	function getGcsValue(){
 		$.ajax({
-	        url: '<?=base_url()?>api/gcs_realtime_value',
+	        url: '<?=base_url()?>api/gcs/gcs_realtime_value',
 	        success: function(points) {
 		        var lux = points[0],
 		        	temp = points[1],
@@ -230,13 +220,13 @@ $(document).ready(function(){
 	}
 	getGcsValue();
 	function getDcsLog(){
-		$("#dcs_log_table").load('<?=base_url()?>api/dcs_today_log');
+		$("#dcs_log_table").load('<?=base_url()?>api/dcs/dcs_today_log');
 		setTimeout(getDcsLog, 1000);
 	}
 	getDcsLog();
 	function getHcsValue(){
 		$.ajax({
-	        url: '<?=base_url()?>api/hcs_get_lamp',
+	        url: '<?=base_url()?>api/hcs/hcs_get_lamp',
 	        success: function(points) {
 		        var str = points.split(';');
 		        for(var i=0; i<str.length; i++){
