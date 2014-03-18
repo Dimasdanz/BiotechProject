@@ -1,9 +1,3 @@
-<div id="page-wrapper">
-	<div class="row">
-		<div class="col-sm-12">
-			<h1 class="page-header">Admin</h1>
-		</div>
-	</div>
 	<?php 
 		if($this->session->flashdata('success')){
 	?>
@@ -53,7 +47,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -154,9 +147,6 @@
         </div>
     </div>
 </div>
-<?php
-	$this->load->view('template/footer');
-?>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>

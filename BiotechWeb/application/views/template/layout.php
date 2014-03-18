@@ -26,10 +26,18 @@
 </head>
 <body>
 	<div id="wrapper">
-		<?php $this->load->view('template/topbar')?>
-		<?php $this->load->view('template/sidebar')?>
+		<?php 
+			if($this->uri->segment(1) != 'login'){ 
+				$this->load->view('template/topbar');
+				$this->load->view('template/sidebar');
+			}
+		?>
 		<?php
 			switch($this->uri->segment(1)){
+				case 'admin':
+					$header = 'Admin';
+					$icon = 'users';
+					break;
 				default:
 					$header = 'Beranda';
 					$icon = 'home';
@@ -58,6 +66,15 @@
 					$icon = 'home';
 					break;
 			}
+			
+			switch($this->uri->segment(1)){
+				case 'admin':
+					$header = 'Admin';
+					$icon = 'users';
+					break;
+			}
+			
+			if($this->uri->segment(1) != 'login'){
 		?>
 		<div id="page-wrapper">
 			<div class="row">
@@ -66,7 +83,10 @@
 						<i class="fa fa-<?=$icon?> fa-fw"></i> <?=$header?></h3>
 				</div>
 			</div>
-			<?php $this->load->view($content, $contentData)?>
+			<?php 
+				} 
+				$this->load->view($content, $contentData)
+			?>
 		</div>
     </div>
     <!--

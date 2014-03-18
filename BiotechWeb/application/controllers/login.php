@@ -1,19 +1,25 @@
 <?php
+
+if(! defined('BASEPATH')) exit('No direct script access allowed');
 class login extends CI_Controller{
-	
+
 	public function __construct(){
 		parent::__construct();
 	}
-	
+
 	public function index(){
 		if($this->session->userdata('logged_in') != NULL){
 			redirect(base_url());
 		}
-		$this->load->view('template/header');
-		$this->load->view('main/login_page');
-		$this->load->view('template/footer');
+		$data = array(
+			'content' => 'main/login_page',
+			'contentData' => array(
+				'' 
+			) 
+		);
+		$this->load->view('template/layout', $data);
 	}
-	
+
 	public function validate(){
 		$this->load->library('PasswordHash');
 		
@@ -23,15 +29,15 @@ class login extends CI_Controller{
 		if($this->form_validation->run() == FALSE){
 			$msg = validation_errors();
 			$this->session->set_flashdata('error', $msg);
-			redirect(base_url().'login', 'refresh');
+			redirect(base_url() . 'login', 'refresh');
 		}else{
 			redirect(base_url(), 'refresh');
 		}
 	}
-	
+
 	public function login_check($str){
 		$this->load->model('db_admin');
-	
+		
 		$username = $this->db_admin->get_single($this->input->post('username'));
 		if($username){
 			if($this->passwordhash->CheckPassword($str, $username->password)){
@@ -46,11 +52,11 @@ class login extends CI_Controller{
 			return false;
 		}
 	}
-	
+
 	public function logout(){
 		$this->session->unset_userdata('logged_in');
 		$this->session->sess_destroy();
-		redirect(base_url().'login', 'refresh');
+		redirect(base_url() . 'login', 'refresh');
 	}
 }
 ?>
