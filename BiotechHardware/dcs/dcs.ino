@@ -5,6 +5,12 @@
 #include <LiquidCrystal_I2C.h>
 #include <Servo.h>
 
+const char server[] = "192.168.2.4";
+byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
+IPAddress ip(192,168,1,9);
+
+EthernetClient client;
+
 const byte ROWS = 4;
 const byte COLS = 3;
 char keys[ROWS][COLS] = {
@@ -16,20 +22,16 @@ byte colPins[COLS] = {6, 7, 8};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 LiquidCrystal_I2C lcd(0x27,20,4);
-EthernetClient client;
-
-const char server[] = "192.168.1.3";
-byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
-IPAddress ip(192,168,4,3);
 
 const int sensor = A2;
+const int push_btn = A3;
 const int solenoid = 9;
 
 int attempt = 0;
 int count = 0;
 int max_attempt;
 String disp = "";
-char pass[255];
+char pass[16];
 
 boolean display_armed = false;
 boolean display_disarmed = false;
@@ -37,17 +39,24 @@ boolean display_locked = false;
 boolean display_unlocked = false;
 
 void setup(){
+  Serial.begin(9600);
+  Ethernet.begin(mac, ip);
+  Serial.println(Ethernet.localIP());
+  
   lcd.init();
   lcd.backlight();
   lcd.setCursor(3, 0);
   lcd.print("Danz  Security");
   lcd.setCursor(0,1);
   lcd.print("Inisialisasi...");
-  Ethernet.begin(mac, ip);
   check_device();
   lcd_init();
+  
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
+  pinMode(push_btn, INPUT);
+  digitalWrite(push_btn, HIGH);
+  
   pinMode(solenoid, OUTPUT);
 }
 
@@ -59,12 +68,14 @@ void loop(){
         disp += "*";
         lcd.setCursor(0,2);
         lcd.print(disp);
+        Serial.print(key);
         pass[count] = key;
         count++;
       }
       if(key == '*'){
         attempt++;
         send_password(pass);
+        Serial.println(pass);
         sys_init();
         lcd_init();
       }

@@ -22,11 +22,11 @@ byte colPins[COLS] = {6, 7, 8};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 LiquidCrystal_I2C lcd(0x27,20,4);
-
+Servo myservo;
 
 const int sensor = A2;
 const int push_btn = A3;
-const int solenoid = 9;
+const int servo = 9;
 
 int attempt = 0;
 int count = 0;
@@ -47,6 +47,7 @@ long interval_check = 60000;
 
 void setup(){
   Serial.begin(9600);
+  myservo.attach(9);
   if(Ethernet.begin(mac) == 0){
     Ethernet.begin(mac, ip);
   }
@@ -63,12 +64,12 @@ void setup(){
   device_status = check_device();
   device_condition = check_condition();
   
-  //lcd_init();
+  lcd_init();
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
   pinMode(push_btn, INPUT);
   digitalWrite(push_btn, HIGH);
-  pinMode(solenoid, OUTPUT);
+  myservo.write(60);
 }
 
 void loop(){
@@ -170,7 +171,7 @@ void lcd_init(){
   lcd.setCursor(3,0);
   lcd.print("Keamanan Pintu");
   lcd.setCursor(0,1);
-  lcd.print("Input Password :");
+  lcd.print("Kata Kunci :");
   lcd.setCursor(0,2);
   for(int i=0;i<20;i++){
     lcd.print(" ");
@@ -229,9 +230,11 @@ void check_result(String result){
     lcd_print("Password Salah");
     lcd_attempts(attempt, max_attempt);
     delay(1000);
-    if(attempt >= max_attempt){
-      attempt = 0;
-      lock_device();
+    if(max_attempt > 0){
+      if(attempt >= max_attempt){
+        attempt = 0;
+        lock_device();
+      }
     }
   }
 }
@@ -239,14 +242,14 @@ void check_result(String result){
 void open_door(){
   attempt = 0;
   lcd_print("Pintu Terbuka");
-  digitalWrite(solenoid, HIGH);
+  myservo.write(0);
   delay(3000);
   int val = digitalRead(sensor);
   while(digitalRead(sensor) == HIGH){
     val = digitalRead(sensor);
   }
   delay(1000);
-  digitalWrite(solenoid, LOW);
+  myservo.write(60);
 }
 
 String read_server(String url){
