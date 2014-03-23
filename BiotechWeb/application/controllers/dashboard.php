@@ -18,13 +18,7 @@ class dashboard extends CI_Controller{
 	}
 	
 	public function error_404(){
-		$data = array(
-			'content' => 'main/error_404',
-			'contentData' => array(
-				''
-			)
-		);
-		$this->load->view('template/layout', $data);
+		$this->load->view('main/error_404');
 	}
 }
 
