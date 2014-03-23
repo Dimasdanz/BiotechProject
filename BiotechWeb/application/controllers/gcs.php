@@ -104,16 +104,16 @@ class gcs extends CI_Controller{
 		$selected_plant = $this->db_gcs_plants->get_single($plant_id);
 		switch($selected_plant->humidity){
 			case 'dry':
-				$upper = 300;
+				$upper = 30;
 				$lower = 0;
 				break;
 			case 'humid':
-				$upper = 700;
-				$lower = 301;
+				$upper = 70;
+				$lower = 31;
 				break;
 			case 'wet':
-				$upper = 1023;
-				$lower = 701;
+				$upper = 100;
+				$lower = 71;
 				break;
 		}
 		write_file("assets/device/gcs/lux_target.txt", $selected_plant->lux);
