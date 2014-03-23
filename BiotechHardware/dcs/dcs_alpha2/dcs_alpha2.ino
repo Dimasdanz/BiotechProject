@@ -59,7 +59,7 @@ void setup(){
   lcd.setCursor(3, 0);
   lcd.print("Keamanan Pintu");
   lcd.setCursor(0,1);
-  lcd.print("Inisialisasi...");
+  lcd.print("Inisialisasi");
   
   device_status = check_device();
   device_condition = check_condition();
@@ -69,7 +69,7 @@ void setup(){
   digitalWrite(sensor, HIGH);
   pinMode(push_btn, INPUT);
   digitalWrite(push_btn, HIGH);
-  myservo.write(60);
+  myservo.write(70);
 }
 
 void loop(){
@@ -119,7 +119,7 @@ void loop(){
 
 boolean check_device(){
   Serial.print("Cek Status");
-  if(read_server("/api/dcs_get_value/status") == "1"){
+  if(read_server("/api/dcs/dcs_get_value/status") == "1"){
     if(!display_armed){
       lcd_init();
       display_armed = true;
@@ -141,7 +141,7 @@ boolean check_device(){
 
 boolean check_condition(){
   Serial.print("Cek Kondisi");
-  if(read_server("/api/dcs_get_value/condition") == "0"){
+  if(read_server("/api/dcs/dcs_get_value/condition") == "0"){
     if(!display_unlocked){
       lcd_init();
       display_unlocked = true;
@@ -205,7 +205,7 @@ void send_password(char password[]){
 
   if (client.connect(server,80))
   {
-    client.print("POST /api/dcs_check_password HTTP/1.1\n");
+    client.print("POST /api/dcs/dcs_check_password HTTP/1.1\n");
     client.print("Host: 192.168.2.4\n");
     client.print("Connection: close\n");
     client.print("Content-Type: application/x-www-form-urlencoded\n");
@@ -215,12 +215,12 @@ void send_password(char password[]){
     client.print(data);
   }
   delay(50);
-  check_result(read_server("/api/dcs_get_value/result"));
+  check_result(read_server("/api/dcs/dcs_get_value/result"));
 }
 
 void check_result(String result){
   if(attempt == 1){
-    max_attempt = read_server("/api/dcs_get_value/password_attempts").toInt();
+    max_attempt = read_server("/api/dcs/dcs_get_value/password_attempts").toInt();
     lcd_attempts(attempt, max_attempt);
   }
   if(result == "1"){
@@ -242,14 +242,14 @@ void check_result(String result){
 void open_door(){
   attempt = 0;
   lcd_print("Pintu Terbuka");
-  myservo.write(0);
+  myservo.write(30);
   delay(3000);
   int val = digitalRead(sensor);
   while(digitalRead(sensor) == HIGH){
     val = digitalRead(sensor);
   }
   delay(1000);
-  myservo.write(60);
+  myservo.write(70);
 }
 
 String read_server(String url){
@@ -299,7 +299,7 @@ void lock_device(){
 
   if (client.connect(server,80))
   {
-    client.print("POST /api/dcs_lock HTTP/1.1\n");
+    client.print("POST /api/dcs/dcs_lock HTTP/1.1\n");
     client.print("Host: 192.168.2.4\n");
     client.print("Connection: close\n");
     client.print("Content-Type: application/x-www-form-urlencoded\n");
