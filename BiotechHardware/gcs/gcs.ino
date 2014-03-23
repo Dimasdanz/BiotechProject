@@ -10,21 +10,26 @@
 #include <dht11.h>
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
-const char server[] = "192.168.1.3";
-IPAddress ip(192,168,4,3);
+const char server[] = "192.168.2.4";
+IPAddress ip(192,168,1,13);
 
 LiquidCrystal_I2C lcd(0x27,20,4);
 
-const int h_pin = A0;
-const int t_pin = 3;
-const int ah_pin = 2;
+const int relay_1 = 2;
+const int relay_2 = 3;
+const int relay_3 = 5;
+const int relay_4 = 6;
+
+const int h_pin = A3;
+const int t_pin = 9;
+const int ah_pin = 8;
 int commaPosition;
 
 OneWire oneWire(t_pin);
 DallasTemperature temp_sensor(&oneWire);
 dht11 DHT11;
 
-int h_low;
+int h_lower;
 int h_upper;
 int l_target;
 
@@ -32,6 +37,11 @@ int BH1750address = 0x23;
 byte buff[2];
 
 void setup(){
+  pinMode(relay_1, OUTPUT);
+  pinMode(relay_2, OUTPUT);
+  pinMode(relay_3, OUTPUT);
+  pinMode(relay_4, OUTPUT);
+  
   lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
@@ -48,16 +58,17 @@ void setup(){
   lcd.print("C");
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
+  Serial.println(Ethernet.localIP());
   delay(1000);
 }
 
 void loop(){
-  String val = get_value("/api/gcs_get_value");
+  String val = get_value("/api/gcs/gcs_get_value");
   
   commaPosition = val.indexOf(';');
-  h_low = val.substring(0,commaPosition).toInt();
+  h_lower = val.substring(0,commaPosition).toInt();
   val = val.substring(commaPosition+1, val.length());
-  Serial.println(h_low);
+  Serial.println(h_lower);
   
   commaPosition = val.indexOf(';');
   h_upper = val.substring(0,commaPosition).toInt();
@@ -80,14 +91,31 @@ void loop(){
   float temp = temp_sensor.getTempCByIndex(0);
   Serial.println(temp);
   
-  int h = analogRead(h_pin);
-  Serial.println(h);
+  int h = constrain(analogRead(h_pin), 255, 1005);
+  int soil = map(h, 255, 1005, 100, 0);
+  Serial.println(soil);
   
   DHT11.read(ah_pin);
   int ah = DHT11.humidity;
   Serial.println(ah);
-  print_lcd(lux, temp, h, ah);
-  send_log(lux, temp, h, ah);
+  
+  print_lcd(lux, temp, soil, ah);
+  
+  if(lux < l_target){
+    digitalWrite(relay_1, HIGH);
+  }else{
+    digitalWrite(relay_1, LOW);
+  }
+  
+  if(soil < h_lower){
+    digitalWrite(relay_2, HIGH);
+  }
+  
+  if(soil > h_upper){
+    digitalWrite(relay_2, LOW);
+  }
+  
+  send_log(lux, temp, soil, ah);
 }
 
 void print_lcd(int lux, float temp, int h, int ah){
@@ -153,14 +181,16 @@ void send_log(int var1, float var2, int var3, int var4){
 
   if (client.connect(server,80))
   {
-    client.print("POST /api/gcs_insert_log HTTP/1.1\n");
-    client.print("Host: 192.168.1.3\n");
+    client.print("POST /api/gcs/gcs_insert_log HTTP/1.1\n");
+    client.print("Host: 192.168.2.4\n");
     client.print("Connection: close\n");
     client.print("Content-Type: application/x-www-form-urlencoded\n");
     client.print("Content-Length: ");
     client.print(data.length());
     client.print("\n\n");
     client.print(data);
+  }else{
+    Serial.println("Sending failed");
   }
 }
 
