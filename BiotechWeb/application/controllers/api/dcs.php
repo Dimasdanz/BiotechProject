@@ -1,21 +1,12 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if(! defined('BASEPATH')) exit('No direct script access allowed');
 class dcs extends CI_Controller{
+
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('db_dcs_log');
 		$this->load->model('db_dcs_users');
-	}
-	
-	public function dcs_status(){
-		$status = (read_file("assets/device/dcs/status.txt") == 1 ? "Aktif" : "Non-Aktif");
-		$password_attempts = read_file("assets/device/dcs/password_attempts.txt");
-		$condition = (read_file("assets/device/dcs/condition.txt") == 1 ? "Terkunci" : "Tidak Terkunci");
-		$val = array(
-			$status,
-			$password_attempts,
-			$condition 
-		);
-		echo json_encode($val);
 	}
 
 	public function dcs_today_log(){
@@ -59,5 +50,63 @@ class dcs extends CI_Controller{
 			'name' => $name 
 		);
 		$this->db_dcs_log->insert($data);
+	}
+	
+	/* Android API */
+	
+	/* Response Cheat Sheet
+	 * Response = 0 -> Device Locked
+	 * Response = 1 -> Change Device Status ON
+	 * Response = 2 -> Change Device Status OFF
+	 * Response = 3 -> Change Password Attempts
+	 * Response = 4 -> Device Unlocked 
+	 */
+	public function dcs_status(){
+		$status = (read_file("assets/device/dcs/status.txt") == 1 ? true : false);
+		$password_attempts = read_file("assets/device/dcs/password_attempts.txt");
+		$condition = (read_file("assets/device/dcs/condition.txt") == 1 ? true : false);
+		$val = array(
+				'status' => $status,
+				'password_attempts' => $password_attempts,
+				'condition' => $condition
+		);
+		echo json_encode($val);
+	}
+	
+	public function dcs_change_status(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$response['response'] = 0;
+			echo json_encode($response);
+			exit;
+		}
+		if($this->input->post('status') == "true"){
+			$status = 1;
+			$this->dcs_insert_log('Perangkat Dihidupkan');
+			$response['response'] = 1;
+		}else{
+			$status = 0;
+			$this->dcs_insert_log('Perangkat Dimatikan');
+			$response['response'] = 2;
+		}
+		write_file("assets/device/dcs/status.txt", $status);
+		echo json_encode($response);
+	}
+	
+	public function dcs_change_attempts(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$response['response'] = 0;
+			echo json_encode($response);
+			exit;
+		}
+		write_file("assets/device/dcs/password_attempts.txt", $this->input->post('password_attempts'));
+		$response['response'] = 3;
+		echo json_encode($response);
+	}
+	
+	public function dcs_unlock(){
+		write_file("assets/device/dcs/condition.txt", "0");
+		$this->dcs_insert_log('Perangkat Terbuka');
+		$response['response'] = 4;
+		echo json_encode($response);
 	}
 }
