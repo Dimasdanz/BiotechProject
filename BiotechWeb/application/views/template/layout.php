@@ -16,12 +16,6 @@
 <script src="<?=base_url()?>assets/js/bootstrap.min.js"></script>
 <script src="<?=base_url()?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="<?=base_url()?>assets/js/sb-admin.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("selected");
-		$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("active");
-	});
-</script>
 
 </head>
 <body>
@@ -89,31 +83,4 @@
 			?>
 		</div>
     </div>
-    <!--
-	<hr>
-	  <div id="footer" class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="text-left">
-						<p class="text-muted credit">
-							Pusat Penelitian Bioteknologi - LIPI<br> Jl. Raya Bogor KM 46<br> Cibinong, Kabupaten Bogor<br>Jawa Barat
-						</p>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="text-right">
-						<p class="text-muted credit">
-							Copyright &copy; 2014 <a href="<?=base_url()?>">BiotechSquad</a>
-						</p>
-						<p class="text-muted credit">
-							Created by <a href="http://facebook.com/Dimasdanz" target="_blank">Dimas Rullyan Danu</a>
-						</p>
-						<p class="text-muted credit small">Powered by SB-Admin</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> 
-	-->
 </body>

@@ -15,7 +15,7 @@
 					<li id="setting"><a href="<?=base_url()?>dcs/setting"><i class="fa fa-wrench fa-fw"></i> Pengaturan</a></li>
 				</ul>
 			</li>
-			<li id="gcs">
+			<li id="gcs" >
 				<a href="#">
 					<i class="fa fa-leaf fa-fw"></i>  Sistem Kendali Rumah Kaca<span class="fa arrow"></span>
 				</a>
@@ -55,5 +55,26 @@
 				</ul>
 			</li>
 		</ul>
+		<div class="sidebar sidebar-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="text-left">
+							<p class="text-muted credit">
+								Copyright &copy; 2014 <a href="<?=base_url()?>">BiotechSquad</a>
+							</p>
+							<p class="text-muted credit">
+								Created by <a href="http://facebook.com/Dimasdanz" target="_blank">Dimas Rullyan Danu</a>
+							</p>
+							<p class="text-muted credit small">Powered by SB-Admin</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </nav>
+<script>
+$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("active");
+$("#<?=$this->uri->segment(1, 'dashboard')?>").addClass("selected");
+</script>

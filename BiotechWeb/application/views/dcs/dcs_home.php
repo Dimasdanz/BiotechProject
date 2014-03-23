@@ -51,9 +51,19 @@
 	$(document).ready(function() {
 		function get_dcs_status(){
 			$.getJSON('<?=base_url()?>api/dcs/dcs_status', function(data) {
-				$("#status").html(data[0]);
-				$("#password_attempts").html(data[1]);
-				$("#condition").html(data[2]);
+				console.log(data);
+				if(data.status){
+					$("#status").html("Aktif");
+				}else{
+					$("#status").html("Tidak Aktif");
+				}
+				if(data.condition){
+					$("#condition").html("Terkunci");
+				}else{
+					$("#condition").html("Tidak Terkunci");
+				}
+				$("#password_attempts").html(data.password_attempts);
+				
 				setTimeout(get_dcs_status, 1000);
 			});
 		}
