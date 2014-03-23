@@ -162,9 +162,11 @@ class dcs extends CI_Controller{
 		if($this->input->post('status') == 'on'){
 			$status = 1;
 			$string = 'dihidupkan';
+			$this->insert_log('Perangkat Dihidupkan');
 		}else{
 			$status = 0;
 			$string = 'dimatikan';
+			$this->insert_log('Perangkat Dimatikan');
 		}
 		write_file("assets/device/dcs/status.txt", $status);
 		$this->session->set_flashdata('message', array(
@@ -180,6 +182,14 @@ class dcs extends CI_Controller{
 			'success',
 			'Perangkat telah dibuka' 
 		));
+		$this->insert_log('Perangkat Terbuka');
 		redirect('/dcs/setting', 'refresh');
+	}
+	
+	public function insert_log($name){
+		$data = array(
+				'name' => $name
+		);
+		$this->db_dcs_log->insert($data);
 	}
 }
