@@ -17,11 +17,6 @@ const int lamp1_pin = 2;
 const int lamp2_pin = 3;
 const int lamp3_pin = 5;
 const int lamp4_pin = 6;
-/*const int led_power = A5;
-const int lamp1_power = A4;
-const int lamp2_power = A3;
-const int lamp3_power = A2;
-const int lamp4_power = A1;*/
 
 void setup(){
   Serial.begin(9600);
@@ -38,16 +33,6 @@ void setup(){
   digitalWrite(lamp2_pin, HIGH);
   digitalWrite(lamp3_pin, HIGH);
   digitalWrite(lamp4_pin, HIGH);
-  /*pinMode(led_power, OUTPUT);
-  pinMode(lamp1_power, OUTPUT);
-  pinMode(lamp2_power, OUTPUT);
-  pinMode(lamp3_power, OUTPUT);
-  pinMode(lamp4_power, OUTPUT);
-  digitalWrite(led_power, HIGH);
-  digitalWrite(lamp1_power, LOW);
-  digitalWrite(lamp2_power, LOW);
-  digitalWrite(lamp3_power, LOW);
-  digitalWrite(lamp4_power, LOW);*/
   delay(1000);
 }
 
@@ -65,51 +50,20 @@ void loop(){
   val = val.substring(commaPosition+1, val.length());
   Serial.println(lamp2_val);
   
-  commaPosition = val.indexOf(';');
-  lamp3_val = val.substring(0,commaPosition);
-  Serial.println(lamp3_val);
-  
-  lamp4_val = val.substring(commaPosition+1, (val.length()-1));
-  Serial.println(lamp4_val);
-  
   if(lamp1_val == "1"){
     digitalWrite(lamp1_pin, LOW);
-    //digitalWrite(lamp1_power, HIGH);
     Serial.println("Lampu 1 Hidup");
   }else{
     digitalWrite(lamp1_pin, HIGH);
-    //digitalWrite(lamp1_power, LOW);
     Serial.println("Lampu 1 Mati");
   }
   
   if(lamp2_val == "1"){
     digitalWrite(lamp2_pin, LOW);
-    //digitalWrite(lamp2_power, HIGH);
     Serial.println("Lampu 2 Hidup");
   }else{
     digitalWrite(lamp2_pin, HIGH);
-    //digitalWrite(lamp2_power, LOW);
     Serial.println("Lampu 2 Mati");
-  }
-  
-  if(lamp3_val == "1"){
-    digitalWrite(lamp3_pin, LOW);
-    //digitalWrite(lamp3_power, HIGH);
-    Serial.println("Lampu 3 Hidup");
-  }else{
-    digitalWrite(lamp3_pin, HIGH);
-    //digitalWrite(lamp3_power, LOW);
-    Serial.println("Lampu 3 Mati");
-  }
-  
-  if(lamp4_val == "1"){
-    digitalWrite(lamp4_pin, LOW);
-    //digitalWrite(lamp4_power, HIGH);
-    Serial.println("Lampu 4 Hidup");
-  }else{
-    digitalWrite(lamp4_pin, HIGH);
-    //digitalWrite(lamp4_power, LOW);
-    Serial.println("Lampu 4 Mati");
   }
 }
 
