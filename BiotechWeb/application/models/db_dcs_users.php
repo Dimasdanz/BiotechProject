@@ -24,6 +24,19 @@ class db_dcs_users extends CI_Model{
 		return $q->row();
 	}
 	
+	function fetch_user($limit, $start){
+		$this->db->limit($limit, $start);
+		$q = $this->db->get('dcs_user');
+		if($q->num_rows() > 0){
+			return $q->result();
+		}
+		return false;
+	}
+	
+	function users_count(){
+		return $this->db->count_all('dcs_user');
+	}
+	
 	function insert($data){
 		$this->db->insert('dcs_user', $data);
 	}
