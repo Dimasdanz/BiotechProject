@@ -1,23 +1,23 @@
+#include <SPI.h>
+#include <Ethernet.h>
+#include <Wire.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include <SPI.h>
-#include <HttpClient.h>
-#include <Ethernet.h>
-#include <EthernetClient.h>
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 const int smoke_pin = A3;
 const int temp_pin =  2;
 const int relay = 3; 
+const int relays = 4;
 const int fan = 9;
+const int buzzer = 8;
 
 float percentage = 0;
 int fan_speed = 255;
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30 };
-const char server[] = "192.168.1.3";
-IPAddress ip(192,168,3,5);
+const char server[] = "192.168.1.4";
+IPAddress ip(192,168,1,5);
 
 OneWire oneWire(temp_pin);
 DallasTemperature temp_sensor(&oneWire);
@@ -46,7 +46,10 @@ void setup() {
   analogWrite(fan, 255);
   delay(3000);
   pinMode(relay, OUTPUT);
+  pinMode(buzzer, OUTPUT);
   digitalWrite(relay, HIGH);
+  digitalWrite(buzzer, LOW);
+  Serial.println(Ethernet.localIP());
 }
 
 void loop() {
@@ -57,9 +60,11 @@ void loop() {
 
   if(temp > 40){
     digitalWrite(relay, LOW);
+    digitalWrite(buzzer, HIGH);
   }
   else{
     digitalWrite(relay, HIGH);
+    digitalWrite(buzzer, LOW);
   }
   
   percentage = (smoke/1023)*100;
@@ -103,7 +108,7 @@ void send_log(float temp, float smoke){
   if (client.connect(server,80))
   {
     client.print("POST /api/scs_insert_log HTTP/1.1\n");
-    client.print("Host: 192.168.1.3\n");
+    client.print("Host: 192.168.1.4\n");
     client.print("Connection: close\n");
     client.print("Content-Type: application/x-www-form-urlencoded\n");
     client.print("Content-Length: ");
