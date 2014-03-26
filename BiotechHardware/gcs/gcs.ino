@@ -32,11 +32,16 @@ dht11 DHT11;
 int h_lower;
 int h_upper;
 int l_target;
+boolean fan_pump;
 
 int BH1750address = 0x23;
 byte buff[2];
 
 void setup(){
+  Serial.begin(9600);
+  Ethernet.begin(mac, ip);
+  Serial.println(Ethernet.localIP());
+  
   pinMode(relay_1, OUTPUT);
   pinMode(relay_2, OUTPUT);
   pinMode(relay_3, OUTPUT);
@@ -56,9 +61,6 @@ void setup(){
   lcd.print((char)223);
   lcd.setCursor(19,3);
   lcd.print("C");
-  Serial.begin(9600);
-  Ethernet.begin(mac, ip);
-  Serial.println(Ethernet.localIP());
   delay(1000);
 }
 
@@ -91,8 +93,8 @@ void loop(){
   float temp = temp_sensor.getTempCByIndex(0);
   Serial.println(temp);
   
-  int h = constrain(analogRead(h_pin), 255, 1005);
-  int soil = map(h, 255, 1005, 100, 0);
+  int h = constrain(analogRead(h_pin), 255, 1023);
+  int soil = map(h, 255, 1023, 100, 0);
   Serial.println(soil);
   
   DHT11.read(ah_pin);
@@ -113,6 +115,22 @@ void loop(){
   
   if(soil > h_upper){
     digitalWrite(relay_2, LOW);
+  }
+  
+  if(ah > 70){
+    fan_pump = true;
+    digitalWrite(relay_3, HIGH);
+    digitalWrite(relay_4, HIGH);
+  }else{
+    fan_pump = false;
+    digitalWrite(relay_3, LOW);
+    digitalWrite(relay_4, LOW);
+  }
+  
+  if(temp > 40){
+    digitalWrite(relay_3, HIGH);
+  }else if(!fan_pump){
+    digitalWrite(relay_3, LOW);
   }
   
   send_log(lux, temp, soil, ah);
