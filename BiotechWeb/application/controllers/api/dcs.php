@@ -37,6 +37,13 @@ class dcs extends CI_Controller{
 		$status = intval(read_file("assets/device/dcs/" . $param . ".txt"));
 		echo json_encode("<" . $status . ">");
 	}
+	
+	public function dcs_get_server(){
+		header("Content-type: text/json");
+		$status = intval(read_file("assets/device/dcs/status.txt"));
+		$condition = intval(read_file("assets/device/dcs/condition.txt"));
+		echo json_encode("<".$status.";".$condition.">");
+	}
 
 	public function dcs_lock(){
 		write_file("assets/device/dcs/condition.txt", 1);
@@ -134,7 +141,7 @@ class dcs extends CI_Controller{
 		$config = array(
 			'base_url' => base_url().'/api/dcs/dcs_get_user',
 			'total_rows' => $this->db_dcs_users->users_count(),
-			'per_page' => 3,
+			'per_page' => 5,
 			'uri_segment' => 4
 		);
 		
@@ -144,12 +151,19 @@ class dcs extends CI_Controller{
 		$offset = $page == 0 ? 0 : ($page-1)*$config["per_page"];
 		$data = $this->db_dcs_users->fetch_user($config['per_page'], $offset);
 		
-		$response['user_id'] = array();
-		$response['user_name'] = array();
-		foreach($data as $row){
-			array_push($response['user_id'],  $row->user_id);
-			array_push($response['user_name'],  $row->name);
+		$response['userid'] = array();
+		$response['username'] = array();
+		if($data != null){
+			$response['response'] = 1;
+			foreach($data as $row){
+				array_push($response['userid'],  $row->user_id);
+				array_push($response['username'],  $row->name);
+			}
+			
+		}else{
+			$response['response'] = 0;
 		}
+		
 		echo json_encode($response);
 	}
 }
