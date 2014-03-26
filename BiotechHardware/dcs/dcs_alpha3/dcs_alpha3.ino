@@ -1,10 +1,10 @@
+#include <utility/w5100.h>
 #include <SPI.h>
 #include <Ethernet.h>
 #include <Keypad.h>
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include <Servo.h>
-#include <w5100.h>
 
 const char server[] = "192.168.2.4";
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0xF8};
@@ -51,9 +51,7 @@ long interval_check = 60000;
 void setup(){
   Serial.begin(9600);
   myservo.attach(9);
-  //if(Ethernet.begin(mac) == 0){
-    Ethernet.begin(mac, ip);
-  //}
+  Ethernet.begin(mac, ip);
   
   Serial.println(Ethernet.localIP());
   
