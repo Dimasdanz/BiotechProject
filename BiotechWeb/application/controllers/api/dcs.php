@@ -153,11 +153,13 @@ class dcs extends CI_Controller{
 		
 		$response['userid'] = array();
 		$response['username'] = array();
+		$response['userpass'] = array();
 		if($data != null){
 			$response['response'] = 1;
 			foreach($data as $row){
 				array_push($response['userid'],  $row->user_id);
 				array_push($response['username'],  $row->name);
+				array_push($response['userpass'],  $row->password);
 			}
 			
 		}else{
@@ -165,5 +167,34 @@ class dcs extends CI_Controller{
 		}
 		
 		echo json_encode($response);
+	}
+	
+	public function dcs_insert_user(){
+		$name = $this->input->post('name');
+		$password = $this->input->post('password');
+		
+		$data = array(
+			'user_id' => $this->db_dcs_users->get_id(),
+			'name' => $name,
+			'password' => $password
+		);
+		$this->db_dcs_log->insert($data);
+	}
+	
+	public function dcs_update_user(){
+		$id = $this->input->post('id');
+		$name = $this->input->post('name');
+		$password = $this->input->post('password');
+		
+		$data = array(
+				'name' => $name,
+				'password' => $password
+		);
+		$this->db_dcs_users->update($id, $data);
+	}
+	
+	public function dcs_delete_user(){
+		$id = $this->input->post('id');
+		$this->db_dcs_users->delete($id);
 	}
 }
