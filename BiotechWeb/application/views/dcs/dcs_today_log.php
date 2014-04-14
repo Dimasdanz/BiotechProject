@@ -6,7 +6,7 @@ if ($today_log != NULL) {
 <tr>
 	<td><?=$no?></td>
 	<td><?=$row->name?></td>
-	<td><?=date('h:i:s', strtotime($row->time))?></td>
+	<td><?=date('H:i:s', strtotime($row->time))?></td>
 </tr>
 <?php
 		$no ++;

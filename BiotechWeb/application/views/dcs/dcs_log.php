@@ -21,7 +21,7 @@
 								<tr>
 									<td><?=$no?></td>
 									<td><?=$row->name?></td>
-									<td><?=date('h:i:s', strtotime($row->time))?></td>
+									<td><?=date('H:i:s', strtotime($row->time))?></td>
 									<td><?=date('d F Y', strtotime($row->time))?></td>
 								</tr>
 							<?php 
@@ -71,9 +71,8 @@
 				}
 			},
 			"aoColumnDefs": [
-				{ "bSortable": false, "aTargets": [ 0,2 ] }
-			],
-			"aaSorting": [[ 1, 'asc' ]]
+				{ "bSortable": false, "aTargets": [ 0 ] }
+			]
 		<?php 
 			}
 		?>
