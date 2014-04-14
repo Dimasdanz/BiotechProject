@@ -26,6 +26,7 @@ class db_dcs_users extends CI_Model{
 	
 	function fetch_user($limit, $start){
 		$this->db->limit($limit, $start);
+		$this->db->order_by('name');
 		$q = $this->db->get('dcs_user');
 		if($q->num_rows() > 0){
 			return $q->result();
