@@ -56,7 +56,7 @@ class dcs extends CI_Controller{
 	}
 
 	public function insert(){
-		$this->form_validation->set_rules('name', 'Name', 'trim|required|alpha|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|numeric|xss_clean');
 		
 		$id = $this->input->post('id');
@@ -86,7 +86,7 @@ class dcs extends CI_Controller{
 	}
 
 	public function update(){
-		$this->form_validation->set_rules('name', 'Name', 'trim|required|alpha|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|numeric|xss_clean');
 		
 		$id = $this->input->post('id');
