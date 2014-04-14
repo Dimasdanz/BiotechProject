@@ -7,8 +7,7 @@
 #include <Servo.h>
 
 const char server[] = "192.168.2.4";
-byte mac[] = {
-  0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0xF8};
+byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0xF8};
 IPAddress ip(192,168,1,5);
 
 EthernetClient client;
@@ -16,20 +15,13 @@ EthernetClient client;
 const byte ROWS = 4;
 const byte COLS = 3;
 char keys[ROWS][COLS] = {
-  {
-    '1','2','3'    }
-  ,{
-    '4','5','6'    }
-  ,{
-    '7','8','9'    }
-  ,{
-    '*','0','#'    }
-};
+{'1','2','3'},
+{'4','5','6'},
+{'7','8','9'},
+{'*','0','#'}};
 
-byte rowPins[ROWS] = {
-  2, 3, 4, 5};
-byte colPins[COLS] = {
-  6, 7, 8};
+byte rowPins[ROWS] = {2, 3, 4, 5};
+byte colPins[COLS] = {6, 7, 8};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 LiquidCrystal_I2C lcd(0x27,20,4);
@@ -68,7 +60,7 @@ void setup(){
   Serial.println(Ethernet.localIP());
 
   W5100.setRetransmissionTime(0x07D0);
-  W5100.setRetransmissionCount(3);
+  W5100.setRetransmissionCount(10);
 
   lcd.init();
   lcd.backlight();
@@ -79,7 +71,6 @@ void setup(){
 
   check_server();
 
-  lcd_init();
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
   pinMode(push_btn, INPUT);
@@ -386,6 +377,3 @@ void lock_device(){
     device_condition = false;
   }
 }
-
-
-
