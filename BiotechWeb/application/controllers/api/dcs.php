@@ -74,7 +74,7 @@ class dcs extends CI_Controller{
 		
 		$fields = array(
 			'data' => array(
-				'notification_message' => $message,
+				'notification_message' => urldecode($message),
 				'notification_time' => date('H:i:s')
 			),
 			'registration_ids' => $registration_ids
@@ -130,6 +130,30 @@ class dcs extends CI_Controller{
 		echo json_encode($response);
 	}
 	
+	public function dcs_login_admin(){
+		$this->load->model('db_admin');
+		$this->load->library('PasswordHash');
+		
+		$username = $this->db_admin->get_single($this->input->post('username'));
+		if($username){
+			if($this->passwordhash->CheckPassword($this->input->post('password'), $username->password)){
+				$response['response'] = 1;
+				$response['username'] = $username->username;
+			}else{
+				$response['response'] = 0;
+			}
+		}else{
+			$response['response'] = 2;
+		}
+		/*
+		 * Response
+		 * 0 = Login false
+		 * 1 = Login true
+		 * 2 = Login invalid (no username with that ID)
+		 */
+		 echo json_encode($response);
+	}
+	
 	public function dcs_register_device(){
 		$this->load->model('db_dcs_device');
 		$user_id = $this->input->post('user_id');
@@ -139,6 +163,9 @@ class dcs extends CI_Controller{
 			'user_id' => $user_id,
 			'gcm_id' => $gcm_id
 		);
+		if($this->db_dcs_device->get_single($user_id)){
+			$this->db_dcs_device->delete($user_id);
+		}
 		$this->db_dcs_device->insert($data);
 		$response['response'] = 1;
 		echo json_encode($response);
