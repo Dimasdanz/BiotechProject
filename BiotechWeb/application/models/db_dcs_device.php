@@ -15,6 +15,12 @@ class db_dcs_device extends CI_Model{
 		}
 	}
 	
+	function get_exception($user_id){
+		$this->db->where('user_id !=', $user_id);
+		$q = $this->db->get('dcs_device');
+		return $q->result();
+	}
+	
 	function insert($data){
 		$this->db->insert('dcs_device', $data);
 	}

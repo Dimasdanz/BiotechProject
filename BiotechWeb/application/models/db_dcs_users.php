@@ -17,7 +17,7 @@ class db_dcs_users extends CI_Model{
 		$q = $this->db->get('dcs_user');
 		return $q->result();
 	}
-	
+
 	function get_single($user_id){
 		$this->db->where('user_id', $user_id);
 		$q = $this->db->get('dcs_user');

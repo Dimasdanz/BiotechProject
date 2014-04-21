@@ -20,7 +20,7 @@ class dcs extends CI_Controller{
 		if($data != null){
 			if($password == $data->password){
 				write_file("assets/device/dcs/result.txt", 1);
-				$this->dcs_insert_log($data->name);
+				$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
 				echo 1;
 			}else{
 				write_file("assets/device/dcs/result.txt", 0);
@@ -47,24 +47,24 @@ class dcs extends CI_Controller{
 
 	public function dcs_lock(){
 		write_file("assets/device/dcs/condition.txt", 1);
-		$this->dcs_insert_log("Perangkat Terkunci");
+		$this->dcs_insert_log("000", "Perangkat Terkunci", "Perangkat");
 	}
 
-	public function dcs_insert_log($name, $param = true){
+	public function dcs_insert_log($user_id, $name, $input_source){
 		$data = array(
-			'name' => $name
+			'user_id' => $user_id,
+			'name' => $name,
+			'input_source' => $input_source
 		);
 		$this->db_dcs_log->insert($data);
-		if($param){
-			//$this->send_notification($name);
-		}
+		$this->dcs_send_notification($user_id, $name, $input_source);
 	}
 	
-	public function dcs_send_notification($message){
+	public function dcs_send_notification($user_id, $message, $input_source){
 		$this->load->model('db_dcs_device');
 		$url = 'https://android.googleapis.com/gcm/send';
 		
-		$device = $this->db_dcs_device->get_all();
+		$device = $this->db_dcs_device->get_exception($user_id);
 		
 		$registration_ids = array();
 		
@@ -103,7 +103,27 @@ class dcs extends CI_Controller{
 		}
 		
 		curl_close($ch);
-		echo $result;
+
+	}
+	
+	public function send_command($command){
+		$url = 'http://192.168.1.73/command_'.$command;
+		$headers = array(
+			'Accept: application/json'
+		);
+		$ch = curl_init();
+		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPGET,true);
+		$reply = curl_exec($ch);
+		if ($reply === false) {
+			print_r('Curl error: ' . curl_error($ch));
+		}
+		curl_close($ch);
+		//$decoded_data = json_decode($reply, true);
+		print_r(json_decode($reply, true));
 	}
 
 	/* Android API */
@@ -127,6 +147,15 @@ class dcs extends CI_Controller{
 		 * 1 = Login true
 		 * 2 = Login invalid (no username with that ID)
 		 */
+		echo json_encode($response);
+	}
+	
+	public function dcs_open_door(){
+		$user_id = $this->input->post('username_id');
+		$input_source = $this->input->post('input_source');
+		$data = $this->db_dcs_users->get_single($user_id);
+		$this->dcs_insert_log($data->user_id, $data->name, $input_source);
+		$response['response'] = 1;
 		echo json_encode($response);
 	}
 	
