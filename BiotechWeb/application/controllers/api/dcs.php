@@ -60,6 +60,26 @@ class dcs extends CI_Controller{
 		$this->dcs_send_notification($user_id, $name, $input_source);
 	}
 	
+	public function dcs_auth($input){
+		if($input == 'keluar'){
+			$this->dcs_insert_log("000", "Push-Button Keluar", "Push-Button Keluar");
+		}
+		$user_id = substr($input, 0, 3);
+		$password = substr($input, 3, (strlen($input) - 3));
+		$data = $this->db_dcs_users->get_single($user_id);
+		if($data != null){
+			if($password == $data->password){
+				$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
+				echo 1;
+			}else{
+				echo 2;
+			}
+		}else{
+			echo 0;
+		}
+		//$this->dcs_send_notification($user_id, $name, $input_source);
+	}
+	
 	public function dcs_send_notification($user_id, $message, $input_source){
 		$this->load->model('db_dcs_device');
 		$url = 'https://android.googleapis.com/gcm/send';
@@ -106,6 +126,13 @@ class dcs extends CI_Controller{
 
 	}
 	
+	/*	Arduino Command Cheat Sheet
+	*	o -> Open door -> open
+	*	s2 -> Activate -> activate
+	*	s0 -> Deactivate -> deactivate
+	*	c -> Get Status -> active/non-active
+	*	a -> Check if available -> online
+	*/	
 	public function send_command($command){
 		$url = 'http://192.168.1.73/command_'.$command;
 		$headers = array(
@@ -117,13 +144,16 @@ class dcs extends CI_Controller{
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPGET,true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 		$reply = curl_exec($ch);
 		if ($reply === false) {
 			print_r('Curl error: ' . curl_error($ch));
+			return false;
 		}
 		curl_close($ch);
-		//$decoded_data = json_decode($reply, true);
-		print_r(json_decode($reply, true));
+		$decoded_data = json_decode($reply, true);
+		echo $decoded_data['response'];
+		return $decoded_data['response'];
 	}
 
 	/* Android API */
@@ -153,10 +183,15 @@ class dcs extends CI_Controller{
 	public function dcs_open_door(){
 		$user_id = $this->input->post('username_id');
 		$input_source = $this->input->post('input_source');
-		$data = $this->db_dcs_users->get_single($user_id);
-		$this->dcs_insert_log($data->user_id, $data->name, $input_source);
-		$response['response'] = 1;
-		echo json_encode($response);
+		if($this->send_command('o')){
+			$data = $this->db_dcs_users->get_single($user_id);
+			$this->dcs_insert_log($data->user_id, $data->name, $input_source);
+			$response['response'] = 1;
+			echo json_encode($response);
+		}else{
+			$response['response'] = 0;
+			echo json_encode($response);
+		}
 	}
 	
 	public function dcs_login_admin(){
