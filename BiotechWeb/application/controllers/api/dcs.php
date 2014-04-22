@@ -63,6 +63,7 @@ class dcs extends CI_Controller{
 	public function dcs_auth($input){
 		if($input == 'keluar'){
 			$this->dcs_insert_log("000", "Push-Button Keluar", "Push-Button Keluar");
+			return;
 		}
 		$user_id = substr($input, 0, 3);
 		$password = substr($input, 3, (strlen($input) - 3));
@@ -70,14 +71,18 @@ class dcs extends CI_Controller{
 		if($data != null){
 			if($password == $data->password){
 				$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
+				$this->send_command('o');
 				echo 1;
 			}else{
+				$this->dcs_insert_log("000", "Wrong Password", $input);
+				$this->send_command('f');
 				echo 2;
 			}
 		}else{
+			$this->send_command('f');
+			$this->dcs_insert_log("000", "Wrong Password", $input);
 			echo 0;
 		}
-		//$this->dcs_send_notification($user_id, $name, $input_source);
 	}
 	
 	public function dcs_send_notification($user_id, $message, $input_source){
@@ -132,6 +137,7 @@ class dcs extends CI_Controller{
 	*	s0 -> Deactivate -> deactivate
 	*	c -> Get Status -> active/non-active
 	*	a -> Check if available -> online
+	*	f -> Wrong Password
 	*/	
 	public function send_command($command){
 		$url = 'http://192.168.1.73/command_'.$command;
