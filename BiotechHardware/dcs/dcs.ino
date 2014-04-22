@@ -1,277 +1,189 @@
-#include <SPI.h>
+#include <SPI.h>        
 #include <Ethernet.h>
 #include <Keypad.h>
-#include <Wire.h> 
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Servo.h>
 
-const char server[] = "192.168.2.4";
-byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0x30};
-IPAddress ip(192,168,1,9);
+const char server_addr[] = "192.168.2.4";
+byte mac[] = {
+  0x90, 0xA2, 0xDA, 0x0E, 0xF5, 0xF8};
+byte ip[] = {
+  192,168,1,73};
 
-EthernetClient client;
+EthernetServer server(80);
+boolean device_status = true;
 
 const byte ROWS = 4;
 const byte COLS = 3;
 char keys[ROWS][COLS] = {
-  {'1','2','3'},{'4','5','6'},{'7','8','9'},{'*','0','#'}
+  {
+    '1','2','3'  }
+  ,
+  {
+    '4','5','6'  }
+  ,
+  {
+    '7','8','9'  }
+  ,
+  {
+    '*','0','#'  }
 };
 
-byte rowPins[ROWS] = {2, 3, 4, 5};
-byte colPins[COLS] = {6, 7, 8};
+byte rowPins[ROWS] = {
+  2, 3, 4, 5};
+byte colPins[COLS] = {
+  6, 7, 8};
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 LiquidCrystal_I2C lcd(0x27,20,4);
+Servo myservo;
+
+char pass[16];
+int attempt = 0;
+int count = 0;
+int max_attempt = 3;
 
 const int sensor = A2;
 const int push_btn = A3;
-const int solenoid = 9;
-
-int attempt = 0;
-int count = 0;
-int max_attempt;
-String disp = "";
-char pass[16];
-
-boolean display_armed = false;
-boolean display_disarmed = false;
-boolean display_locked = false;
-boolean display_unlocked = false;
+const int servo = 9;
 
 void setup(){
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
-  Serial.println(Ethernet.localIP());
-  
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(3, 0);
-  lcd.print("Danz  Security");
-  lcd.setCursor(0,1);
-  lcd.print("Inisialisasi...");
-  check_device();
-  lcd_init();
-  
+  server.begin();
   pinMode(sensor, INPUT);
   digitalWrite(sensor, HIGH);
   pinMode(push_btn, INPUT);
   digitalWrite(push_btn, HIGH);
-  
-  pinMode(solenoid, OUTPUT);
+  myservo.write(70);
+  Serial.println("ready");
 }
 
 void loop(){
-  if(check_device()){
-    if(check_condition()){
-      char key = keypad.getKey();
-      if (key != NO_KEY){
-        disp += "*";
-        lcd.setCursor(0,2);
-        lcd.print(disp);
-        Serial.print(key);
-        pass[count] = key;
-        count++;
-      }
-      if(key == '*'){
-        attempt++;
-        send_password(pass);
-        Serial.println(pass);
-        sys_init();
-        lcd_init();
-      }
-      if(key == '#'){
-        sys_init();
-        lcd_init();
+  EthernetClient client = server.available();
+  if(client){
+    while(client.connected()){
+      if(client.available()){
+        if(client.find("GET /")){
+          while(client.findUntil("command_", "\n\r")){  
+            char type = client.read();
+            if(type == 'o') {
+              Serial.println("Open Command");
+              client.println("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.println();
+              client.print("{\"response\":\"open\"}");
+            }
+            else if(type == 's'){
+              int val = client.parseInt();
+              Serial.println("Status Command");
+              if(val == 2){
+                device_status = true;
+                Serial.println("Activate");
+                client.println("HTTP/1.1 200 OK");
+                client.println("Content-Type: application/json");
+                client.println();
+                client.print("{\"response\":\"activate\"}");
+              }
+              else if(val == 0){
+                device_status = false;
+                Serial.println("Deactivate");
+                client.println("HTTP/1.1 200 OK");
+                client.println("Content-Type: application/json");
+                client.println();
+                client.print("{\"response\":\"deactivate\"}");
+              }
+              else{
+                Serial.println("Unexpected command");
+                client.println("HTTP/1.1 200 OK");
+                client.println("Content-Type: application/json");
+                client.println();
+                client.print("{\"response\":\"invalid_status\"}");
+              }
+            }
+            else if(type == 'a') {
+              Serial.println("Pinging");
+              client.println("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.println();
+              client.print("{\"response\":\"online\"}");
+            }
+            else if(type == 'c') {
+              Serial.println("Check Status");
+              client.println("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.println();
+              if(device_status){
+                client.print("{\"response\":\"active\"}");
+              }
+              else{
+                client.print("{\"response\":\"non-active\"}");
+              }
+            }
+            else {
+              Serial.print("Unexpected type ");
+              Serial.print(type);
+              client.println("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.println();
+              client.print("{\"response\":\"invalid\"}");
+            }
+          }
+        }
+        break;
       }
     }
-    else{
-      //check_condition();
-    }
+    delay(10);
+    client.stop();
   }
-}
+  if(digitalRead(push_btn) == LOW){
+    auth_user("keluar");
+    open_door();
+  }
 
-boolean check_device(){
-  if(read_server("/api/dcs_get_value/status") == "1"){
-    if(!display_armed){
-      lcd_init();
-      display_armed = true;
+  if(device_status){
+    char key = keypad.getKey();
+    if (key != NO_KEY && key != '*'){
+      pass[count] = key;
+      count++;
     }
-    display_disarmed = false;
-    return true;
-  }
-  else{
-    if(!display_disarmed){
-      lcd_print("Perangkat non-aktif");
-      display_disarmed = true;
+    if(key == '*'){
+      attempt++;
+      auth_user(pass);
+      sys_init();
     }
-    display_armed = false;
-    return false;
-  }
-}
-
-boolean check_condition(){
-  if(read_server("/api/dcs_get_value/condition") == "0"){
-    if(!display_unlocked){
-      lcd_init();
-      display_unlocked = true;
+    if(key == '#'){
+      sys_init();
     }
-    display_locked = false;
-    return true;
-  }
-  else{
-    if(!display_locked){
-      lcd_print("Perangkat terkunci");
-      display_locked = true;
-    }
-    display_unlocked = false;
-    return false;
   }
 }
 
 void sys_init(){
   memset(pass, 0, sizeof pass);
   count = 0;
-  disp = "";
 }
 
-void lcd_init(){
-  lcd.setCursor(3,0);
-  lcd.print("Danz  Security");
-  lcd.setCursor(0,1);
-  lcd.print("Input Password :");
-  lcd.setCursor(0,2);
-  for(int i=0;i<20;i++){
-    lcd.print(" ");
-  }
-}
-
-void lcd_print(String s){
-  lcd.clear();
-  lcd.setCursor(3,0);
-  lcd.print("Danz  Security");
-  lcd.setCursor(0,2);
-  lcd.print(s);
-}
-
-void lcd_attempts(int tried, int attempts){
-  lcd.setCursor(0,3);
-  lcd.print("Percobaan :");
-  lcd.setCursor(13,3);
-  lcd.print(tried);
-  lcd.setCursor(15,3);
-  lcd.print("/");
-  lcd.print(attempts);
-}
-
-void send_password(char password[]){
-  String data ="";
+void auth_user(char user_input[]){
   EthernetClient client;
-  String s_password = "password=";
-  data = s_password+password;
-  Serial.println(data);
-
-  if (client.connect(server,80))
+  Serial.println("Sending");
+  if (client.connect(server_addr,80))
   {
-    client.print("POST /api/dcs_check_password HTTP/1.1\n");
-    client.print("Host: 192.168.1.3\n");
-    client.print("Connection: close\n");
-    client.print("Content-Type: application/x-www-form-urlencoded\n");
-    client.print("Content-Length: ");
-    client.print(data.length());
-    client.print("\n\n");
-    client.print(data);
+    client.print("GET /api/dcs/dcs_auth/");
+    client.print(user_input);
+    Serial.println(user_input);
+    client.print(" HTTP/1.1\n");
+    client.print("Host: 192.168.2.4\n");
+    client.print("Connection: close\n\n");
+    Serial.println("Sending success");
   }
-  delay(50);
-  check_result(read_server("/api/dcs_get_value/result"));
-}
-
-void check_result(String result){
-  if(attempt == 1){
-    max_attempt = read_server("/api/dcs_get_value/password_attempts").toInt();
-    lcd_attempts(attempt, max_attempt);
-  }
-  if(result == "1"){
-      open_door();
-    }
   else{
-    lcd_print("Password Salah");
-    lcd_attempts(attempt, max_attempt);
-    delay(1000);
-    if(attempt >= max_attempt){
-      attempt = 0;
-      lock_device();
-    }
+    Serial.println("Sending failed");
   }
 }
 
 void open_door(){
-  attempt = 0;
-  lcd_print("Pintu Terbuka");
-  digitalWrite(solenoid, HIGH);
-  delay(3000);
-  int val = digitalRead(sensor);
-  while(digitalRead(sensor) == HIGH){
-    val = digitalRead(sensor);
-  }
+  Serial.println("Door open");
   delay(1000);
-  digitalWrite(solenoid, LOW);
-}
-
-String read_server(String url){
-  if (client.connect(server, 80)) {
-    client.print("GET ");
-    client.println(url);
-    client.println();
-    return readData();
-  }
-  else{
-    return "connection failed";
-  }
-}
-
-String readData(){
-  int stringPos = 0; 
-  boolean startRead = false;
-  char inString[32];
-
-  memset( &inString, 0, 32 );
-  while(true){
-    if (client.available()) {
-      char c = client.read();
-      if (c == '<' ) {
-        startRead = true;
-      }
-      else if(startRead){
-        if(c != '>'){
-          inString[stringPos] = c;
-          stringPos ++;
-        }
-        else{
-          startRead = false;
-          client.stop();
-          client.flush();
-          return inString;
-        }
-      }
-    }
-  }
-}
-
-void lock_device(){
-  String data ="";
-  EthernetClient client;
-  data = "1";
-
-  if (client.connect(server,80))
-  {
-    client.print("POST /api/dcs_lock HTTP/1.1\n");
-    client.print("Host: 192.168.1.3\n");
-    client.print("Connection: close\n");
-    client.print("Content-Type: application/x-www-form-urlencoded\n");
-    client.print("Content-Length: ");
-    client.print(data.length());
-    client.print("\n\n");
-    client.print(data);
-  }
 }
 
