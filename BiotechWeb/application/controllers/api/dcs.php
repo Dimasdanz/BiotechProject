@@ -12,44 +12,6 @@ class dcs extends CI_Controller{
 		$this->load->view('dcs/dcs_today_log', $data);
 	}
 
-	public function dcs_check_password(){
-		$input = $this->input->post('password');
-		$user_id = substr($input, 0, 3);
-		$password = substr($input, 3, (strlen($input) - 4));
-		$data = $this->db_dcs_users->get_single($user_id);
-		if($data != null){
-			if($password == $data->password){
-				write_file("assets/device/dcs/result.txt", 1);
-				$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
-				echo 1;
-			}else{
-				write_file("assets/device/dcs/result.txt", 0);
-				echo 0;
-			}
-		}else{
-			write_file("assets/device/dcs/result.txt", 0);
-			echo 0;
-		}
-	}
-
-	public function dcs_get_value($param){
-		header("Content-type: text/json");
-		$status = intval(read_file("assets/device/dcs/" . $param . ".txt"));
-		echo json_encode("<" . $status . ">");
-	}
-
-	public function dcs_get_server(){
-		header("Content-type: text/json");
-		$status = intval(read_file("assets/device/dcs/status.txt"));
-		$condition = intval(read_file("assets/device/dcs/condition.txt"));
-		echo json_encode("<" . $status . ";" . $condition . ">");
-	}
-
-	public function dcs_lock(){
-		write_file("assets/device/dcs/condition.txt", 1);
-		$this->dcs_insert_log("000", "Perangkat Terkunci", "Perangkat");
-	}
-
 	public function dcs_insert_log($user_id, $name, $input_source){
 		$data = array(
 			'user_id' => $user_id,
@@ -72,16 +34,13 @@ class dcs extends CI_Controller{
 			if($password == $data->password){
 				$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
 				$this->send_command('o');
-				echo 1;
 			}else{
 				$this->dcs_insert_log("000", "Wrong Password", $input);
 				$this->send_command('f');
-				echo 2;
 			}
 		}else{
 			$this->send_command('f');
 			$this->dcs_insert_log("000", "Wrong Password", $input);
-			echo 0;
 		}
 	}
 	
@@ -150,19 +109,24 @@ class dcs extends CI_Controller{
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPGET,true);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 		$reply = curl_exec($ch);
 		if ($reply === false) {
-			print_r('Curl error: ' . curl_error($ch));
 			return false;
 		}
 		curl_close($ch);
 		$decoded_data = json_decode($reply, true);
-		echo $decoded_data['response'];
 		return $decoded_data['response'];
 	}
 
 	/* Android API */
+	
+	/*
+	 * Login Response
+	 * 0 = Login false
+	 * 1 = Login true
+	 * 2 = Login invalid (no username with that ID)
+	 */
 	public function dcs_login(){
 		$this->load->model('db_dcs_users');
 		
@@ -177,27 +141,7 @@ class dcs extends CI_Controller{
 		}else{
 			$response['response'] = 2;
 		}
-		/*
-		 * Response
-		 * 0 = Login false
-		 * 1 = Login true
-		 * 2 = Login invalid (no username with that ID)
-		 */
 		echo json_encode($response);
-	}
-	
-	public function dcs_open_door(){
-		$user_id = $this->input->post('username_id');
-		$input_source = $this->input->post('input_source');
-		if($this->send_command('o')){
-			$data = $this->db_dcs_users->get_single($user_id);
-			$this->dcs_insert_log($data->user_id, $data->name, $input_source);
-			$response['response'] = 1;
-			echo json_encode($response);
-		}else{
-			$response['response'] = 0;
-			echo json_encode($response);
-		}
 	}
 	
 	public function dcs_login_admin(){
@@ -215,15 +159,23 @@ class dcs extends CI_Controller{
 		}else{
 			$response['response'] = 2;
 		}
-		/*
-		 * Response
-		 * 0 = Login false
-		 * 1 = Login true
-		 * 2 = Login invalid (no username with that ID)
-		 */
 		 echo json_encode($response);
 	}
 	
+	public function dcs_open_door(){
+		$user_id = $this->input->post('username_id');
+		$input_source = $this->input->post('input_source');
+		if($this->send_command('o')){
+			$data = $this->db_dcs_users->get_single($user_id);
+			$this->dcs_insert_log($data->user_id, $data->name, $input_source);
+			$response['response'] = true;
+			echo json_encode($response);
+		}else{
+			$response['response'] = false;
+			echo json_encode($response);
+		}
+	}
+
 	public function dcs_register_device(){
 		$this->load->model('db_dcs_device');
 		$user_id = $this->input->post('user_id');
@@ -248,55 +200,7 @@ class dcs extends CI_Controller{
 	 * Response = 3 -> Change Password Attempts
 	 * Response = 4 -> Device Unlocked 
 	 */
-	public function dcs_status(){
-		$status = (read_file("assets/device/dcs/status.txt") == 1 ? true : false);
-		$password_attempts = intval(read_file("assets/device/dcs/password_attempts.txt"));
-		$condition = (read_file("assets/device/dcs/condition.txt") == 1 ? true : false);
-		$val = array(
-			'status' => $status, 
-			'password_attempts' => $password_attempts,
-			'condition' => $condition
-		);
-		echo json_encode($val);
-	}
-
-	public function dcs_change_status(){
-		if(read_file("assets/device/dcs/condition.txt") == 1){
-			$response['response'] = 0;
-			echo json_encode($response);
-			exit;
-		}
-		if($this->input->post('status') == "true"){
-			$status = 1;
-			$this->dcs_insert_log('Perangkat Dihidupkan', false);
-			$response['response'] = 1;
-		}else{
-			$status = 0;
-			$this->dcs_insert_log('Perangkat Dimatikan', false);
-			$response['response'] = 2;
-		}
-		write_file("assets/device/dcs/status.txt", $status);
-		echo json_encode($response);
-	}
-
-	public function dcs_change_attempts(){
-		if(read_file("assets/device/dcs/condition.txt") == 1){
-			$response['response'] = 0;
-			echo json_encode($response);
-			exit;
-		}
-		write_file("assets/device/dcs/password_attempts.txt", $this->input->post('password_attempts'));
-		$response['response'] = 3;
-		echo json_encode($response);
-	}
-
-	public function dcs_unlock(){
-		write_file("assets/device/dcs/condition.txt", "0");
-		$this->dcs_insert_log('Perangkat Terbuka', false);
-		$response['response'] = 4;
-		echo json_encode($response);
-	}
-
+	
 	public function dcs_get_log_date(){
 		$data = $this->db_dcs_log->get_date();
 		$response['date'] = array();
@@ -383,5 +287,96 @@ class dcs extends CI_Controller{
 		
 		$response['response'] = 1;
 		echo json_encode($response);
+	}
+	
+	/* Deprecated */
+	
+	/* Android */
+	public function dcs_status(){
+		$status = (read_file("assets/device/dcs/status.txt") == 1 ? true : false);
+		$password_attempts = intval(read_file("assets/device/dcs/password_attempts.txt"));
+		$condition = (read_file("assets/device/dcs/condition.txt") == 1 ? true : false);
+		$val = array(
+			'status' => $status, 
+			'password_attempts' => $password_attempts,
+			'condition' => $condition
+		);
+		echo json_encode($val);
+	}
+
+	public function dcs_change_status(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$response['response'] = 0;
+			echo json_encode($response);
+			exit;
+		}
+		if($this->input->post('status') == "true"){
+			$status = 1;
+			//$this->dcs_insert_log('Perangkat Dihidupkan', false);
+			$response['response'] = 1;
+		}else{
+			$status = 0;
+			//$this->dcs_insert_log('Perangkat Dimatikan', false);
+			$response['response'] = 2;
+		}
+		write_file("assets/device/dcs/status.txt", $status);
+		echo json_encode($response);
+	}
+
+	public function dcs_change_attempts(){
+		if(read_file("assets/device/dcs/condition.txt") == 1){
+			$response['response'] = 0;
+			echo json_encode($response);
+			exit;
+		}
+		write_file("assets/device/dcs/password_attempts.txt", $this->input->post('password_attempts'));
+		$response['response'] = 3;
+		echo json_encode($response);
+	}
+
+	public function dcs_unlock(){
+		write_file("assets/device/dcs/condition.txt", "0");
+		//$this->dcs_insert_log('Perangkat Terbuka', false);
+		$response['response'] = 4;
+		echo json_encode($response);
+	}
+	
+	public function dcs_check_password(){
+		$input = $this->input->post('password');
+		$user_id = substr($input, 0, 3);
+		$password = substr($input, 3, (strlen($input) - 4));
+		$data = $this->db_dcs_users->get_single($user_id);
+		if($data != null){
+			if($password == $data->password){
+				write_file("assets/device/dcs/result.txt", 1);
+				//$this->dcs_insert_log($data->user_id, $data->name, "Keypad Masuk");
+				echo 1;
+			}else{
+				write_file("assets/device/dcs/result.txt", 0);
+				echo 0;
+			}
+		}else{
+			write_file("assets/device/dcs/result.txt", 0);
+			echo 0;
+		}
+	}
+
+	/* Arduino */
+	public function dcs_get_value($param){
+		header("Content-type: text/json");
+		$status = intval(read_file("assets/device/dcs/" . $param . ".txt"));
+		echo json_encode("<" . $status . ">");
+	}
+
+	public function dcs_get_server(){
+		header("Content-type: text/json");
+		$status = intval(read_file("assets/device/dcs/status.txt"));
+		$condition = intval(read_file("assets/device/dcs/condition.txt"));
+		echo json_encode("<" . $status . ";" . $condition . ">");
+	}
+
+	public function dcs_lock(){
+		write_file("assets/device/dcs/condition.txt", 1);
+		$this->dcs_insert_log("000", "Perangkat Terkunci", "Perangkat");
 	}
 }
